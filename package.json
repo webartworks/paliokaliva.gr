@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "start": "node dist/server/entry.mjs",
     "preview": "astro preview",
     "check": "astro check"
   },
   "dependencies": {
+    "@astrojs/node": "^9.5.5",
     "@fontsource-variable/eb-garamond": "^5.2.5",
     "@fontsource-variable/fira-code": "^5.2.5",
     "@fontsource-variable/open-sans": "^5.2.5",

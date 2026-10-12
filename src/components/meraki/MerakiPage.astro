@@ -1,0 +1,166 @@
+---
+import { Picture } from 'astro:assets';
+import heroImage from '@/assets/images/meraki/hero.jpg';
+import dish from '@/assets/images/meraki.jpg';
+import logo from '@/assets/logo/meraki.svg';
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import Gallery from '@/components/Gallery.astro';
+import ReservationForm from '@/components/ReservationForm.astro';
+import { t, type Locale } from '@/i18n';
+import { routes, site } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dict = t(locale);
+const m = dict.merakiPage;
+const r = dict.reservation;
+
+// Gallery photos, in file name order, from src/assets/images/meraki/NN-name.jpg.
+const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/meraki/[0-9]*.jpg', { eager: true });
+const photos = Object.keys(files)
+  .sort()
+  .map((path, i) => ({ image: files[path].default, alt: m.photoAlts[i] ?? m.eyebrow }));
+---
+
+<Base locale={locale} path={routes.meraki} title={dict.nav.meraki} description={m.description} overHero>
+  <PageHero image={heroImage} alt={m.heroAlt} title={m.title} eyebrow={m.eyebrow} position="50% 62%" />
+
+  <section class="section bg-cream">
+    <div class="container meraki-intro">
+      <div class="meraki-intro__body">
+        <img
+          class="meraki-intro__logo"
+          src={logo.src}
+          width={logo.width}
+          height={logo.height}
+          alt={m.logoAlt}
+          data-reveal
+        />
+        <p class="quote-mono" data-reveal style="--i:1">{m.quote}</p>
+        <div class="meraki-intro__text" data-reveal style="--i:2">
+          {m.body.map((p) => <p set:html={p} />)}
+        </div>
+        <div class="meraki-intro__actions" data-reveal style="--i:3">
+          <a class="btn" href="#reserve">{dict.meraki.reserve}</a>
+          {
+            site.meraki.menuUrl && (
+              <a class="btn" href={site.meraki.menuUrl}>
+                {dict.meraki.menu}
+              </a>
+            )
+          }
+        </div>
+      </div>
+      <div class="media meraki-intro__photo" data-reveal="image">
+        <Picture
+          src={dish}
+          alt={m.dishAlt}
+          formats={['avif', 'webp']}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 56em) 40vw, 100vw"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="meraki-gallery bg-cream">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{m.galleryEyebrow}</span>
+        <h2 class="h2" data-reveal style="--i:1">{m.galleryTitle}</h2>
+      </div>
+      <div class="meraki-gallery__grid">
+        <Gallery locale={locale} photos={photos} ratio="4 / 5" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-linen" id="reserve">
+    <div class="container meraki-reserve">
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{r.eyebrow}</span>
+        <h2 class="h2" data-reveal style="--i:1">{r.title}</h2>
+        <p class="lede" data-reveal style="--i:2">{r.body}</p>
+        <p data-reveal style="--i:3">
+          {r.today} <a class="meraki-reserve__phone" href={`tel:${site.phone.href}`}>{site.phone.label}</a>.
+        </p>
+      </div>
+      <div data-reveal style="--i:2">
+        <ReservationForm locale={locale} />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .meraki-intro {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .meraki-intro__body {
+    display: grid;
+    justify-items: start;
+    gap: 1.5rem;
+  }
+
+  .meraki-intro__logo {
+    width: clamp(9rem, 7rem + 8vw, 13rem);
+    margin-bottom: 1rem;
+  }
+
+  .meraki-intro__text {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 32rem;
+    text-wrap: pretty;
+  }
+
+  .meraki-intro__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.375rem;
+    margin-top: 1rem;
+  }
+
+  .meraki-intro__photo {
+    aspect-ratio: 4 / 5;
+  }
+
+  .meraki-gallery {
+    padding-bottom: var(--section);
+  }
+
+  .meraki-gallery__grid {
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+
+  .meraki-reserve {
+    display: grid;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .meraki-reserve__phone {
+    border-bottom: 1px solid currentColor;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 56em) {
+    .meraki-intro {
+      grid-template-columns: 1.1fr 1fr;
+      gap: clamp(3rem, 8vw, 7.5rem);
+    }
+
+    .meraki-reserve {
+      grid-template-columns: 1fr 1.2fr;
+      gap: clamp(3rem, 8vw, 7.5rem);
+    }
+  }
+</style>

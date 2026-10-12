@@ -7,9 +7,11 @@ import { t, type Locale } from '@/i18n';
 interface Props {
   locale: Locale;
   photos: { image: ImageMetadata; alt: string }[];
+  // Shape of the small photos, for example "4 / 3" for landscape sets or "4 / 5" for portrait ones.
+  ratio?: string;
 }
 
-const { locale, photos } = Astro.props;
+const { locale, photos, ratio = '4 / 3' } = Astro.props;
 const l = t(locale).lightbox;
 
 const items = await Promise.all(
@@ -20,7 +22,7 @@ const items = await Promise.all(
 );
 ---
 
-<ul class="gallery" data-gallery>
+<ul class="gallery" style={`--ratio:${ratio}`} data-gallery>
   {
     items.map((item, i) => (
       <li class="gallery__item">
@@ -72,7 +74,7 @@ const items = await Promise.all(
 
   .gallery__link {
     display: block;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: var(--ratio);
     cursor: zoom-in;
   }
 

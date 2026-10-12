@@ -124,7 +124,8 @@ a {
 }
 
 button,
-input {
+input,
+textarea {
   font: inherit;
   color: inherit;
 }
@@ -333,6 +334,138 @@ a:hover > .arrow-link svg {
   background: var(--ink);
   border-color: var(--ink);
   color: var(--cream);
+}
+
+/* --------------------------------------------------------------------------
+   Forms
+   -------------------------------------------------------------------------- */
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem 1.5rem;
+}
+
+.form[hidden] {
+  display: none;
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.field__label {
+  color: var(--brown);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.field__label small {
+  color: var(--muted);
+  font-size: inherit;
+  letter-spacing: 0.08em;
+  text-transform: none;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgb(18 17 13 / 0.35);
+  border-radius: 0;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 300;
+  transition: border-color var(--t-fast) var(--ease);
+}
+
+.field textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.field input:focus-visible,
+.field textarea:focus-visible {
+  outline: 0;
+  border-bottom-color: var(--ink);
+  box-shadow: 0 1px 0 var(--ink);
+}
+
+.field [aria-invalid='true'] {
+  border-bottom-color: #9a3b2a;
+  box-shadow: 0 1px 0 #9a3b2a;
+}
+
+.form__wide {
+  grid-column: 1 / -1;
+}
+
+.form__consent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  font-size: var(--fs-small);
+}
+
+.form__consent input {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0.15rem 0 0;
+  accent-color: var(--brown);
+}
+
+.form__consent input[aria-invalid='true'] {
+  outline: 1px solid #9a3b2a;
+  outline-offset: 2px;
+}
+
+.form__consent a {
+  border-bottom: 1px solid currentColor;
+}
+
+/* A field real visitors never see or reach; bots tend to fill it in. */
+.form__trap {
+  position: absolute;
+  left: -100vw;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form__status {
+  color: #9a3b2a;
+  font-size: var(--fs-small);
+  font-weight: 400;
+}
+
+.form__status:empty {
+  display: none;
+}
+
+.form button[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+@media (min-width: 36em) {
+  .form {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* --------------------------------------------------------------------------

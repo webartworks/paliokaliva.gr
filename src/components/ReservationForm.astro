@@ -1,0 +1,100 @@
+---
+// Table request form for Meraki. It is sent by src/scripts/site.ts to /api/reservation/.
+import { localePath, t, type Locale } from '@/i18n';
+import { routes, site } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dict = t(locale);
+const r = dict.reservation;
+const f = r.fields;
+
+const [consentBefore, consentAfter] = r.consent.split('{privacy}');
+---
+
+<form class="form" id="reservation-form" action="/api/reservation/" method="post" data-ajax-form>
+  <input type="hidden" name="locale" value={locale} />
+  <input type="hidden" name="startedAt" value="" />
+  <div class="form__trap" aria-hidden="true">
+    <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <label class="field form__wide">
+    <span class="field__label">{f.name}</span>
+    <input type="text" name="name" autocomplete="name" required minlength="2" maxlength="100" />
+  </label>
+  <label class="field">
+    <span class="field__label">{f.email}</span>
+    <input type="email" name="email" autocomplete="email" required maxlength="254" />
+  </label>
+  <label class="field">
+    <span class="field__label">{f.phone}</span>
+    <input type="tel" name="phone" autocomplete="tel" required maxlength="40" />
+  </label>
+  <label class="field">
+    <span class="field__label">{f.date}</span>
+    <input type="date" name="date" required data-min-today />
+  </label>
+  <label class="field">
+    <span class="field__label">{f.time}</span>
+    <input type="time" name="time" required step="900" />
+  </label>
+  <label class="field">
+    <span class="field__label">{f.guests}</span>
+    <input type="number" name="guests" required min="1" max="20" value="2" inputmode="numeric" />
+  </label>
+  <label class="field form__wide">
+    <span class="field__label">{f.notes} <small>({f.optional})</small></span>
+    <textarea name="notes" rows="3" maxlength="1500" placeholder={f.notesHint}></textarea>
+  </label>
+
+  <label class="form__consent form__wide">
+    <input type="checkbox" name="consent" required />
+    <span>
+      {consentBefore}<a href={localePath(locale, routes.privacy)}>{dict.nav.privacy}</a>{consentAfter}
+    </span>
+  </label>
+
+  <p
+    class="form__status form__wide"
+    role="alert"
+    data-form-status
+    data-validation={r.errors.validation}
+    data-rate={r.errors.rate}
+    data-server={r.errors.server}
+  >
+  </p>
+
+  <div class="form__wide">
+    <button class="btn" type="submit" data-sending={r.sending}>{r.submit}</button>
+  </div>
+
+  <noscript>
+    <p class="form__wide">
+      {r.noscript}
+      <a href={`tel:${site.phone.href}`}>{site.phone.label}</a> · <a href={`mailto:${site.email}`}>{site.email}</a>
+    </p>
+  </noscript>
+</form>
+
+<div class="form-success" tabindex="-1" hidden data-form-success="reservation-form">
+  <h3 class="h3">{r.successTitle}</h3>
+  <p>{r.successBody}</p>
+</div>
+
+<style>
+  .form-success {
+    display: grid;
+    gap: 0.75rem;
+    padding: 2rem;
+    border: 1px solid var(--rule);
+    outline: 0;
+  }
+
+  .form-success[hidden] {
+    display: none;
+  }
+</style>

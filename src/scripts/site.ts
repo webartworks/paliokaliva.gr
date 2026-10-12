@@ -1,5 +1,5 @@
 // Small behaviours shared by every page: scroll reveals, header state, mobile menu,
-// booking bar, photo strip, photo viewer, mobile dock and the offer card. No animation library.
+// booking bar, photo strip, photo viewer, forms, mobile dock and the offer card. No animation library.
 
 declare global {
   interface Window {
@@ -300,6 +300,69 @@ function initLightbox() {
   dialog.addEventListener('close', () => links[current]?.focus());
 }
 
+function initForms() {
+  document.querySelectorAll<HTMLFormElement>('form[data-ajax-form]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('[data-form-status]');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const success = document.querySelector<HTMLElement>(`[data-form-success="${form.id}"]`);
+    const started = form.querySelector<HTMLInputElement>('input[name="startedAt"]');
+    if (started) started.value = String(Date.now());
+
+    // Requests for a past date make no sense.
+    form.querySelectorAll<HTMLInputElement>('input[type="date"][data-min-today]').forEach((input) => {
+      input.min = toISODate(new Date());
+    });
+
+    const label = button?.textContent ?? '';
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+      if (status) status.textContent = '';
+      if (button) {
+        button.disabled = true;
+        button.textContent = button.dataset.sending ?? label;
+      }
+
+      const data: Record<string, unknown> = Object.fromEntries(new FormData(form));
+      data.consent = form.querySelector<HTMLInputElement>('input[name="consent"]')?.checked ?? false;
+
+      let result: { ok: boolean; error?: string; fields?: string[] } = { ok: false, error: 'server' };
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        result = await response.json();
+      } catch {
+        // Network problem or an unreadable answer: handled as a general error below.
+      }
+
+      if (result.ok && success) {
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+        return;
+      }
+
+      result.fields?.forEach((name) => {
+        form.querySelector(`[name="${name}"]`)?.setAttribute('aria-invalid', 'true');
+      });
+      if (status) {
+        const key = result.error === 'validation' || result.error === 'rate' ? result.error : 'server';
+        status.textContent = status.dataset[key] ?? '';
+      }
+      if (button) {
+        button.disabled = false;
+        button.textContent = label;
+      }
+    });
+  });
+}
+
 function init() {
   document.documentElement.classList.add('js');
   initReveal();
@@ -310,6 +373,7 @@ function init() {
   initDock();
   initOffer();
   initLightbox();
+  initForms();
 }
 
 init();

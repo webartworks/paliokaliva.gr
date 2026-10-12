@@ -7,13 +7,14 @@ The developer's English is not strong: write to them in simple, clear English. T
 ## Commands
 
 - `pnpm dev` starts the dev server.
-- `pnpm build` builds the static site into `dist/`. The first build is slow because it generates the images; later builds reuse the cache.
+- `pnpm build` builds the site into `dist/` (`dist/client` for the static pages, `dist/server` for the form endpoints). The first build is slow because it generates the images; later builds reuse the cache.
+- `pnpm start` runs the built site (`node dist/server/entry.mjs`). It listens on `HOST` and `PORT`.
 - Use pnpm, not npm. Astro 5 on Node 20 or newer (Astro 6+ needs Node 22).
 
 ## Stack and hosting
 
-- Astro, static output, no CMS. The developer edits content in the code.
-- Deployed on the developer's Coolify server.
+- Astro, no CMS. The developer edits content in the code. All pages are static; only the form endpoints in `src/pages/api/` run on the server, through the `@astrojs/node` adapter.
+- Deployed on the developer's Coolify server as a Node app (not as a static site), with the variables from `.env.example` set there.
 - No UI framework and no animation library. Plain CSS and one small script.
 - Fonts are self-hosted through `@fontsource-variable`: EB Garamond (titles), Open Sans (body), Fira Code (small quotes).
 
@@ -26,6 +27,8 @@ The developer's English is not strong: write to them in simple, clear English. T
 - `src/styles/global.css`: colours, type sizes, spacing, shared classes (`.eyebrow`, `.h2`, `.btn`, `.arrow-link`, `.media`) and the motion rules.
 - `src/scripts/site.ts`: scroll reveals, header state, mobile menu, booking bar, photo strip, mobile bar, offer card.
 - `src/layouts/Base.astro`: page shell, meta tags, language alternates.
+- `src/lib/mail.ts`: sending through Postmark, plus validation helpers and the request limit. `src/pages/api/reservation.ts` is the Meraki table request endpoint; a contact form should follow the same pattern.
+- `.env.example`: the settings the forms need. The real `.env` is never committed.
 - `src/components/home/`: the homepage sections, one file each.
 - `src/components/accommodation/`: the Accommodation page and the room page. The thin files in `src/pages/accommodation/` and `src/pages/el/accommodation/` only choose the language.
 - Shared page parts: `PageHero` (opening photo of an inner page), `Gallery` (photo mosaic with a large viewer), `RoomCard` / `RoomGrid`, `FeatureSection` (large photo beside text, with a small second photo), `LineList` / `AmenityList`, `BookingCta`.
@@ -50,7 +53,8 @@ The developer's English is not strong: write to them in simple, clear English. T
 - Page transitions use the browser's native `@view-transition`. Do not add Astro's `ClientRouter`: it would remove the RateParity widget when the visitor changes page.
 - Offers: there is no offers page. A running offer is shown with the offer card.
 - Meraki Restaurant is a separate business next to the hotel, with its own logo and photos. Table reservations will be an email form on the hotel site.
-- Forms (contact, Meraki reservation) will send email through Postmark. This needs a server endpoint, which is not built yet.
+- Forms send email through Postmark. The sender is always `mailer@webartworks.gr` and the hotel receives at `info@paliokaliva.gr`. The email to the hotel has the guest as Reply-To; the receipt to the guest has the hotel as Reply-To and never repeats the guest's free text. Without `POSTMARK_SERVER_TOKEN`, `pnpm dev` prints the emails in the terminal and the built site answers with an error.
+- Forms are protected by a hidden trap field, a minimum fill time and a limit of 5 requests per 10 minutes per visitor. There is no captcha.
 - Newsletter: a simple hosted service (for example Brevo or MailerLite) is planned; not chosen yet.
 - Menu: Our Village, Accommodation, Village Life, Meraki Restaurant, Activities, Zakynthos, Contact. Gallery and Privacy Policy are in the footer. Six room types, each with its own page.
 
@@ -63,8 +67,10 @@ Waiting for the owner or the developer:
 - Reception hours and the TripAdvisor link (both left out of the footer until confirmed).
 - Whether the mobile number has WhatsApp.
 - Meraki menu: the "See the menu" button is hidden until `site.meraki.menuUrl` is set.
+- Meraki opening season, hours and its own phone number are unknown; the page shows the hotel phone and the form accepts any time.
+- The Postmark token is not set yet, so real sending has not been tested.
 - Activity details (pottery workshop, wine tasting): the current texts are drafts without facts.
 - Greek titles in EB Garamond look old-fashioned; the developer is deciding whether to keep it.
 - On phones the RateParity widget may overlap the Call / WhatsApp / Book bar; check on a test address.
 
-Built: homepage, Accommodation, six room pages, Village Life. Still to build: the other inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.
+Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form. Still to build: the other inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.

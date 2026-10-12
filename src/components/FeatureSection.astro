@@ -2,6 +2,7 @@
 // A large photo beside a block of text, with a smaller second photo under the text.
 // Used for the long, calm sections of inner pages. `reverse` puts the text on the left.
 import { Picture } from 'astro:assets';
+import { imageFormats } from '@/lib/images';
 
 interface Props {
   id?: string;
@@ -27,7 +28,7 @@ const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', 
       <Picture
         src={image}
         alt={alt}
-        formats={['avif', 'webp']}
+        formats={imageFormats}
         widths={[640, 960, 1400]}
         sizes="(min-width: 56em) 52vw, 100vw"
       />
@@ -49,7 +50,7 @@ const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', 
             <Picture
               src={smallImage}
               alt={smallAlt}
-              formats={['avif', 'webp']}
+              formats={imageFormats}
               widths={[360, 560, 800]}
               sizes="(min-width: 56em) 24vw, 62vw"
             />

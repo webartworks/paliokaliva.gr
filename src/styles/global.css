@@ -515,16 +515,22 @@ a:focus-visible .media img {
   transform: none;
 }
 
-/* Photos open like a slow curtain while the image settles into place. */
+/* Photos open like a slow curtain while the image settles into place.
+   The curtain is on the picture inside, never on the element itself: Chrome treats
+   an element that is fully clipped as not visible, so its reveal would never start. */
 .js [data-reveal='image'] {
   opacity: 1;
   transform: none;
+  background: transparent;
+}
+
+.js [data-reveal='image'] > picture {
   clip-path: inset(0 0 100% 0);
   transition: clip-path var(--t-slow) var(--ease-in-out);
   transition-delay: calc(var(--i, 0) * 110ms);
 }
 
-.js [data-reveal='image'].is-in {
+.js [data-reveal='image'].is-in > picture {
   clip-path: inset(0);
 }
 
@@ -592,7 +598,7 @@ a:focus-visible .media img {
   }
 
   .js [data-reveal],
-  .js [data-reveal='image'] {
+  .js [data-reveal='image'] > picture {
     opacity: 1;
     transform: none;
     clip-path: none;

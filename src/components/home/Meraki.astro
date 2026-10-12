@@ -3,6 +3,7 @@ import { Picture } from 'astro:assets';
 import dish from '@/assets/images/meraki.jpg';
 import { localePath, t, type Locale } from '@/i18n';
 import { routes, site } from '@/data/site';
+import { imageFormats } from '@/lib/images';
 
 interface Props {
   locale: Locale;
@@ -18,7 +19,7 @@ const merakiUrl = localePath(locale, routes.meraki);
     <Picture
       src={dish}
       alt={m.alt}
-      formats={['avif', 'webp']}
+      formats={imageFormats}
       widths={[640, 960, 1440]}
       sizes="(min-width: 56em) 50vw, 100vw"
     />

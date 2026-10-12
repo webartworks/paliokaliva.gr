@@ -10,6 +10,7 @@ import ReservationForm from '@/components/ReservationForm.astro';
 import { t, type Locale } from '@/i18n';
 import { routes, site } from '@/data/site';
 import { breadcrumbSchema, restaurantSchema } from '@/lib/seo';
+import { imageFormats } from '@/lib/images';
 
 interface Props {
   locale: Locale;
@@ -68,7 +69,7 @@ const photos = Object.keys(files)
         <Picture
           src={dish}
           alt={m.dishAlt}
-          formats={['avif', 'webp']}
+          formats={imageFormats}
           widths={[480, 800, 1200]}
           sizes="(min-width: 56em) 40vw, 100vw"
         />

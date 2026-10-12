@@ -45,7 +45,7 @@ The developer's English is not strong: write to them in simple, clear English. T
 - Use `localePath(locale, path)` for internal links and `routes` from `site.ts` for paths. URLs end with a slash.
 - Follow the homepage design in `_reference/design/UI/`. Colours and fonts come from the tokens in `global.css`; do not add new ones without asking.
 - Every page passes `title` and `description` to `Base`. Pages with an opening photo also pass it as `image` (it becomes the 1200 x 630 sharing image) and a `jsonLd` breadcrumb.
-- Photos go through `<Picture>` from `astro:assets` with `avif` and `webp`, inside a `.media` wrapper.
+- Photos go through `<Picture>` from `astro:assets` with `formats={imageFormats}` (from `src/lib/images.ts`), inside a `.media` wrapper. The built site offers AVIF and WebP; `pnpm dev` offers WebP only, because the dev server re-encodes AVIF on every request and takes seconds per photo.
 - Motion is slow, soft and plays once: `data-reveal` for text, `data-reveal="image"` for photos, `--i` for a small delay between neighbours. Nothing loops or moves on its own. Reduced-motion settings must be respected.
 - Tone of the texts: calm and professional, warm, family-run. Do not invent facts about the hotel (prices, times, capacities); ask instead.
 

@@ -6,6 +6,7 @@ import gardens from '@/assets/images/life-gardens.jpg';
 import ArrowLink from '@/components/ArrowLink.astro';
 import { localePath, t, type Locale } from '@/i18n';
 import { routes } from '@/data/site';
+import { imageFormats } from '@/lib/images';
 
 interface Props {
   locale: Locale;
@@ -39,7 +40,7 @@ const items = l.items.map((item, i) => ({
                 <Picture
                   src={item.photo}
                   alt={item.alt}
-                  formats={['avif', 'webp']}
+                  formats={imageFormats}
                   widths={[480, 760, 1140]}
                   sizes="(min-width: 56em) 28vw, 100vw"
                 />

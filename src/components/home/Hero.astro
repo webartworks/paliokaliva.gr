@@ -3,6 +3,7 @@ import { Picture } from 'astro:assets';
 import heroImage from '@/assets/images/hero.jpg';
 import BookingBar from '@/components/BookingBar.astro';
 import { t, type Locale } from '@/i18n';
+import { imageFormats } from '@/lib/images';
 
 interface Props {
   locale: Locale;
@@ -17,7 +18,7 @@ const h = t(locale).hero;
     <Picture
       src={heroImage}
       alt={h.alt}
-      formats={['avif', 'webp']}
+      formats={imageFormats}
       widths={[640, 960, 1440, 1920, 2560]}
       sizes="100vw"
       loading="eager"

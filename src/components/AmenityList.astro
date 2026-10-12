@@ -1,4 +1,5 @@
 ---
+import LineList from './LineList.astro';
 import { t, type Locale } from '@/i18n';
 import type { Amenity } from '@/data/rooms';
 
@@ -11,31 +12,4 @@ const { locale, items } = Astro.props;
 const labels = t(locale).room.amenities;
 ---
 
-<ul class="amenities" data-reveal>
-  {items.map((key) => <li>{labels[key]}</li>)}
-</ul>
-
-<style>
-  .amenities {
-    columns: 1;
-    column-gap: clamp(1.5rem, 3vw, 2.75rem);
-  }
-
-  .amenities li {
-    break-inside: avoid;
-    padding-block: 0.8rem;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  @media (min-width: 36em) {
-    .amenities {
-      columns: 2;
-    }
-  }
-
-  @media (min-width: 64em) {
-    .amenities {
-      columns: 3;
-    }
-  }
-</style>
+<LineList items={items.map((key) => labels[key])} />

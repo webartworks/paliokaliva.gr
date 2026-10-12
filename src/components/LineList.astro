@@ -1,0 +1,39 @@
+---
+// A plain list with a hairline under each item, flowing into columns on wider screens.
+interface Props {
+  items: readonly string[];
+  // Most columns to use on a wide screen.
+  columns?: 1 | 2 | 3;
+}
+
+const { items, columns = 3 } = Astro.props;
+---
+
+<ul class="line-list" data-columns={columns} data-reveal>
+  {items.map((item) => <li>{item}</li>)}
+</ul>
+
+<style>
+  .line-list {
+    columns: 1;
+    column-gap: clamp(1.5rem, 3vw, 2.75rem);
+  }
+
+  .line-list li {
+    break-inside: avoid;
+    padding-block: 0.8rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  @media (min-width: 36em) {
+    .line-list:not([data-columns='1']) {
+      columns: 2;
+    }
+  }
+
+  @media (min-width: 64em) {
+    .line-list[data-columns='3'] {
+      columns: 3;
+    }
+  }
+</style>

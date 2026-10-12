@@ -1,0 +1,122 @@
+---
+// A large photo beside a block of text, with a smaller second photo under the text.
+// Used for the long, calm sections of inner pages. `reverse` puts the text on the left.
+import { Picture } from 'astro:assets';
+
+interface Props {
+  id?: string;
+  eyebrow: string;
+  title: string;
+  quote?: string;
+  body: readonly string[];
+  image: ImageMetadata;
+  alt: string;
+  smallImage?: ImageMetadata;
+  smallAlt?: string;
+  reverse?: boolean;
+}
+
+const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', reverse = false } = Astro.props;
+---
+
+<section class:list={['feature', { 'feature--reverse': reverse }]} id={id}>
+  <div class="container feature__grid">
+    <div class="media feature__photo" data-reveal="image">
+      <Picture
+        src={image}
+        alt={alt}
+        formats={['avif', 'webp']}
+        widths={[640, 960, 1400]}
+        sizes="(min-width: 56em) 52vw, 100vw"
+      />
+    </div>
+
+    <div class="feature__body">
+      <span class="eyebrow" data-reveal>{eyebrow}</span>
+      <h2 class="h2" data-reveal style="--i:1">{title}</h2>
+      {quote && <p class="quote-mono" data-reveal style="--i:2">{quote}</p>}
+      <div class="feature__text" data-reveal style="--i:3">
+        {body.map((p) => <p>{p}</p>)}
+      </div>
+      <div class="feature__extra" data-reveal style="--i:4">
+        <slot />
+      </div>
+      {
+        smallImage && (
+          <div class="media feature__small" data-reveal="image" style="--i:2">
+            <Picture
+              src={smallImage}
+              alt={smallAlt}
+              formats={['avif', 'webp']}
+              widths={[360, 560, 800]}
+              sizes="(min-width: 56em) 24vw, 62vw"
+            />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .feature {
+    padding-block: calc(var(--section) * 0.6);
+  }
+
+  .feature__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .feature__photo {
+    aspect-ratio: 3 / 2;
+  }
+
+  .feature__body {
+    display: grid;
+    justify-items: start;
+    gap: 1.25rem;
+  }
+
+  .feature__body .eyebrow {
+    margin-bottom: 1.25rem;
+  }
+
+  .feature__text {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 30rem;
+    margin-top: 0.5rem;
+    text-wrap: pretty;
+  }
+
+  .feature__extra:empty {
+    display: none;
+  }
+
+  .feature__small {
+    width: 62%;
+    margin-top: clamp(1.5rem, 1rem + 2vw, 3rem);
+    aspect-ratio: 4 / 3;
+  }
+
+  @media (min-width: 56em) {
+    .feature__grid {
+      grid-template-columns: 1.25fr 1fr;
+      gap: clamp(2.5rem, 7vw, 6.25rem);
+    }
+
+    .feature--reverse .feature__grid {
+      grid-template-columns: 1fr 1.25fr;
+    }
+
+    .feature--reverse .feature__photo {
+      order: 2;
+    }
+
+    .feature__body {
+      padding-top: clamp(1rem, 3vw, 3rem);
+    }
+  }
+</style>

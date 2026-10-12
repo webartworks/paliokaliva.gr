@@ -1,0 +1,113 @@
+---
+import { Picture } from 'astro:assets';
+import dish from '@/assets/images/meraki.jpg';
+import { localePath, t, type Locale } from '@/i18n';
+import { routes, site } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const m = t(locale).meraki;
+const merakiUrl = localePath(locale, routes.meraki);
+---
+
+<section class="meraki">
+  <div class="media meraki__photo" data-reveal="image">
+    <Picture
+      src={dish}
+      alt={m.alt}
+      formats={['avif', 'webp']}
+      widths={[640, 960, 1440]}
+      sizes="(min-width: 56em) 50vw, 100vw"
+    />
+  </div>
+  <div class="meraki__panel">
+    <div class="meraki__content">
+      <span class="eyebrow" data-reveal>{m.eyebrow}</span>
+      <h2 class="h2" data-reveal style="--i:1">{m.title}</h2>
+      <div class="meraki__text" data-reveal style="--i:2">
+        {m.body.map((p) => <p set:html={p} />)}
+      </div>
+      <div class="meraki__actions" data-reveal style="--i:3">
+        <a class="btn btn--solid-light" href={`${merakiUrl}#reserve`}>{m.reserve}</a>
+        {
+          site.meraki.menuUrl && (
+            <a class="btn btn--light" href={site.meraki.menuUrl}>
+              {m.menu}
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .meraki {
+    display: grid;
+    background: var(--sage);
+    color: var(--white);
+  }
+
+  .meraki__photo {
+    aspect-ratio: 4 / 5;
+    max-height: 90svh;
+    width: 100%;
+  }
+
+  .meraki__panel {
+    display: grid;
+    align-items: center;
+    padding: clamp(3.5rem, 2.5rem + 5vw, 7rem) var(--gutter);
+  }
+
+  .meraki__content {
+    display: grid;
+    justify-items: start;
+    gap: 1.25rem;
+    max-width: 31.5rem;
+  }
+
+  .meraki .eyebrow {
+    margin-bottom: 1.5rem;
+    color: inherit;
+    opacity: 0.9;
+  }
+
+  .meraki .h2 {
+    color: inherit;
+  }
+
+  .meraki__text {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    font-weight: 400;
+    text-wrap: pretty;
+  }
+
+  .meraki__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.375rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 56em) {
+    .meraki {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .meraki__photo {
+      aspect-ratio: auto;
+      max-height: none;
+      min-height: min(62.5rem, 69.5vw);
+    }
+
+    .meraki__panel {
+      padding-inline: clamp(2.5rem, 7vw, 6.25rem) var(--gutter);
+    }
+  }
+</style>

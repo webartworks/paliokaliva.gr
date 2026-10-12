@@ -1,0 +1,203 @@
+export const en = {
+  meta: {
+    title: 'Paliokaliva Village | Boutique stone village in Tragaki, Zakynthos',
+    description:
+      'Eighteen traditional stone-built villas, apartments and studios around an olive grove garden in Tragaki, Zakynthos. Pool with sea view, buffet breakfast and caring, family-run hospitality.',
+  },
+  nav: {
+    home: 'Home',
+    village: 'Our Village',
+    accommodation: 'Accommodation',
+    life: 'Village Life',
+    meraki: 'Meraki Restaurant',
+    activities: 'Activities',
+    zakynthos: 'Zakynthos',
+    contact: 'Contact',
+    gallery: 'Gallery',
+    privacy: 'Privacy Policy',
+    book: 'Book now',
+    menu: 'Menu',
+    close: 'Close',
+    main: 'Main navigation',
+    skip: 'Skip to content',
+    switchTo: 'Ελληνικά',
+    switchShort: 'ΕΛ',
+  },
+  booking: {
+    label: 'Check availability',
+    arrival: 'Arrival',
+    departure: 'Departure',
+    adults: 'Adults',
+    children: 'Children',
+    submit: 'Check availability',
+    less: 'Fewer',
+    more: 'More',
+  },
+  hero: {
+    title: ['Traditional Zakynthian', 'Atmosphere'],
+    subtitle: 'Authentic living and caring hospitality',
+    alt: 'The pool of Paliokaliva Village seen from the bar terrace, with the Ionian Sea behind',
+  },
+  welcome: {
+    eyebrow: 'Welcome',
+    title: 'Paliokaliva means “the old hunters’ spot”',
+    body: [
+      'We welcome you to spend a unique holiday with us at Paliokaliva Village on Zakynthos. Our privately owned boutique hotel was created to share an authentic Zakynthian way of life with our guests.',
+      'Eighteen traditional stone-built villas, apartments and studios overlook the fresh greenery of our olive grove garden, a sociable gathering place for families and couples.',
+    ],
+    quote: '“Inspired by the earliest Greek writing”',
+    story:
+      'Our name comes from the peaceful hillside where the hotel stands. Our logo is inspired by the ancient Mycenaean symbol for “roof”, found on the Linear B tablets.',
+    link: 'Our story',
+    altPool: 'The pool bar lit up at dusk, reflected in the water',
+    altVillage: 'A stone house with wooden shutters behind old olive trees',
+  },
+  rooms: {
+    eyebrow: 'Accommodation',
+    title: 'Villas, Apartments & Studios',
+    quote: '“Island tradition, contemporary simplicity”',
+    body: 'Rich wooden ceiling beams and furniture handcrafted by local artisans blend with modern living spaces, offering every comfort and convenience.',
+    view: 'View',
+    all: 'All accommodation',
+    guests: 'up to {n} guests',
+    items: {
+      studio: {
+        name: 'Studio',
+        text: 'An open-plan stone studio that opens straight onto the grass and the olive trees.',
+        alt: 'Studio bedroom seen past a linen curtain, with stone walls and a wooden roof',
+      },
+      'superior-studio': {
+        name: 'Superior Studio',
+        text: 'A separate bedroom and more room to breathe, for couples or a small family.',
+        alt: 'Superior Studio living area with a wooden gallery above',
+      },
+      apartment: {
+        name: 'Apartment',
+        text: 'Two bedrooms and a shaded terrace, easy for a family of four.',
+        alt: 'Apartment bedroom with an iron bed under wooden beams',
+      },
+      'superior-apartment': {
+        name: 'Superior Apartment',
+        text: 'Two bedrooms on one level, with a generous living space.',
+        alt: 'Superior Apartment dining corner by the window',
+      },
+      villa: {
+        name: 'Villa',
+        text: 'Two floors, two bathrooms and a balcony over the grove, made for families.',
+        alt: 'Villa living room with a long wooden dining table',
+      },
+      'superior-villa': {
+        name: 'Superior Villa',
+        text: 'Our largest house, with a wide sitting room and space for five.',
+        alt: 'Superior Villa sitting room with a built-in sofa and stone walls',
+      },
+    },
+  },
+  life: {
+    eyebrow: 'Village life',
+    title: 'Life outdoors, day and night',
+    body: 'Traditionally, the Zante way of life is enjoyed in the open air. Our services and amenities follow the island’s outdoor rhythm, for couples and families alike.',
+    more: 'Read more',
+    items: [
+      {
+        name: 'Buffet Breakfast',
+        text: 'A rich table with a daily changing menu of traditional specialties and international breakfast favorites, served by the pool.',
+        alt: 'The breakfast buffet with breads, jams and fruit under hanging herbs',
+        anchor: 'breakfast',
+      },
+      {
+        name: 'Pool & All-Day Bar',
+        text: 'Fun, relaxing days by the pool, with a children’s splash pool and the sparkling Ionian Sea as your backdrop.',
+        alt: 'Sun loungers by the pool at sunset',
+        anchor: 'pool',
+      },
+      {
+        name: 'Olive Grove Gardens',
+        text: 'Beautifully landscaped, with sitting areas and a hammock: the Zakynthian lifestyle, outdoors in nature.',
+        alt: 'A candle-lit sitting corner under an old olive tree in the evening',
+        anchor: 'gardens',
+      },
+    ],
+  },
+  meraki: {
+    eyebrow: 'Meraki Restaurant',
+    title: 'Traditional Greek cuisine, local products',
+    body: [
+      'Next to the village, the Meraki Restaurant offers a delicious variety of traditional Greek specialties, from starters to desserts, for dining under the stars and the trees.',
+      'In Greek, <em>meraki</em> means a labor of love. The kitchen follows the Ionian tradition of creating classic Greek cuisine with passion, using local ingredients.',
+    ],
+    reserve: 'Reserve a table',
+    menu: 'See the menu',
+    alt: 'A dish of slow-cooked pork with hazelnuts being served at Meraki',
+  },
+  activities: {
+    eyebrow: 'Activities',
+    title: 'Celebrating summer, organized events',
+    body: 'Wine tasting and events such as folk dancing capture the authenticity of the island’s community traditions.',
+    all: 'All activities',
+    items: [
+      {
+        name: 'Pottery workshop',
+        text: 'Shape and paint your own piece of clay at a shared table. A calm, creative activity for children and adults alike.',
+        alt: 'A hand-painted clay cup on the workshop table',
+      },
+      {
+        name: 'Wine tasting',
+        text: 'Local wines poured at a long table in the garden, with the Ionian Sea in the distance.',
+        alt: 'A long table set with wine glasses in the garden, overlooking the sea',
+      },
+    ],
+  },
+  location: {
+    eyebrow: 'Location',
+    title: 'Far from the crowd, close to lively Tsilivi',
+    body: 'Paliokaliva Village is in the quiet area of Tragaki, a 5-minute drive from the popular resort of Tsilivi. It is a good base for exploring the island and enjoying summer fun.',
+    cta: 'How to find us',
+    alt: 'The pool terrace looking over olive groves to the open sea',
+  },
+  note: {
+    eyebrow: 'A note from us',
+    quote:
+      '“Our dedicated team looks forward to welcoming you this summer on Zakynthos, with one shared purpose: to offer every guest an authentic Zante experience and caring hospitality in the Ionian tradition.”',
+    link: 'View gallery',
+    stripLabel: 'Photos from the village',
+    alts: [
+      'Restaurant tables under an olive tree at dusk',
+      'A breakfast table set in the morning sun',
+      'A hammock between the olive trees',
+      'A stack of pancakes with berries',
+      'A stone path under a pergola covered in green',
+      'Old olive trees and bougainvillea in the garden',
+    ],
+  },
+  footer: {
+    tagline: 'A boutique village of eighteen stone houses among the olive groves of Tragaki, Zakynthos.',
+    licence: 'Licence no. {n}',
+    find: 'Find us',
+    address: ['Paliokaliva Village', 'Tragaki, 29100 Zakynthos', 'Ionian Islands, Greece'],
+    directions: 'Directions',
+    reservations: 'Reservations',
+    follow: 'Follow',
+    awards: 'Awards',
+    award2020: 'World Luxury Hotel Awards, 2020 winner',
+    award2022: 'World Luxury Hotel Awards, 2022 winner',
+    rights: 'All rights reserved.',
+    credit: 'Website by',
+  },
+  dock: {
+    call: 'Call',
+    whatsapp: 'WhatsApp',
+    book: 'Book',
+  },
+  offer: {
+    eyebrow: 'Offer',
+    close: 'Close offer',
+  },
+  placeholder: {
+    eyebrow: 'In preparation',
+    body: 'This page is being prepared.',
+    back: 'Back to the homepage',
+  },
+};
+
+export type Dictionary = typeof en;

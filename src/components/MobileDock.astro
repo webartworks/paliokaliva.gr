@@ -1,0 +1,64 @@
+---
+// Call / WhatsApp / Book bar, fixed to the bottom of the screen on phones.
+import { t, type Locale } from '@/i18n';
+import { site } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const d = t(locale).dock;
+---
+
+<nav class="dock" aria-label={t(locale).footer.reservations} data-dock>
+  <a href={`tel:${site.phone.href}`}>{d.call}</a>
+  <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener">{d.whatsapp}</a>
+  <a class="dock__book" href={site.bookingUrl} target="_blank" rel="noopener">{d.book}</a>
+</nav>
+
+<style>
+  .dock {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 80;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--cream);
+    border-top: 1px solid var(--rule);
+    transform: translateY(100%);
+    transition: transform 0.7s var(--ease);
+  }
+
+  .dock.is-visible {
+    transform: none;
+  }
+
+  .dock a {
+    display: grid;
+    place-items: center;
+    min-height: 3.25rem;
+    color: var(--ink);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .dock a + a {
+    border-left: 1px solid var(--rule);
+  }
+
+  .dock .dock__book {
+    background: var(--brown);
+    color: var(--cream);
+    border-left: 0;
+  }
+
+  @media (min-width: 40em) {
+    .dock {
+      display: none;
+    }
+  }
+</style>

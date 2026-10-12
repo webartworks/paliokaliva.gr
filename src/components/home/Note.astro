@@ -1,0 +1,135 @@
+---
+import { Picture } from 'astro:assets';
+import restaurant from '@/assets/images/strip-restaurant.jpg';
+import table from '@/assets/images/strip-table.jpg';
+import hammock from '@/assets/images/strip-hammock.jpg';
+import pancakes from '@/assets/images/strip-pancakes.jpg';
+import pergola from '@/assets/images/strip-pergola.jpg';
+import grove from '@/assets/images/strip-grove.jpg';
+import ArrowLink from '@/components/ArrowLink.astro';
+import { localePath, t, type Locale } from '@/i18n';
+import { routes } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const n = t(locale).note;
+const photos = [restaurant, table, hammock, pancakes, pergola, grove];
+---
+
+<section class="note bg-cream">
+  <div class="container note__intro">
+    <span class="eyebrow" data-reveal>{n.eyebrow}</span>
+    <blockquote class="note__quote" data-reveal style="--i:1">
+      <p>{n.quote}</p>
+    </blockquote>
+    <div data-reveal style="--i:2">
+      <ArrowLink href={localePath(locale, routes.gallery)}>{n.link}</ArrowLink>
+    </div>
+  </div>
+
+  <div class="strip" data-strip>
+    <ul class="strip__track" aria-label={n.stripLabel} tabindex="0" data-strip-track>
+      {
+        photos.map((photo, i) => (
+          <li class="media strip__item" data-reveal="image" style={`--i:${i};--ratio:${photo.width / photo.height}`}>
+            <Picture
+              src={photo}
+              alt={n.alts[i]}
+              formats={['avif', 'webp']}
+              widths={[360, 540, 760]}
+              sizes="(min-width: 48em) 25vw, 60vw"
+            />
+          </li>
+        ))
+      }
+    </ul>
+    <div class="strip__progress" aria-hidden="true"><span data-strip-bar></span></div>
+  </div>
+</section>
+
+<style>
+  .note {
+    padding-block: var(--section);
+    overflow: hidden;
+  }
+
+  .note__intro {
+    display: grid;
+    justify-items: center;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .note__quote {
+    max-width: 39rem;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: var(--fs-quote);
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  .note__intro > div {
+    margin-top: 2rem;
+  }
+
+  .strip {
+    margin-top: clamp(3rem, 2rem + 4vw, 6rem);
+  }
+
+  /* A row of photos you can drag or swipe; it never moves on its own. */
+  .strip__track {
+    --h: clamp(11rem, 8rem + 9vw, 15rem);
+    display: flex;
+    gap: clamp(0.75rem, 1.3vw, 1.25rem);
+    padding-top: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    cursor: grab;
+  }
+
+  .strip__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .strip__track.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+  }
+
+  .strip__item {
+    flex: none;
+    height: var(--h);
+    aspect-ratio: var(--ratio);
+    scroll-snap-align: center;
+  }
+
+  .strip__item:nth-child(3n) {
+    margin-top: -1.25rem;
+  }
+
+  .strip__item :global(img) {
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .strip__progress {
+    width: min(23rem, 60vw);
+    height: 1px;
+    margin: clamp(3rem, 2rem + 4vw, 5.25rem) auto 0;
+    background: var(--sand);
+  }
+
+  .strip__progress span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--brown);
+    transform: scaleX(var(--progress, 0.2));
+    transform-origin: left;
+  }
+</style>

@@ -1,0 +1,30 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from './Hero.astro';
+import Welcome from './Welcome.astro';
+import Rooms from './Rooms.astro';
+import VillageLife from './VillageLife.astro';
+import Meraki from './Meraki.astro';
+import Activities from './Activities.astro';
+import Location from './Location.astro';
+import Note from './Note.astro';
+import type { Locale } from '@/i18n';
+import { routes } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<Base locale={locale} path={routes.home} overHero>
+  <Hero locale={locale} />
+  <Welcome locale={locale} />
+  <Rooms locale={locale} />
+  <VillageLife locale={locale} />
+  <Meraki locale={locale} />
+  <Activities locale={locale} />
+  <Location locale={locale} />
+  <Note locale={locale} />
+</Base>

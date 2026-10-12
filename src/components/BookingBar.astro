@@ -1,0 +1,159 @@
+---
+// Sends the chosen dates and guests to the external booking engine in a new tab.
+import { t, type Locale } from '@/i18n';
+import { site } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const b = t(locale).booking;
+
+const steppers = [
+  { name: 'adults', label: b.adults, value: 2, min: 1, max: 6 },
+  { name: 'children', label: b.children, value: 0, min: 0, max: 4 },
+];
+---
+
+<form class="booking" action={site.bookingUrl} method="get" target="_blank" aria-label={b.label} data-booking>
+  <label class="booking__field booking__field--date">
+    <span class="booking__label">{b.arrival}</span>
+    <input type="date" name="checkin" required data-checkin />
+  </label>
+  <label class="booking__field booking__field--date">
+    <span class="booking__label">{b.departure}</span>
+    <input type="date" name="checkout" required data-checkout />
+  </label>
+  {
+    steppers.map((s) => (
+      <div class="booking__field booking__field--stepper" data-stepper>
+        <label class="booking__label" for={`booking-${s.name}`}>
+          {s.label}
+        </label>
+        <div class="booking__stepper">
+          <button type="button" aria-label={`${b.less}: ${s.label}`} data-step="-1">
+            −
+          </button>
+          <input
+            id={`booking-${s.name}`}
+            type="number"
+            name={s.name}
+            value={s.value}
+            min={s.min}
+            max={s.max}
+            inputmode="numeric"
+            readonly
+          />
+          <button type="button" aria-label={`${b.more}: ${s.label}`} data-step="1">
+            +
+          </button>
+        </div>
+      </div>
+    ))
+  }
+  <button class="btn btn--light booking__submit" type="submit">{b.submit}</button>
+</form>
+
+<style>
+  .booking {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem 1.5rem;
+    align-items: end;
+    width: 100%;
+    padding: 1.25rem 1.5rem 1.5rem;
+    background: rgb(18 17 13 / 0.62);
+    border-radius: 0.5rem;
+    color: var(--white);
+    color-scheme: dark;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+
+  .booking__field {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .booking__label {
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  .booking input {
+    width: 100%;
+    min-height: 2rem;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgb(255 255 255 / 0.35);
+    border-radius: 0;
+    color: var(--white);
+    font-size: 0.875rem;
+    font-weight: 400;
+  }
+
+  .booking input:focus-visible {
+    outline: 0;
+    border-bottom-color: var(--white);
+  }
+
+  .booking__stepper {
+    display: grid;
+    grid-template-columns: 2rem 1fr 2rem;
+    align-items: center;
+    border-bottom: 1px solid rgb(255 255 255 / 0.35);
+  }
+
+  .booking__stepper input {
+    border: 0;
+    text-align: center;
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  .booking__stepper input::-webkit-inner-spin-button,
+  .booking__stepper input::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  .booking__stepper button {
+    height: 2rem;
+    font-size: 1rem;
+    line-height: 1;
+    opacity: 0.85;
+    transition: opacity var(--t-fast) var(--ease);
+  }
+
+  .booking__stepper button:hover {
+    opacity: 1;
+  }
+
+  .booking__submit {
+    grid-column: 1 / -1;
+    min-height: 2.75rem;
+    padding-inline: 1.25rem;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 56em) {
+    .booking {
+      grid-template-columns: 1.1fr 1.1fr 0.8fr 0.8fr auto;
+      gap: 1.75rem;
+      padding: 1.1rem 2.25rem 1.3rem;
+    }
+
+    .booking__submit {
+      grid-column: auto;
+      min-height: 2.5rem;
+    }
+  }
+</style>

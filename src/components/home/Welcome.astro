@@ -1,0 +1,144 @@
+---
+import { Picture } from 'astro:assets';
+import poolNight from '@/assets/images/welcome-pool-night.jpg';
+import village from '@/assets/images/welcome-village.jpg';
+import logoDark from '@/assets/logo/logo-dark.svg';
+import ArrowLink from '@/components/ArrowLink.astro';
+import Wave from '@/components/Wave.astro';
+import { localePath, t, type Locale } from '@/i18n';
+import { routes } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const w = t(locale).welcome;
+---
+
+<section class="welcome bg-cream">
+  <div class="container">
+    <div class="welcome__intro">
+      <span class="eyebrow" data-reveal>{w.eyebrow}</span>
+      <h2 class="h2" data-reveal style="--i:1">{w.title}</h2>
+      <div class="welcome__text" data-reveal style="--i:2">
+        {w.body.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+
+    <div class="welcome__row">
+      <figure class="media welcome__photo welcome__photo--small" data-reveal="image">
+        <Picture
+          src={poolNight}
+          alt={w.altPool}
+          formats={['avif', 'webp']}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 64em) 28vw, 60vw"
+        />
+      </figure>
+      <figure class="media welcome__photo welcome__photo--large" data-reveal="image" style="--i:1">
+        <Picture
+          src={village}
+          alt={w.altVillage}
+          formats={['avif', 'webp']}
+          widths={[640, 1040, 1600]}
+          sizes="(min-width: 64em) 36vw, 100vw"
+        />
+      </figure>
+      <div class="welcome__story" data-reveal style="--i:2">
+        <p class="quote-mono">{w.quote}</p>
+        <img src={logoDark.src} width="834" height="451" alt="" loading="lazy" />
+        <p class="quote-mono welcome__story-text">{w.story}</p>
+        <ArrowLink href={localePath(locale, routes.village)}>{w.link}</ArrowLink>
+      </div>
+    </div>
+  </div>
+  <Wave variant="content" class="welcome__wave" />
+</section>
+
+<style>
+  .welcome {
+    position: relative;
+    padding-top: var(--section);
+  }
+
+  .welcome__intro {
+    display: grid;
+    justify-items: center;
+    gap: 1.25rem;
+    max-width: 44rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .welcome__intro .eyebrow {
+    margin-bottom: 1.25rem;
+  }
+
+  .welcome__text {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+    text-wrap: pretty;
+  }
+
+  .welcome__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    margin-top: clamp(3rem, 2rem + 4vw, 5.5rem);
+  }
+
+  .welcome__photo--large {
+    aspect-ratio: 3 / 2;
+  }
+
+  .welcome__photo--small {
+    order: 2;
+    width: 62%;
+    aspect-ratio: 3 / 2;
+  }
+
+  .welcome__story {
+    order: 3;
+    display: grid;
+    justify-items: center;
+    gap: 1.5rem;
+    max-width: 22rem;
+    margin: 2.5rem auto 0;
+    text-align: center;
+  }
+
+  .welcome__story img {
+    width: 7.25rem;
+    opacity: 0.32;
+  }
+
+  .welcome__story-text {
+    font-size: 0.75rem;
+  }
+
+  .welcome :global(.welcome__wave) {
+    margin-top: clamp(2rem, 4vw, 4rem);
+  }
+
+  @media (min-width: 64em) {
+    .welcome__row {
+      grid-template-columns: 396fr 515fr 296fr;
+      align-items: end;
+      gap: 0.25rem;
+    }
+
+    .welcome__photo--small {
+      order: 0;
+      width: 100%;
+    }
+
+    .welcome__story {
+      order: 0;
+      align-self: center;
+      margin: 0 0 0 auto;
+      padding-left: 1.5rem;
+    }
+  }
+</style>

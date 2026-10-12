@@ -1,0 +1,149 @@
+---
+import { Picture } from 'astro:assets';
+import studio from '@/assets/images/room-studio.jpg';
+import superiorStudio from '@/assets/images/room-superior-studio.jpg';
+import apartment from '@/assets/images/room-apartment.jpg';
+import superiorApartment from '@/assets/images/room-superior-apartment.jpg';
+import villa from '@/assets/images/room-villa.jpg';
+import superiorVilla from '@/assets/images/room-superior-villa.jpg';
+import ArrowLink from '@/components/ArrowLink.astro';
+import { localePath, t, type Locale } from '@/i18n';
+import { roomFacts, roomSlugs, routes, type RoomSlug } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const r = t(locale).rooms;
+
+const photos: Record<RoomSlug, ImageMetadata> = {
+  studio,
+  'superior-studio': superiorStudio,
+  apartment,
+  'superior-apartment': superiorApartment,
+  villa,
+  'superior-villa': superiorVilla,
+};
+
+const rooms = roomSlugs.map((slug) => ({
+  slug,
+  ...r.items[slug],
+  photo: photos[slug],
+  meta: `${roomFacts[slug].size} m² · ${r.guests.replace('{n}', String(roomFacts[slug].guests))}`,
+  href: localePath(locale, `${routes.accommodation}${slug}/`),
+}));
+---
+
+<section class="rooms section bg-cream">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow" data-reveal>{r.eyebrow}</span>
+      <h2 class="h2" data-reveal style="--i:1">{r.title}</h2>
+      <p class="quote-mono" data-reveal style="--i:2">{r.quote}</p>
+      <p class="lede" data-reveal style="--i:3">{r.body}</p>
+    </div>
+
+    <ul class="rooms__grid">
+      {
+        rooms.map((room, i) => (
+          <li>
+            <a class="room" href={room.href}>
+              <div class="media room__photo" data-reveal="image" style={`--i:${i % 3}`}>
+                <Picture
+                  src={room.photo}
+                  alt={room.alt}
+                  formats={['avif', 'webp']}
+                  widths={[360, 560, 800]}
+                  sizes="(min-width: 64em) 27vw, (min-width: 40em) 42vw, 74vw"
+                />
+              </div>
+              <div class="room__body" data-reveal style={`--i:${(i % 3) + 1}`}>
+                <h3 class="h3">{room.name}</h3>
+                <p class="room__meta">{room.meta}</p>
+                <p class="room__text">{room.text}</p>
+                <ArrowLink>{r.view}</ArrowLink>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .rooms {
+    padding-top: clamp(3rem, 2rem + 3vw, 5rem);
+  }
+
+  /* Phones: one row you swipe sideways, with the next house peeking in. */
+  .rooms__grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 74%;
+    gap: 1.25rem;
+    margin-top: clamp(2.5rem, 2rem + 3vw, 5rem);
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .rooms__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rooms__grid > li {
+    scroll-snap-align: start;
+  }
+
+  .room {
+    display: block;
+  }
+
+  .room__photo {
+    aspect-ratio: 3 / 4;
+  }
+
+  .room__body {
+    display: grid;
+    justify-items: start;
+    gap: 0.4rem;
+    padding-top: 1.75rem;
+  }
+
+  .room__meta {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+  }
+
+  .room__text {
+    max-width: 19rem;
+    margin-bottom: 0.75rem;
+    text-wrap: pretty;
+  }
+
+  @media (min-width: 40em) {
+    .rooms__grid {
+      grid-auto-flow: row;
+      grid-auto-columns: auto;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3.5rem 1.5rem;
+      margin-inline: 0;
+      padding-inline: 0;
+      overflow: visible;
+    }
+  }
+
+  @media (min-width: 64em) {
+    .rooms__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4.5rem 1.375rem;
+    }
+  }
+</style>

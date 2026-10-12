@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Source material from the client (large photos and videos), kept out of the repository
+_reference/

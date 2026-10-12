@@ -1,0 +1,143 @@
+---
+import { Picture } from 'astro:assets';
+import heroImage from '@/assets/images/hero.jpg';
+import BookingBar from '@/components/BookingBar.astro';
+import { t, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const h = t(locale).hero;
+---
+
+<section class="hero">
+  <div class="hero__media">
+    <Picture
+      src={heroImage}
+      alt={h.alt}
+      formats={['avif', 'webp']}
+      widths={[640, 960, 1440, 1920, 2560]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+  <div class="hero__content">
+    <h1 class="hero__title">
+      {h.title.map((line) => <span class="hero__line"><span>{line}</span></span>)}
+    </h1>
+    <p class="hero__subtitle">{h.subtitle}</p>
+    <div class="hero__booking">
+      <BookingBar locale={locale} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    /* Fill the screen, but stop growing on very tall displays. */
+    min-height: max(38rem, min(100svh, 68rem));
+    color: var(--white);
+    background: var(--ink);
+    overflow: hidden;
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__media :global(picture) {
+    display: block;
+    height: 100%;
+  }
+
+  .hero__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    animation: hero-settle 3.2s var(--ease) both;
+  }
+
+  /* Soft shade so the logo, menu and title stay readable on the photo. */
+  .hero__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgb(18 17 13 / 0.38), rgb(18 17 13 / 0) 28%),
+      linear-gradient(to top, rgb(18 17 13 / 0.5), rgb(18 17 13 / 0.12) 55%, rgb(18 17 13 / 0) 75%);
+  }
+
+  .hero__content {
+    position: relative;
+    align-self: end;
+    display: grid;
+    justify-items: center;
+    width: 100%;
+    padding: calc(var(--header-h) + 2rem) var(--gutter) clamp(1.5rem, 1rem + 5vw, 6.25rem);
+    text-align: center;
+  }
+
+  .hero__title {
+    font-family: var(--serif);
+    font-size: var(--fs-hero);
+    font-weight: 500;
+    line-height: 0.96;
+    letter-spacing: -0.01em;
+  }
+
+  .hero__line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.12em;
+  }
+
+  .hero__line > span {
+    display: block;
+    animation: hero-rise 1.5s var(--ease) both;
+    animation-delay: 0.35s;
+  }
+
+  .hero__line:nth-child(2) > span {
+    animation-delay: 0.5s;
+  }
+
+  .hero__subtitle {
+    margin-top: clamp(1rem, 0.6rem + 1.4vw, 1.75rem);
+    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+    animation: hero-fade 1.4s var(--ease) 0.9s both;
+  }
+
+  .hero__booking {
+    width: min(47.5rem, 100%);
+    margin-top: clamp(2rem, 1.2rem + 3vw, 3.25rem);
+    text-align: left;
+    animation: hero-fade 1.4s var(--ease) 1.15s both;
+  }
+
+  @keyframes hero-settle {
+    from {
+      transform: scale(1.08);
+    }
+  }
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes hero-fade {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+  }
+</style>

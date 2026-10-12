@@ -1,0 +1,377 @@
+---
+import logoDark from '@/assets/logo/logo-dark.svg';
+import logoLight from '@/assets/logo/logo-light.svg';
+import { htmlLang, localePath, otherLocale, t, type Locale } from '@/i18n';
+import { mainNav, routes, site } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+  path: string;
+  overHero?: boolean;
+}
+
+const { locale, path, overHero = false } = Astro.props;
+const dict = t(locale);
+const other = otherLocale(locale);
+
+const links = mainNav.map((key) => ({
+  label: dict.nav[key],
+  href: localePath(locale, routes[key]),
+  current: path.startsWith(routes[key]),
+}));
+---
+
+<header class:list={['site-header', { 'site-header--over': overHero }]} data-header>
+  <div class="site-header__inner">
+    <a class="brand" href={localePath(locale, routes.home)} aria-label={`${site.name}, ${dict.nav.home}`}>
+      <img class="brand__logo brand__logo--dark" src={logoDark.src} width="834" height="451" alt="" />
+      <img class="brand__logo brand__logo--light" src={logoLight.src} width="834" height="451" alt="" />
+    </a>
+
+    <nav class="nav" aria-label={dict.nav.main}>
+      <ul class="nav__list">
+        {
+          links.map((link) => (
+            <li>
+              <a class="nav__link" href={link.href} aria-current={link.current ? 'page' : undefined}>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a
+        class="lang"
+        href={localePath(other, path)}
+        hreflang={htmlLang[other]}
+        lang={htmlLang[other]}
+        aria-label={dict.nav.switchTo}
+      >
+        {dict.nav.switchShort}
+      </a>
+      <a class="btn book" href={site.bookingUrl} target="_blank" rel="noopener">{dict.nav.book}</a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="site-menu" data-menu-toggle>
+        <span class="visually-hidden" data-menu-label data-open={dict.nav.menu} data-close={dict.nav.close}>
+          {dict.nav.menu}
+        </span>
+        <span class="burger__lines" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="site-menu" data-menu hidden>
+  <nav class="menu__nav" aria-label={dict.nav.main}>
+    <ul class="menu__list">
+      {
+        links.map((link, i) => (
+          <li style={`--i:${i}`}>
+            <a class="menu__link" href={link.href} aria-current={link.current ? 'page' : undefined}>
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <div class="menu__foot" style={`--i:${links.length}`}>
+    <a class="btn" href={site.bookingUrl} target="_blank" rel="noopener">{dict.nav.book}</a>
+    <a class="menu__lang" href={localePath(other, path)} hreflang={htmlLang[other]} lang={htmlLang[other]}>
+      {dict.nav.switchTo}
+    </a>
+    <p class="menu__contact">
+      <a href={`tel:${site.phone.href}`}>{site.phone.label}</a>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+    </p>
+  </div>
+</div>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 100;
+    color: var(--ink);
+    background: var(--cream);
+    border-bottom: 1px solid transparent;
+    transition:
+      background-color 0.6s var(--ease),
+      color 0.6s var(--ease),
+      border-color 0.6s var(--ease);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    height: var(--header-h);
+    padding-inline: clamp(1.25rem, 1.4vw, 1.5rem);
+    transition: height 0.6s var(--ease);
+  }
+
+  /* On pages that open with a photo the header starts clear, with white text. */
+  .site-header--over:not(.is-scrolled):not(.is-open) {
+    background: transparent;
+    color: var(--white);
+  }
+
+  .site-header.is-scrolled {
+    border-bottom-color: var(--rule);
+  }
+
+  .site-header.is-scrolled .site-header__inner {
+    height: 4.5rem;
+  }
+
+  .brand {
+    position: relative;
+    flex: none;
+    display: block;
+    width: clamp(6.5rem, 9.2vw, 8.25rem);
+    transition: width 0.6s var(--ease);
+  }
+
+  .site-header.is-scrolled .brand {
+    width: 6.25rem;
+  }
+
+  .brand__logo {
+    width: 100%;
+    transition: opacity 0.6s var(--ease);
+  }
+
+  .brand__logo--light {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+
+  .site-header--over:not(.is-scrolled):not(.is-open) .brand__logo--dark {
+    opacity: 0;
+  }
+
+  .site-header--over:not(.is-scrolled):not(.is-open) .brand__logo--light {
+    opacity: 1;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .nav__list {
+    display: flex;
+    gap: clamp(1rem, 2.1vw, 1.9rem);
+  }
+
+  .nav__link {
+    position: relative;
+    display: block;
+    padding-block: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+
+  /* A hairline grows from the left on hover and stays on the current page. */
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.25rem;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .nav__link:hover::after,
+  .nav__link:focus-visible::after,
+  .nav__link[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .lang {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+  }
+
+  .book {
+    display: none;
+    min-height: 0;
+    padding: 0.4rem 1.6rem;
+    color: inherit;
+    letter-spacing: 0.08em;
+    border-radius: 2px;
+  }
+
+  .site-header--over:not(.is-scrolled):not(.is-open) .book:hover,
+  .site-header--over:not(.is-scrolled):not(.is-open) .book:focus-visible {
+    background: var(--white);
+    border-color: var(--white);
+    color: var(--ink);
+  }
+
+  .burger {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-right: -0.5rem;
+  }
+
+  .burger__lines {
+    position: relative;
+    width: 1.625rem;
+    height: 0.5625rem;
+  }
+
+  .burger__lines::before,
+  .burger__lines::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: currentColor;
+    transition: transform 0.5s var(--ease);
+  }
+
+  .burger__lines::before {
+    top: 0;
+  }
+
+  .burger__lines::after {
+    bottom: 0;
+  }
+
+  .burger[aria-expanded='true'] .burger__lines::before {
+    transform: translateY(0.25rem) rotate(45deg);
+  }
+
+  .burger[aria-expanded='true'] .burger__lines::after {
+    transform: translateY(-0.25rem) rotate(-45deg);
+  }
+
+  @media (min-width: 40em) {
+    .book {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 72em) {
+    .nav {
+      display: block;
+      margin-left: auto;
+    }
+
+    .site-header__actions {
+      margin-left: clamp(0.5rem, 1.6vw, 1.5rem);
+    }
+
+    .burger {
+      display: none;
+    }
+  }
+
+  /* Full-screen menu for phones and tablets */
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding: calc(var(--header-h) + 2rem) var(--gutter) 2.5rem;
+    overflow-y: auto;
+    background: var(--cream);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease);
+  }
+
+  .menu[hidden] {
+    display: none;
+  }
+
+  .menu.is-open {
+    opacity: 1;
+  }
+
+  .menu__list {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .menu__list li,
+  .menu__foot {
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition:
+      opacity 0.7s var(--ease),
+      transform 0.9s var(--ease);
+    transition-delay: calc(120ms + var(--i, 0) * 60ms);
+  }
+
+  .menu.is-open .menu__list li,
+  .menu.is-open .menu__foot {
+    opacity: 1;
+    transform: none;
+  }
+
+  .menu__link {
+    display: block;
+    padding-block: 0.4rem;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: clamp(1.75rem, 1.3rem + 2.4vw, 2.5rem);
+    font-weight: 500;
+    line-height: 1.15;
+  }
+
+  .menu__link[aria-current='page'] {
+    color: var(--brown);
+  }
+
+  .menu__foot {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .menu__lang {
+    color: var(--brown);
+    font-size: var(--fs-label);
+    font-weight: 400;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+  }
+
+  .menu__contact {
+    display: grid;
+    gap: 0.25rem;
+    color: var(--text-soft);
+  }
+
+  @media (min-width: 72em) {
+    .menu {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,219 @@
+---
+import { Image } from 'astro:assets';
+import logoDark from '@/assets/logo/logo-dark.svg';
+import award2020 from '@/assets/images/award-wlha-2020.jpg';
+import award2022 from '@/assets/images/award-wlha-2022.jpg';
+import ArrowLink from './ArrowLink.astro';
+import Wave from './Wave.astro';
+import { localePath, t, type Locale } from '@/i18n';
+import { routes, site } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dict = t(locale);
+const f = dict.footer;
+
+const socials = [
+  { label: 'Instagram', href: site.social.instagram },
+  { label: 'Facebook', href: site.social.facebook },
+  { label: 'TripAdvisor', href: site.social.tripadvisor },
+].filter((s): s is { label: string; href: string } => Boolean(s.href));
+---
+
+<footer class="footer">
+  <Wave variant="footer" class="footer__wave" />
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a href={localePath(locale, routes.home)} aria-label={site.name}>
+        <img src={logoDark.src} width="834" height="451" alt="" loading="lazy" />
+      </a>
+      <p class="footer__tagline">{f.tagline}</p>
+      <p class="footer__licence">{f.licence.replace('{n}', site.licence)}</p>
+    </div>
+
+    <div class="footer__col">
+      <h2 class="footer__title">{f.find}</h2>
+      <address>
+        {f.address.map((line) => <span>{line}</span>)}
+      </address>
+      <ArrowLink href={localePath(locale, routes.contact)} class="footer__directions">{f.directions}</ArrowLink>
+    </div>
+
+    <div class="footer__col">
+      <h2 class="footer__title">{f.reservations}</h2>
+      <ul>
+        <li><a href={`tel:${site.phone.href}`}>{site.phone.label}</a></li>
+        <li><a href={`tel:${site.mobile.href}`}>{site.mobile.label}</a></li>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h2 class="footer__title">{f.follow}</h2>
+      <ul>
+        {
+          socials.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener">
+                {s.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <ul class="footer__awards" aria-label={f.awards}>
+      <li><Image src={award2020} alt={f.award2020} height={200} loading="lazy" /></li>
+      <li><Image src={award2022} alt={f.award2022} height={200} loading="lazy" /></li>
+    </ul>
+  </div>
+
+  <div class="container footer__bottom">
+    <p>© {new Date().getFullYear()} {site.name}. {f.rights}</p>
+    <ul class="footer__legal">
+      <li><a href={localePath(locale, routes.gallery)}>{dict.nav.gallery}</a></li>
+      <li><a href={localePath(locale, routes.privacy)}>{dict.nav.privacy}</a></li>
+    </ul>
+    <p>{f.credit} <a href="https://webartworks.com" target="_blank" rel="noopener">Web Artworks</a></p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(4rem, 3rem + 5vw, 8rem) 1.75rem;
+    background: var(--sand);
+    color: var(--text);
+    font-size: var(--fs-small);
+  }
+
+  .footer :global(.footer__wave) {
+    position: absolute;
+    inset: auto 0 22% 0;
+  }
+
+  .footer__grid,
+  .footer__bottom {
+    position: relative;
+  }
+
+  .footer__grid {
+    display: grid;
+    gap: 2.75rem 2rem;
+    grid-template-columns: 1fr;
+  }
+
+  .footer__brand img {
+    width: clamp(11rem, 9rem + 8vw, 15.625rem);
+  }
+
+  .footer__tagline {
+    max-width: 17rem;
+    margin-top: 1.75rem;
+    line-height: 1.45;
+  }
+
+  .footer__licence {
+    margin-top: 0.75rem;
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+
+  .footer__title {
+    margin-bottom: 1.25rem;
+    color: var(--brown);
+    font-size: 0.875rem;
+    font-weight: 300;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+  }
+
+  .footer__col address span {
+    display: block;
+  }
+
+  .footer__col address,
+  .footer__col li {
+    line-height: 1.75;
+  }
+
+  .footer__col a:not(.arrow-link) {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+    transition: background-size 0.6s var(--ease);
+  }
+
+  .footer__col a:not(.arrow-link):hover,
+  .footer__col a:not(.arrow-link):focus-visible {
+    background-size: 100% 1px;
+  }
+
+  .footer :global(.footer__directions) {
+    margin-top: 1rem;
+    font-size: 0.6875rem;
+  }
+
+  .footer__awards {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .footer__awards :global(img) {
+    width: auto;
+    height: clamp(4rem, 3rem + 3vw, 6.25rem);
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    font-size: 0.75rem;
+  }
+
+  .footer__legal {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer__bottom a:hover,
+  .footer__bottom a:focus-visible {
+    color: var(--brown);
+  }
+
+  @media (min-width: 40em) {
+    .footer__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .footer__brand,
+    .footer__awards {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 64em) {
+    .footer__grid {
+      grid-template-columns: 1.9fr 1.2fr 1.3fr 0.9fr;
+      column-gap: 3rem;
+    }
+
+    .footer__brand {
+      grid-column: auto;
+      grid-row: 1 / span 2;
+    }
+
+    .footer__awards {
+      grid-column: 2 / -1;
+      justify-content: flex-end;
+      margin-top: 2rem;
+    }
+  }
+</style>

@@ -1,0 +1,28 @@
+{
+  "name": "paliokaliva.gr",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@fontsource-variable/eb-garamond": "^5.2.5",
+    "@fontsource-variable/fira-code": "^5.2.5",
+    "@fontsource-variable/open-sans": "^5.2.5",
+    "astro": "^5.18.2",
+    "sharp": "^0.35.5"
+  },
+  "engines": {
+    "node": ">=20.3.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  }
+}

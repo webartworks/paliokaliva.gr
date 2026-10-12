@@ -1,0 +1,101 @@
+---
+import { Picture } from 'astro:assets';
+import pottery from '@/assets/images/activity-pottery.jpg';
+import wine from '@/assets/images/activity-wine.jpg';
+import ArrowLink from '@/components/ArrowLink.astro';
+import { localePath, t, type Locale } from '@/i18n';
+import { routes } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const a = t(locale).activities;
+const photos = [pottery, wine];
+const href = localePath(locale, routes.activities);
+---
+
+<section class="activities section bg-linen">
+  <div class="container">
+    <div class="section-head activities__head">
+      <span class="eyebrow" data-reveal>{a.eyebrow}</span>
+      <h2 class="h2" data-reveal style="--i:1">{a.title}</h2>
+      <p class="lede" data-reveal style="--i:2">{a.body}</p>
+    </div>
+
+    <ul class="activities__grid">
+      {
+        a.items.map((item, i) => (
+          <li>
+            <a class="activity" href={href}>
+              <div class="media activity__photo" data-reveal="image" style={`--i:${i}`}>
+                <Picture
+                  src={photos[i]}
+                  alt={item.alt}
+                  formats={['avif', 'webp']}
+                  widths={[480, 800, 1200]}
+                  sizes="(min-width: 48em) 43vw, 100vw"
+                />
+              </div>
+              <div class="activity__body" data-reveal style={`--i:${i + 1}`}>
+                <h3 class="h3">{item.name}</h3>
+                <p>{item.text}</p>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="activities__more" data-reveal>
+      <ArrowLink href={href}>{a.all}</ArrowLink>
+    </div>
+  </div>
+</section>
+
+<style>
+  .activities__head .h2 {
+    max-width: 30rem;
+  }
+
+  .activities__head .lede {
+    max-width: 31rem;
+  }
+
+  .activities__grid {
+    display: grid;
+    gap: 3rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3rem);
+  }
+
+  .activity {
+    display: block;
+  }
+
+  .activity__photo {
+    aspect-ratio: 4 / 5;
+  }
+
+  .activity__body {
+    display: grid;
+    gap: 0.5rem;
+    padding-top: 1.75rem;
+  }
+
+  .activity__body p {
+    max-width: 35rem;
+    text-wrap: pretty;
+  }
+
+  .activities__more {
+    margin-top: clamp(2rem, 1.5rem + 2vw, 3rem);
+  }
+
+  @media (min-width: 48em) {
+    .activities__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.5rem, 3vw, 2.75rem);
+    }
+  }
+</style>

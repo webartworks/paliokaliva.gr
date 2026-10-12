@@ -33,8 +33,11 @@ export const site = {
   social: {
     instagram: 'https://www.instagram.com/paliokaliva/',
     facebook: 'https://www.facebook.com/PaliokalivaZakynthos',
-    // Set the TripAdvisor URL to show the link in the footer.
-    tripadvisor: null as string | null,
+    // Set to null to hide the TripAdvisor link.
+    tripadvisor:
+      'https://www.tripadvisor.com/Hotel_Review-g25085052-d1184618-Reviews-Paliokaliva_Village-Arkadii_Zakynthos_Ionian_Islands.html' as
+        | string
+        | null,
   },
   meraki: {
     // Set the menu URL (page or PDF) to show the "See the menu" button.

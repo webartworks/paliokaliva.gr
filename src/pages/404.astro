@@ -1,0 +1,48 @@
+---
+// Shown for any address that does not exist. It cannot know which language the
+// visitor wanted, so it shows the message in both.
+import Base from '@/layouts/Base.astro';
+import ArrowLink from '@/components/ArrowLink.astro';
+import { htmlLang, localePath, locales, t } from '@/i18n';
+import { routes } from '@/data/site';
+---
+
+<Base locale="en" path="/404/" title={t('en').notFound.eyebrow} noindex>
+  <section class="not-found container">
+    {
+      locales.map((locale) => {
+        const n = t(locale).notFound;
+        return (
+          <div class="not-found__block" lang={htmlLang[locale]}>
+            <span class="eyebrow">{n.eyebrow}</span>
+            <h1 class="h2">{n.title}</h1>
+            <p>{n.body}</p>
+            <ArrowLink href={localePath(locale, routes.home)}>{n.back}</ArrowLink>
+          </div>
+        );
+      })
+    }
+  </section>
+</Base>
+
+<style>
+  .not-found {
+    display: grid;
+    gap: 4rem;
+    align-content: center;
+    min-height: 80svh;
+    padding-block: calc(var(--header-h) + 4rem) 6rem;
+  }
+
+  .not-found__block {
+    display: grid;
+    justify-items: start;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 56em) {
+    .not-found {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

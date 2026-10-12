@@ -1,5 +1,5 @@
 // Small behaviours shared by every page: scroll reveals, header state, mobile menu,
-// booking bar, photo strip, photo viewer, forms, mobile dock and the offer card. No animation library.
+// booking bar, photo strip, photo viewer, forms, cookie notice, mobile dock and the offer card. No animation library.
 
 declare global {
   interface Window {
@@ -219,10 +219,18 @@ function initOffer() {
     card.hidden = false;
     requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('is-visible')));
   };
-  window.setTimeout(() => {
-    window.addEventListener('scroll', show, { passive: true });
-    show();
-  }, 1500);
+  const start = () =>
+    window.setTimeout(() => {
+      window.addEventListener('scroll', show, { passive: true });
+      show();
+    }, 1500);
+
+  // The cookie notice and the offer card share the same corner; the notice goes first.
+  if (document.querySelector('[data-consent]:not([hidden])')) {
+    document.addEventListener('consent:decided', start, { once: true });
+  } else {
+    start();
+  }
 
   card.querySelector('[data-offer-close]')?.addEventListener(
     'click',
@@ -397,8 +405,71 @@ function initMap() {
   });
 }
 
+const CONSENT_KEY = 'cookie-consent';
+const CONSENT_DAYS = 180;
+
+function readConsent(): 'all' | 'necessary' | null {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CONSENT_KEY) ?? 'null') as { choice?: string; at?: number } | null;
+    if (!saved || typeof saved.at !== 'number') return null;
+    if (Date.now() - saved.at > CONSENT_DAYS * 24 * 60 * 60_000) return null;
+    return saved.choice === 'all' || saved.choice === 'necessary' ? saved.choice : null;
+  } catch {
+    return null;
+  }
+}
+
+function initConsent() {
+  const notice = document.querySelector<HTMLElement>('[data-consent]');
+  if (!notice) return;
+
+  const loadOptional = () => {
+    const src = notice.dataset.script;
+    if (!src || document.querySelector(`script[src="${src}"]`)) return;
+    const script = document.createElement('script');
+    script.src = src;
+    script.defer = true;
+    document.body.append(script);
+  };
+
+  const open = () => {
+    notice.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => notice.classList.add('is-visible')));
+  };
+
+  const decide = (choice: 'all' | 'necessary') => {
+    const before = readConsent();
+    try {
+      localStorage.setItem(CONSENT_KEY, JSON.stringify({ choice, at: Date.now() }));
+    } catch {
+      // Storage can be blocked; the choice then only lasts for this page.
+    }
+    notice.classList.remove('is-visible');
+    window.setTimeout(() => (notice.hidden = true), 600);
+    document.dispatchEvent(new CustomEvent('consent:decided'));
+
+    if (choice === 'all') loadOptional();
+    // A script that is already running cannot be unloaded, so withdrawing consent reloads the page.
+    else if (before === 'all') window.location.reload();
+  };
+
+  notice.querySelector('[data-consent-accept]')?.addEventListener('click', () => decide('all'));
+  notice.querySelector('[data-consent-decline]')?.addEventListener('click', () => decide('necessary'));
+  document.querySelectorAll('[data-consent-open]').forEach((button) => button.addEventListener('click', open));
+
+  const choice = readConsent();
+  if (choice === 'all') loadOptional();
+  // Shown at once (not animated in) so everything that waits for it can see it.
+  if (choice === null) {
+    notice.hidden = false;
+    notice.classList.add('is-visible');
+  }
+}
+
 function init() {
   document.documentElement.classList.add('js');
+  // First, because the offer card checks whether the cookie notice is showing.
+  initConsent();
   initReveal();
   initHeader();
   initMenu();

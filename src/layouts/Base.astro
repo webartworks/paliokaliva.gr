@@ -8,6 +8,7 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import MobileDock from '@/components/MobileDock.astro';
 import OfferPopup from '@/components/OfferPopup.astro';
+import CookieNotice from '@/components/CookieNotice.astro';
 import { htmlLang, localePath, locales, ogLocale, t, type Locale } from '@/i18n';
 import { site } from '@/data/site';
 
@@ -19,9 +20,11 @@ interface Props {
   description?: string;
   // True when the page starts with a full-height photo behind the header.
   overHero?: boolean;
+  // True for pages search engines should not list.
+  noindex?: boolean;
 }
 
-const { locale, path, title, description, overHero = false } = Astro.props;
+const { locale, path, title, description, overHero = false, noindex = false } = Astro.props;
 const dict = t(locale);
 
 const pageTitle = title ? `${title} | ${site.name}` : dict.meta.title;
@@ -36,6 +39,7 @@ const canonical = new URL(localePath(locale, path), site.url).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     {
       locales.map((l) => (
@@ -52,6 +56,19 @@ const canonical = new URL(localePath(locale, path), site.url).href;
     <meta property="og:locale" content={ogLocale[locale]} />
     <meta name="theme-color" content="#f9f4ee" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    {
+      // Visitor statistics (Umami, no cookies). Only on the published site, once the ID is set.
+      import.meta.env.PROD && site.analytics.websiteId && (
+        <script
+          is:inline
+          defer
+          src={site.analytics.src}
+          data-website-id={site.analytics.websiteId}
+          data-do-not-track="true"
+        />
+      )
+    }
 
     <script is:inline>
       // Content is only held back for the reveal animations when scripts run.
@@ -71,12 +88,9 @@ const canonical = new URL(localePath(locale, path), site.url).href;
     <Footer locale={locale} />
     <MobileDock locale={locale} />
     <OfferPopup locale={locale} />
+    <CookieNotice locale={locale} />
     <script>
       import '@/scripts/site';
     </script>
-    {
-      // Price comparison widget. It is tied to the live domain, so it only loads in the published site.
-      import.meta.env.PROD && site.rateParityScript && <script is:inline src={site.rateParityScript} defer />
-    }
   </body>
 </html>

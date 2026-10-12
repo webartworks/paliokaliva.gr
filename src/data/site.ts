@@ -8,6 +8,24 @@ export const site = {
   bookingUrl: 'https://paliokalivavillage.reserve-online.net/',
   // RateParity price comparison widget, as on the previous website. Set to '' to turn it off.
   rateParityScript: 'https://code.rateparity.com/versions/installer.min.js',
+  // True: the widget loads only after the visitor allows it in the cookie notice.
+  // False: it loads for everyone and no cookie notice is shown. Only switch this off
+  // if RateParity confirms in writing that the widget stores nothing on the visitor's device.
+  rateParityNeedsConsent: true,
+  // Umami visitor statistics, hosted by Web Artworks. They use no cookies, so they need
+  // no consent. Fill in the website ID from Umami to switch them on.
+  analytics: {
+    src: 'https://analytics.webartworks.com/script.js',
+    websiteId: '',
+  },
+  // Shown on the Privacy Policy page. Fill in the legal details of the company that runs the hotel.
+  legal: {
+    company: '',
+    vat: '',
+    gemi: '',
+    // Date of the latest change to the Privacy Policy.
+    privacyUpdated: '2026-10-12',
+  },
   licence: '1017280',
   mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Paliokaliva+Village+Zakynthos',
   // The embedded map on the Contact page. It loads only after the visitor asks for it.

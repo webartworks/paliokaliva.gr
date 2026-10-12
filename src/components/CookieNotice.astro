@@ -1,0 +1,106 @@
+---
+// Asks before loading the one third-party tool that may store cookies (RateParity).
+// The choice is kept in the browser for six months; src/scripts/site.ts does the work.
+// Nothing is rendered when the widget is off or is set to need no consent.
+import { localePath, t, type Locale } from '@/i18n';
+import { routes, site } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dict = t(locale);
+const c = dict.consent;
+
+const widget = site.rateParityScript;
+// The widget is tied to the live domain, so it is only loaded on the published site.
+const script = import.meta.env.PROD ? widget : '';
+---
+
+{
+  widget && site.rateParityNeedsConsent && (
+    <aside class="consent" aria-label={c.label} data-consent data-script={script} hidden>
+      <p>
+        {c.text}{' '}
+        <a href={localePath(locale, routes.privacy)}>{c.more}</a>
+      </p>
+      <div class="consent__actions">
+        <button class="btn" type="button" data-consent-decline>
+          {c.decline}
+        </button>
+        <button class="btn consent__accept" type="button" data-consent-accept>
+          {c.accept}
+        </button>
+      </div>
+    </aside>
+  )
+}
+
+{
+  // No consent needed: load the widget for everyone, as before.
+  widget && !site.rateParityNeedsConsent && script && <script is:inline src={script} defer />
+}
+
+<style>
+  .consent {
+    position: fixed;
+    left: clamp(0.75rem, 2vw, 1.75rem);
+    right: clamp(0.75rem, 2vw, 1.75rem);
+    bottom: clamp(0.75rem, 2vw, 1.75rem);
+    z-index: 95;
+    display: grid;
+    gap: 1.25rem;
+    /* Narrow, so it stays beside the booking bar on the opening photo. */
+    max-width: 19rem;
+    padding: 1.5rem;
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    box-shadow: 0 1.5rem 3.5rem -1.5rem rgb(18 17 13 / 0.35);
+    font-size: var(--fs-small);
+    opacity: 0;
+    transform: translateY(1rem);
+    transition:
+      opacity 0.6s var(--ease),
+      transform 0.8s var(--ease);
+  }
+
+  .consent[hidden] {
+    display: none;
+  }
+
+  .consent.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .consent a {
+    border-bottom: 1px solid currentColor;
+    white-space: nowrap;
+  }
+
+  .consent__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  /* Both answers are the same size and equally easy to reach. */
+  .consent .btn {
+    flex: 1 1 100%;
+    min-height: 2.75rem;
+    padding-inline: 1rem;
+  }
+
+  .consent__accept {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--cream);
+  }
+
+  .consent__accept:hover,
+  .consent__accept:focus-visible {
+    background: var(--brown);
+    border-color: var(--brown);
+  }
+</style>

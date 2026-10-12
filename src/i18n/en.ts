@@ -783,6 +783,91 @@ export const en = {
       'Old olive trees and bougainvillea in the garden',
     ],
   },
+  consent: {
+    label: 'Cookie notice',
+    text: 'We use a price comparison tool from another company that may store cookies on your device. Do you allow it? The rest of the website works without cookies.',
+    accept: 'Allow',
+    decline: 'Only necessary',
+    more: 'Privacy Policy',
+    settings: 'Cookie settings',
+  },
+  privacyPage: {
+    description:
+      'How Paliokaliva Village handles personal data on this website: contact and reservation requests, bookings, cookies, analytics and your rights.',
+    eyebrow: 'Privacy Policy',
+    title: 'Your privacy',
+    updated: 'Last updated: {date}',
+    intro: 'This page explains which personal data we collect through this website, why we collect it, who helps us process it and which rights you have. We collect as little as possible.',
+    controllerTitle: 'Who we are',
+    controllerBody: 'The data controller for this website is:',
+    vat: 'VAT number',
+    gemi: 'G.E.MI. number',
+    sections: [
+      {
+        title: 'Data you send us',
+        body: [
+          'When you use the contact form or the table request form for the Meraki Restaurant, we receive what you type in: your name, email address, phone number, and your message or the details of your request (date, time, number of guests, notes).',
+          'We use this data only to answer you and to handle your request. The legal basis is your request itself, that is, steps taken at your request before a possible booking, and our legitimate interest in answering the people who write to us.',
+          'You receive an automatic email confirming that we received your request. We keep your message for as long as we need to handle it and for as long as the law requires.',
+        ],
+      },
+      {
+        title: 'Booking a stay',
+        body: [
+          'Bookings are not made on this website. The “Book now” and “Check availability” buttons take you to our online booking engine at reserve-online.net, operated for us by a specialized provider. The data you enter there, including payment details, is processed on that system under its own privacy notice, which you can read before you book.',
+        ],
+      },
+      {
+        title: 'Who helps us',
+        body: ['We work with a small number of service providers, who process data only on our instructions:'],
+        list: [
+          'Web Artworks, which built this website, hosts it and maintains it.',
+          'Postmark, an email delivery service based in the United States, which delivers the emails sent by our forms. Transfers to the United States are covered by the safeguards the provider offers under EU law.',
+          'Our booking engine provider, as described above.',
+        ],
+        after: ['We do not sell your data and we do not share it for advertising.'],
+      },
+      {
+        title: 'Cookies and similar technologies',
+        body: [
+          'This website itself does not set any cookies. It stores two small notes in your browser: your answer to the cookie notice, kept for six months, and, until you close the page, the fact that you closed an offer message. Neither is used to identify you.',
+          'We show a price comparison tool provided by RateParity, which compares our direct prices with those of other booking websites. It is loaded from RateParity’s servers and may store cookies or similar data on your device. It is loaded only if you choose “Allow” in the cookie notice. You can change your choice at any time with the button below.',
+          'The map on the Contact page is provided by Google. It is loaded only when you click “Show the map”. From that moment Google receives your IP address and may set cookies, under Google’s own privacy policy.',
+        ],
+      },
+      {
+        title: 'Visitor statistics',
+        body: [
+          'To understand how the website is used, we count visits with Umami, an analytics tool that we host ourselves. It sets no cookies, does not follow you across websites and does not store data that identifies you. We only see totals, such as how many times a page was viewed.',
+        ],
+      },
+      {
+        title: 'Security',
+        body: [
+          'The website is served over an encrypted connection. To protect the forms from misuse, your IP address is processed for a short time when you send a form; it is not stored with your message.',
+        ],
+      },
+      {
+        title: 'Your rights',
+        body: ['Under the General Data Protection Regulation (GDPR) you have the right to:'],
+        list: [
+          'ask what personal data we hold about you and receive a copy,',
+          'have incorrect data corrected,',
+          'have your data deleted, where the law allows it,',
+          'restrict or object to the processing of your data,',
+          'receive the data you gave us in a portable format,',
+          'withdraw a consent you have given, at any time.',
+        ],
+        after: [
+          'To use any of these rights, write to us at the address above. If you believe your data has been handled unlawfully, you may lodge a complaint with the Hellenic Data Protection Authority (www.dpa.gr).',
+        ],
+      },
+      {
+        title: 'Changes to this policy',
+        body: ['We may update this page when the website or the law changes. The date at the top shows the latest version.'],
+      },
+    ],
+  },
   footer: {
     tagline: 'A boutique village of eighteen stone houses among the olive groves of Tragaki, Zakynthos.',
     licence: 'Licence no. {n}',
@@ -807,9 +892,10 @@ export const en = {
     eyebrow: 'Offer',
     close: 'Close offer',
   },
-  placeholder: {
-    eyebrow: 'In preparation',
-    body: 'This page is being prepared.',
+  notFound: {
+    eyebrow: 'Page not found',
+    title: 'This page does not exist',
+    body: 'The page may have moved, or the address may be mistyped.',
     back: 'Back to the homepage',
   },
 };

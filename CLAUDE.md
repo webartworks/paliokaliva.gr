@@ -32,7 +32,7 @@ The developer's English is not strong: write to them in simple, clear English. T
 - `src/components/home/`: the homepage sections, one file each.
 - `src/components/accommodation/`: the Accommodation page and the room page. The thin files in `src/pages/accommodation/` and `src/pages/el/accommodation/` only choose the language.
 - Shared page parts: `PageHero` (opening photo of an inner page), `Gallery` (photo mosaic with a large viewer), `RoomCard` / `RoomGrid`, `FeatureSection` (large photo beside text, with a small second photo), `LineList` / `AmenityList`, `BookingCta`.
-- `src/pages/[...path].astro`: placeholder for every page that is not built yet. When a real page is added, remove its entry from the list there.
+- `src/pages/404.astro`: the "page not found" page, in both languages.
 - `src/assets/images/`: photos used on the site, already cropped and resized.
 - `src/assets/images/gallery/<group>/`: photos of the Gallery page, one folder per filter (village, pool, breakfast, activities), named `NN.jpg` and shown in file name order. The "Houses" group is not a folder: it takes the first two photos of every room. Alt texts on this page are generic (group name and number).
 - `src/assets/images/rooms/<room>/`: gallery photos of each room, named `NN-kind.jpg` (for example `02-bedroom.jpg`). They show in file name order, the first is the page's opening photo, and the kind (bedroom, living, kitchen, dining, bathroom, interior, detail) gives the alt text. Adding a file adds it to the gallery.
@@ -50,7 +50,9 @@ The developer's English is not strong: write to them in simple, clear English. T
 ## Decisions
 
 - Booking: "Book now" and the booking bar send visitors to the external engine at `paliokalivavillage.reserve-online.net`. Passing dates and guests in the URL is not yet tested against the live engine.
-- RateParity price widget: one script, loaded only in production builds. It appears in the bottom right corner, so the offer card sits bottom left. It is expected to work only on the live domain.
+- RateParity price widget: one script, loaded only in production builds and only after the visitor chooses "Allow" in the cookie notice (`rateParityNeedsConsent` in `site.ts`). It appears in the bottom right corner, so the offer card and the cookie notice sit bottom left. It is expected to work only on the live domain.
+- Cookie notice: it exists only because of RateParity. The site itself sets no cookies; the choice is kept in `localStorage` for 180 days and can be changed from the footer or the Privacy Policy page. The Google map loads on click and Umami uses no cookies, so neither is in the notice.
+- Statistics: self-hosted Umami at `analytics.webartworks.com`, loaded in production once `analytics.websiteId` is set in `site.ts`.
 - Page transitions use the browser's native `@view-transition`. Do not add Astro's `ClientRouter`: it would remove the RateParity widget when the visitor changes page.
 - Offers: there is no offers page. A running offer is shown with the offer card.
 - Meraki Restaurant is a separate business next to the hotel, with its own logo and photos. Table reservations will be an email form on the hotel site.
@@ -69,7 +71,10 @@ Waiting for the owner or the developer:
 - Whether the mobile number has WhatsApp.
 - Meraki menu: the "See the menu" button is hidden until `site.meraki.menuUrl` is set.
 - Meraki opening season, hours and its own phone number are unknown; the page shows the hotel phone and the form accepts any time.
-- The Postmark token is not set yet, so real sending has not been tested.
+- Real sending through Postmark has not been tested from this side.
+- Privacy Policy: a draft written by Claude, not legal advice; the owner or their lawyer should approve it. The legal company name, VAT number and G.E.MI. number are empty in `site.legal`. When the policy changes, update `privacyUpdated` there.
+- Umami website ID is not set yet (`site.analytics.websiteId`).
+- Whether RateParity really stores cookies is not known; the consent gate is the cautious default.
 - The Google map on the Contact page loads only after the visitor clicks "Show the map". It searches for the hotel by name; check that the pin is on the hotel, or replace `mapsEmbedUrl` and `mapsUrl` in `site.ts` with exact links.
 - Distances on the Contact page come from the owner's text. "Bus Station 250 m" was written as "Bus stop".
 - Activities page: written in general terms on purpose, with no dates, times, prices or booking rules, until the owner sends those details. Each activity is a section of one page; separate pages can follow when there is more to say.
@@ -78,4 +83,4 @@ Waiting for the owner or the developer:
 - Greek titles in EB Garamond look old-fashioned; the developer is deciding whether to keep it.
 - On phones the RateParity widget may overlap the Call / WhatsApp / Book bar; check on a test address.
 
-Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form, Our Village, Zakynthos, Gallery, Activities. Only the Privacy Policy is still a placeholder. Still to build: the other inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.
+Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form, Our Village, Zakynthos, Gallery, Activities, Privacy Policy, and a 404 page. Still to build: the newsletter signup, redirects from the old site's addresses, a sitemap, hotel data for search engines and a social sharing image.

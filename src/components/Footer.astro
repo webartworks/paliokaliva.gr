@@ -79,6 +79,15 @@ const socials = [
     <ul class="footer__legal">
       <li><a href={localePath(locale, routes.gallery)}>{dict.nav.gallery}</a></li>
       <li><a href={localePath(locale, routes.privacy)}>{dict.nav.privacy}</a></li>
+      {
+        site.rateParityScript && site.rateParityNeedsConsent && (
+          <li>
+            <button type="button" data-consent-open>
+              {dict.consent.settings}
+            </button>
+          </li>
+        )
+      }
     </ul>
     <p>{f.credit} <a href="https://webartworks.com" target="_blank" rel="noopener">Web Artworks</a></p>
   </div>
@@ -182,11 +191,19 @@ const socials = [
 
   .footer__legal {
     display: flex;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+
+  .footer__bottom button {
+    font-size: inherit;
+    font-weight: inherit;
   }
 
   .footer__bottom a:hover,
-  .footer__bottom a:focus-visible {
+  .footer__bottom a:focus-visible,
+  .footer__bottom button:hover,
+  .footer__bottom button:focus-visible {
     color: var(--brown);
   }
 

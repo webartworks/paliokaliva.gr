@@ -72,10 +72,10 @@ Waiting for the owner or the developer:
 - The Postmark token is not set yet, so real sending has not been tested.
 - The Google map on the Contact page loads only after the visitor clicks "Show the map". It searches for the hotel by name; check that the pin is on the hotel, or replace `mapsEmbedUrl` and `mapsUrl` in `site.ts` with exact links.
 - Distances on the Contact page come from the owner's text. "Bus Station 250 m" was written as "Bus stop".
-- Activity details (pottery workshop, wine tasting): the current texts are drafts without facts.
+- Activities page: written in general terms on purpose, with no dates, times, prices or booking rules, until the owner sends those details. Each activity is a section of one page; separate pages can follow when there is more to say.
 - The Zakynthos page has no photos of the island, because none were supplied. It needs photos the hotel has the right to use (Navagio, Blue Caves, turtles, beaches, villages). Its facts come from the owner's text and were not checked against other sources.
 - Our Village says the hotel is family-run and that events include wine tastings and folk dancing evenings. This comes from the owner's questionnaire and texts; the owner should read that section.
 - Greek titles in EB Garamond look old-fashioned; the developer is deciding whether to keep it.
 - On phones the RateParity widget may overlap the Call / WhatsApp / Book bar; check on a test address.
 
-Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form, Our Village, Zakynthos, Gallery. Still to build: the other inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.
+Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form, Our Village, Zakynthos, Gallery, Activities. Only the Privacy Policy is still a placeholder. Still to build: the other inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.

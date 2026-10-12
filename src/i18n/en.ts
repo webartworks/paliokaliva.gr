@@ -550,6 +550,73 @@ export const en = {
       },
     ],
   },
+  activitiesPage: {
+    description:
+      'Activities at Paliokaliva Village, Zakynthos: pottery workshops, wine tastings, evenings of island tradition, and yoga, cycling, kayaking, sailing and tours arranged by our team.',
+    heroAlt: 'A long table set with wine glasses in the garden, overlooking the sea',
+    intro: [
+      'Wine tastings and events such as folk dancing capture the authenticity of the island’s community traditions, and bring our guests together.',
+      'The program changes through the season. Here is a taste of what you may find during your stay.',
+    ],
+    pottery: {
+      eyebrow: 'For all ages',
+      title: 'Pottery workshop',
+      body: [
+        'Shape a piece of clay with your hands, then paint it in your own colors at a long shared table.',
+        'It is a calm, creative activity that children and adults enjoy together, and an easy way to meet other guests.',
+      ],
+      alt: 'A guest painting a striped clay cup at the workshop table',
+      altSmall: 'Hands shaping a small bowl of clay',
+    },
+    wine: {
+      eyebrow: 'In the garden',
+      title: 'Wine tasting',
+      body: [
+        'Local wines are poured at a long table in the garden, with the Ionian Sea in the distance.',
+        'An unhurried way to discover the flavors of the island and to share a table with fellow guests.',
+      ],
+      alt: 'A long table set with wine glasses in the garden, overlooking the sea',
+      altSmall: 'Wine glasses and place settings on a table in the garden',
+    },
+    events: {
+      eyebrow: 'Events',
+      title: 'Celebrating summer together',
+      items: [
+        {
+          name: 'Evenings of tradition',
+          text: 'Events such as folk dancing bring the island’s community traditions to the village and invite everyone to join in.',
+        },
+        {
+          name: 'Special occasions',
+          text: 'Our team caters for special occasions, including parties and receptions. Tell us what you have in mind and we will help you plan it.',
+        },
+      ],
+    },
+    arranged: {
+      eyebrow: 'Arranged for you',
+      title: 'Active days, near and far',
+      body: 'Whether your passion is nature, history or the sea, our team is at your service, with local expertise, to arrange memorable activities on request.',
+      list: [
+        'Yoga',
+        'Cycling',
+        'Kayaking',
+        'Snorkeling',
+        'Private sailing charters',
+        'Private massage in your house',
+        'Vineyard tours',
+        'Olive press tours',
+        'Minibus excursions and private boat tours',
+        'Tours to Olympia and Kefalonia',
+      ],
+      link: 'Discover Zakynthos',
+    },
+    ask: {
+      eyebrow: 'During your stay',
+      title: 'Ask us what is on',
+      body: 'Activities and events vary from week to week. Write to us before you arrive, or ask at reception, and we will tell you what is planned during your stay and help you book your place.',
+      button: 'Contact us',
+    },
+  },
   zakynthosPage: {
     description:
       'A guide to Zakynthos from Paliokaliva Village: Navagio and the Blue Caves, the Caretta caretta turtles and the Marine Park, the best beaches, mountain villages and monasteries, and the island’s culture.',

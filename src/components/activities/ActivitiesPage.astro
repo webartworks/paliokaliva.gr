@@ -1,0 +1,188 @@
+---
+import heroImage from '@/assets/images/activities/wine-table.jpg';
+import pottery from '@/assets/images/activity-pottery.jpg';
+import potteryHands from '@/assets/images/activities/pottery-hands.jpg';
+import wine from '@/assets/images/activity-wine.jpg';
+import wineGlasses from '@/assets/images/activities/wine-glasses.jpg';
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import FeatureSection from '@/components/FeatureSection.astro';
+import LineList from '@/components/LineList.astro';
+import BookingCta from '@/components/BookingCta.astro';
+import ArrowLink from '@/components/ArrowLink.astro';
+import { localePath, t, type Locale } from '@/i18n';
+import { routes } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dict = t(locale);
+const a = dict.activitiesPage;
+---
+
+<Base locale={locale} path={routes.activities} title={dict.nav.activities} description={a.description} overHero>
+  <PageHero
+    image={heroImage}
+    alt={a.heroAlt}
+    title={dict.activities.title}
+    eyebrow={dict.activities.eyebrow}
+    position="50% 45%"
+  />
+
+  <section class="act-intro bg-cream">
+    <div class="container">
+      <div class="act-intro__inner" data-reveal>
+        {a.intro.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <div class="bg-cream act-features">
+    <FeatureSection
+      id="pottery"
+      eyebrow={a.pottery.eyebrow}
+      title={a.pottery.title}
+      body={a.pottery.body}
+      image={pottery}
+      alt={a.pottery.alt}
+      smallImage={potteryHands}
+      smallAlt={a.pottery.altSmall}
+      ratio="4 / 5"
+    />
+
+    <FeatureSection
+      id="wine"
+      eyebrow={a.wine.eyebrow}
+      title={a.wine.title}
+      body={a.wine.body}
+      image={wine}
+      alt={a.wine.alt}
+      smallImage={wineGlasses}
+      smallAlt={a.wine.altSmall}
+      ratio="4 / 5"
+      reverse
+    />
+  </div>
+
+  <section class="section bg-linen" id="events">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{a.events.eyebrow}</span>
+        <h2 class="h2" data-reveal style="--i:1">{a.events.title}</h2>
+      </div>
+      <ul class="act-cards">
+        {
+          a.events.items.map((item, i) => (
+            <li data-reveal style={`--i:${i}`}>
+              <h3 class="h3">{item.name}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section bg-cream" id="arranged">
+    <div class="container act-arranged">
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{a.arranged.eyebrow}</span>
+        <h2 class="h2" data-reveal style="--i:1">{a.arranged.title}</h2>
+        <p class="lede" data-reveal style="--i:2">{a.arranged.body}</p>
+        <div data-reveal style="--i:3">
+          <ArrowLink href={localePath(locale, routes.zakynthos)}>{a.arranged.link}</ArrowLink>
+        </div>
+      </div>
+      <LineList items={a.arranged.list} columns={2} />
+    </div>
+  </section>
+
+  <section class="section bg-linen">
+    <div class="container act-ask">
+      <span class="eyebrow" data-reveal>{a.ask.eyebrow}</span>
+      <h2 class="h2" data-reveal style="--i:1">{a.ask.title}</h2>
+      <p data-reveal style="--i:2">{a.ask.body}</p>
+      <a class="btn" href={localePath(locale, routes.contact)} data-reveal style="--i:3">{a.ask.button}</a>
+    </div>
+  </section>
+
+  <BookingCta locale={locale} />
+</Base>
+
+<style>
+  .act-intro {
+    padding-top: var(--section);
+  }
+
+  .act-intro__inner {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 44rem;
+    margin-inline: auto;
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  .act-features {
+    padding-block: calc(var(--section) * 0.4) calc(var(--section) * 0.6);
+  }
+
+  .act-cards {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+
+  .act-cards li {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .act-cards p {
+    max-width: 34rem;
+    text-wrap: pretty;
+  }
+
+  .act-arranged {
+    display: grid;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .act-ask {
+    display: grid;
+    justify-items: center;
+    gap: 1.25rem;
+    text-align: center;
+  }
+
+  .act-ask .eyebrow {
+    margin-bottom: 1rem;
+  }
+
+  .act-ask p {
+    max-width: 40rem;
+    text-wrap: pretty;
+  }
+
+  .act-ask .btn {
+    margin-top: 1.5rem;
+  }
+
+  @media (min-width: 56em) {
+    .act-cards {
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem clamp(2.5rem, 7vw, 6.25rem);
+    }
+
+    .act-arranged {
+      grid-template-columns: 1fr 1.2fr;
+      gap: clamp(3rem, 8vw, 7.5rem);
+    }
+  }
+</style>

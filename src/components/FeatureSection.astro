@@ -14,12 +14,14 @@ interface Props {
   smallImage?: ImageMetadata;
   smallAlt?: string;
   reverse?: boolean;
+  // Shape of the large photo. Use "4 / 5" when the photos are portrait.
+  ratio?: string;
 }
 
-const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', reverse = false } = Astro.props;
+const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', reverse = false, ratio = '3 / 2' } = Astro.props;
 ---
 
-<section class:list={['feature', { 'feature--reverse': reverse }]} id={id}>
+<section class:list={['feature', { 'feature--reverse': reverse }]} id={id} style={`--ratio:${ratio}`}>
   <div class="container feature__grid">
     <div class="media feature__photo" data-reveal="image">
       <Picture
@@ -70,7 +72,7 @@ const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', 
   }
 
   .feature__photo {
-    aspect-ratio: 3 / 2;
+    aspect-ratio: var(--ratio);
   }
 
   .feature__body {

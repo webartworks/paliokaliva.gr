@@ -14,6 +14,8 @@ const { locale } = Astro.props;
 const a = t(locale).activities;
 const photos = [pottery, wine];
 const href = localePath(locale, routes.activities);
+// Each card lands on its own section of the Activities page.
+const anchors = ['pottery', 'wine'];
 ---
 
 <section class="activities section bg-linen">
@@ -28,7 +30,7 @@ const href = localePath(locale, routes.activities);
       {
         a.items.map((item, i) => (
           <li>
-            <a class="activity" href={href}>
+            <a class="activity" href={`${href}#${anchors[i]}`}>
               <div class="media activity__photo" data-reveal="image" style={`--i:${i}`}>
                 <Picture
                   src={photos[i]}

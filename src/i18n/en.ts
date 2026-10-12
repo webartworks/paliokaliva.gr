@@ -677,6 +677,23 @@ export const en = {
       ],
     },
   },
+  galleryPage: {
+    description:
+      'Photos of Paliokaliva Village in Tragaki, Zakynthos: the olive grove gardens, the pool and all-day bar, the buffet breakfast, the stone houses and activities.',
+    eyebrow: 'Gallery',
+    title: 'Moments from the village',
+    intro: 'A look at the gardens, the pool, the breakfast table and the houses. Choose a theme, and click any photo to see it larger.',
+    filterLabel: 'Show photos of',
+    all: 'All',
+    groups: {
+      village: 'Gardens & village',
+      pool: 'Pool & bar',
+      breakfast: 'Breakfast',
+      houses: 'Houses',
+      activities: 'Activities',
+    },
+    photoAlt: '{group}, photo {n}',
+  },
   location: {
     eyebrow: 'Location',
     title: 'Far from the crowd, close to lively Tsilivi',

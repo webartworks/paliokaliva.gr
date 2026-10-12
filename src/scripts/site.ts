@@ -240,11 +240,13 @@ function initOffer() {
 
 function initLightbox() {
   const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox-dialog]');
-  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-lightbox]'));
+  const all = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-lightbox]'));
   const image = dialog?.querySelector<HTMLImageElement>('[data-lightbox-image]');
   const count = dialog?.querySelector<HTMLElement>('[data-lightbox-count]');
-  if (!dialog || !image || links.length === 0 || typeof dialog.showModal !== 'function') return;
+  if (!dialog || !image || all.length === 0 || typeof dialog.showModal !== 'function') return;
 
+  // Photos hidden by a filter are skipped.
+  let links = all;
   let current = 0;
 
   const show = (index: number) => {
@@ -261,10 +263,11 @@ function initLightbox() {
     }
   };
 
-  links.forEach((link, index) => {
+  all.forEach((link) => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
-      show(index);
+      links = all.filter((item) => !item.closest('[hidden]'));
+      show(links.indexOf(link));
       dialog.showModal();
     });
   });
@@ -296,8 +299,24 @@ function initLightbox() {
     { passive: true },
   );
 
-  // Give the page back its scroll position and focus when the viewer closes.
+  // Put the focus back on the photo the visitor was looking at.
   dialog.addEventListener('close', () => links[current]?.focus());
+}
+
+function initGalleryFilter() {
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+  const items = document.querySelectorAll<HTMLElement>('[data-gallery] [data-group]');
+  if (buttons.length === 0) return;
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const group = button.dataset.filter ?? '';
+      buttons.forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
+      items.forEach((item) => {
+        item.hidden = group !== '' && item.dataset.group !== group;
+      });
+    });
+  });
 }
 
 function initForms() {
@@ -390,6 +409,7 @@ function init() {
   initLightbox();
   initForms();
   initMap();
+  initGalleryFilter();
 }
 
 init();

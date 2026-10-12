@@ -34,6 +34,7 @@ The developer's English is not strong: write to them in simple, clear English. T
 - Shared page parts: `PageHero` (opening photo of an inner page), `Gallery` (photo mosaic with a large viewer), `RoomCard` / `RoomGrid`, `FeatureSection` (large photo beside text, with a small second photo), `LineList` / `AmenityList`, `BookingCta`.
 - `src/pages/[...path].astro`: placeholder for every page that is not built yet. When a real page is added, remove its entry from the list there.
 - `src/assets/images/`: photos used on the site, already cropped and resized.
+- `src/assets/images/gallery/<group>/`: photos of the Gallery page, one folder per filter (village, pool, breakfast, activities), named `NN.jpg` and shown in file name order. The "Houses" group is not a folder: it takes the first two photos of every room. Alt texts on this page are generic (group name and number).
 - `src/assets/images/rooms/<room>/`: gallery photos of each room, named `NN-kind.jpg` (for example `02-bedroom.jpg`). They show in file name order, the first is the page's opening photo, and the kind (bedroom, living, kitchen, dining, bathroom, interior, detail) gives the alt text. Adding a file adds it to the gallery.
 - `_reference/`: the client's source material (design, brand book, texts, photos, videos). It is not in git. Never write into it; copy what is needed into `src/assets/`.
 
@@ -77,4 +78,4 @@ Waiting for the owner or the developer:
 - Greek titles in EB Garamond look old-fashioned; the developer is deciding whether to keep it.
 - On phones the RateParity widget may overlap the Call / WhatsApp / Book bar; check on a test address.
 
-Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form, Our Village, Zakynthos. Still to build: the other inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.
+Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form, Our Village, Zakynthos, Gallery. Still to build: the other inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.

@@ -1,0 +1,144 @@
+---
+import Base from '@/layouts/Base.astro';
+import Gallery from '@/components/Gallery.astro';
+import BookingCta from '@/components/BookingCta.astro';
+import { t, type Locale } from '@/i18n';
+import { roomPhotos, roomSlugs } from '@/data/rooms';
+import { routes } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dict = t(locale);
+const g = dict.galleryPage;
+
+// Photos live in src/assets/images/gallery/<group>/NN.jpg and show in file name order.
+// To add a photo, drop a file in the folder of its group.
+const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/gallery/*/*.jpg', { eager: true });
+const fromFolder = (group: string) =>
+  Object.keys(files)
+    .filter((path) => path.includes(`/gallery/${group}/`))
+    .sort()
+    .map((path) => files[path].default);
+
+type Group = keyof typeof g.groups;
+
+const groups: Record<Group, ImageMetadata[]> = {
+  village: fromFolder('village'),
+  pool: fromFolder('pool'),
+  breakfast: fromFolder('breakfast'),
+  // The first two photos of every room, taken from the room galleries.
+  houses: roomSlugs.flatMap((slug) =>
+    roomPhotos(slug)
+      .slice(0, 2)
+      .map((photo) => photo.image),
+  ),
+  activities: fromFolder('activities'),
+};
+
+const groupKeys = Object.keys(groups) as Group[];
+
+// Mix the groups in turn, so the "All" view does not show one theme after the other.
+const longest = Math.max(...groupKeys.map((key) => groups[key].length));
+const photos = Array.from({ length: longest }).flatMap((_, i) =>
+  groupKeys
+    .filter((key) => groups[key][i])
+    .map((key) => ({
+      image: groups[key][i],
+      group: key,
+      alt: g.photoAlt.replace('{group}', g.groups[key]).replace('{n}', String(i + 1)),
+    })),
+);
+---
+
+<Base locale={locale} path={routes.gallery} title={dict.nav.gallery} description={g.description}>
+  <section class="gallery-page bg-cream">
+    <div class="container">
+      <div class="gallery-page__head">
+        <span class="eyebrow">{g.eyebrow}</span>
+        <h1 class="h2 gallery-page__title">{g.title}</h1>
+        <p class="lede">{g.intro}</p>
+      </div>
+
+      <div class="filters" role="group" aria-label={g.filterLabel}>
+        <button class="filters__button" type="button" aria-pressed="true" data-filter="">{g.all}</button>
+        {
+          groupKeys.map((key) => (
+            <button class="filters__button" type="button" aria-pressed="false" data-filter={key}>
+              {g.groups[key]}
+            </button>
+          ))
+        }
+      </div>
+
+      <Gallery locale={locale} photos={photos} layout="masonry" />
+    </div>
+  </section>
+
+  <BookingCta locale={locale} />
+</Base>
+
+<style>
+  .gallery-page {
+    padding-block: calc(var(--header-h) + clamp(3rem, 2rem + 4vw, 6rem)) var(--section);
+  }
+
+  .gallery-page__head {
+    display: grid;
+    justify-items: start;
+    gap: 1.25rem;
+  }
+
+  .gallery-page__head .eyebrow {
+    margin-bottom: 1.25rem;
+  }
+
+  .gallery-page__title {
+    font-size: clamp(2.25rem, 1.6rem + 2.8vw, 3.5rem);
+    line-height: 1.02;
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.75rem;
+    margin-block: clamp(2.5rem, 2rem + 2vw, 3.5rem) clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .filters__button {
+    position: relative;
+    padding-block: 0.6rem;
+    color: var(--text-soft);
+    font-size: var(--fs-label);
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: color var(--t-fast) var(--ease);
+  }
+
+  .filters__button::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.25rem;
+    height: 1px;
+    background: var(--brown);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .filters__button:hover,
+  .filters__button[aria-pressed='true'] {
+    color: var(--brown);
+  }
+
+  .filters__button[aria-pressed='true']::after {
+    transform: scaleX(1);
+  }
+</style>

@@ -489,12 +489,6 @@ a:hover > .arrow-link svg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 2.6s var(--ease-settle);
-}
-
-a:hover .media img,
-a:focus-visible .media img {
-  transform: scale(1.02);
 }
 
 /* --------------------------------------------------------------------------
@@ -516,8 +510,8 @@ a:focus-visible .media img {
   transform: none;
 }
 
-/* Photos open like a soft curtain while the image settles into place: a mask with a
-   feathered edge slides down over the picture.
+/* Photos open like a soft curtain: a mask with a feathered edge slides down over
+   the picture. The photo itself does not move.
    The mask is on the picture inside, never on the element itself: Chrome treats an
    element that is fully hidden as not visible, so its reveal would never start. */
 .js [data-reveal='image'] {
@@ -545,19 +539,6 @@ a:focus-visible .media img {
 .js [data-reveal='image'].is-in > picture {
   -webkit-mask-position: 0 0;
   mask-position: 0 0;
-}
-
-.js [data-reveal='image'] img {
-  transform: scale(1.05);
-}
-
-.js [data-reveal='image'].is-in img {
-  transform: scale(1);
-}
-
-.js a:hover [data-reveal='image'].is-in img,
-.js a:focus-visible [data-reveal='image'].is-in img {
-  transform: scale(1.02);
 }
 
 /* Thin hand-drawn lines draw themselves once. */
@@ -618,11 +599,6 @@ a:focus-visible .media img {
   .js [data-reveal='image'] > picture {
     -webkit-mask-image: none;
     mask-image: none;
-  }
-
-  .js [data-reveal='image'] img,
-  .media img {
-    transform: none !important;
   }
 
   .js .wave[data-reveal] path {

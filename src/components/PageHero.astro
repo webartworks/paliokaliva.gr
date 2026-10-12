@@ -59,7 +59,6 @@ const { image, alt, title, eyebrow, position = '50% 50%' } = Astro.props;
     height: 100%;
     object-fit: cover;
     object-position: var(--position);
-    animation: page-hero-settle 2.6s var(--ease) both;
   }
 
   .page-hero__media::after {
@@ -96,12 +95,6 @@ const { image, alt, title, eyebrow, position = '50% 50%' } = Astro.props;
   .page-hero__title span {
     display: block;
     animation: page-hero-rise 1.8s var(--ease) 0.25s both;
-  }
-
-  @keyframes page-hero-settle {
-    from {
-      transform: scale(1.03);
-    }
   }
 
   @keyframes page-hero-rise {

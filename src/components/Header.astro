@@ -219,6 +219,12 @@ const links = mainNav.map((key) => ({
     border-radius: 2px;
   }
 
+  /* The button takes its text colour from the header, so the hover colour is set here too. */
+  .book:hover,
+  .book:focus-visible {
+    color: var(--cream);
+  }
+
   .site-header--over:not(.is-scrolled):not(.is-open) .book:hover,
   .site-header--over:not(.is-scrolled):not(.is-open) .book:focus-visible {
     background: var(--white);

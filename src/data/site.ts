@@ -27,14 +27,15 @@ export const site = {
     privacyUpdated: '2026-10-12',
   },
   licence: '1017280',
-  // Exact position of the hotel, used for the maps and for search engines.
-  geo: { lat: 37.820286, lng: 20.850568 },
-  // Opens Google Maps with a pin on the hotel.
-  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=37.820286,20.850568',
+  // Exact position of the hotel, used for directions, the embedded map and search engines.
+  geo: { lat: 37.820195, lng: 20.85055 },
+  // Opens the hotel's own Google Maps profile (photos, reviews). It finds the hotel by name;
+  // coordinates alone would only show a plain pin. Replace with the hotel's share link if you have it.
+  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Paliokaliva+Village+Zakynthos',
   // Opens Google Maps with the route from where the visitor is to the hotel.
-  directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=37.820286,20.850568',
+  directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=37.820195,20.85055',
   // The embedded map on the Contact page. It loads only after the visitor asks for it.
-  mapsEmbedUrl: 'https://www.google.com/maps?q=37.820286,20.850568&z=15&output=embed',
+  mapsEmbedUrl: 'https://www.google.com/maps?q=37.820195,20.85055&z=15&output=embed',
   social: {
     instagram: 'https://www.instagram.com/paliokaliva/',
     facebook: 'https://www.facebook.com/PaliokalivaZakynthos',

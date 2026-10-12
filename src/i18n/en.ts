@@ -52,6 +52,75 @@ export const en = {
     altPool: 'The pool bar lit up at dusk, reflected in the water',
     altVillage: 'A stone house with wooden shutters behind old olive trees',
   },
+  villagePage: {
+    description:
+      'The story of Paliokaliva Village, a privately owned, family-run boutique hotel of eighteen stone houses around an olive grove garden in Tragaki, Zakynthos, and the meaning of its name and logo.',
+    heroAlt: 'A stone path through old olive trees and bougainvillea, with houses of the village behind',
+    eyebrow: 'Our Village',
+    title: 'Authentic living and caring hospitality',
+    intro: [
+      'We welcome you to spend a unique holiday with us at Paliokaliva Village on Zakynthos. Our privately owned boutique hotel was created to share an authentic Zakynthian way of life with our guests.',
+      'Eighteen traditional stone-built villas, apartments and studios overlook the fresh greenery of our olive grove garden, a sociable gathering place for families and couples.',
+    ],
+    name: {
+      eyebrow: 'Inspiration',
+      title: 'Paliokaliva means “the old hunters’ spot”',
+      body: [
+        'Authenticity begins with the name. Paliokaliva means “the old hunters’ spot” and refers to the peaceful hillside where the hotel stands.',
+        'The name is enriched by our logo. It is inspired by the ancient Mycenaean sign for “roof” from the Linear B tablets, the earliest known form of Greek writing. The sign recalls the wooden beams of a house roof, the same beams you will see above you in every one of our houses.',
+      ],
+      quote: '“Inspired by the earliest Greek writing”',
+      badgeAlt: 'The Paliokaliva Village emblem',
+    },
+    living: {
+      eyebrow: 'Authentic living',
+      title: 'The character of a small, friendly village',
+      body: [
+        'The traditional stone architecture of the villas, apartments and studios, set around the beautifully landscaped olive grove garden, captures the character of a small, friendly village.',
+        'Every house has wooden beams and furniture handcrafted by local artisans. Designed for simplicity, the warm touch of traditional wood sits beside modern furnishings, with every comfort and convenience.',
+      ],
+      alt: 'A stone house with wooden shutters and an old olive tree in front',
+      altSmall: 'A sitting room with a built-in sofa, stone walls and a wooden roof',
+      link: 'See the houses',
+    },
+    zante: {
+      eyebrow: 'Traditionally Zante',
+      title: 'A way of life enjoyed outdoors',
+      body: [
+        'Traditionally, the Zante way of life is enjoyed outdoors, day and night. Our services and amenities follow the island’s open-air lifestyle, with facilities and activities to please couples and families.',
+        'The spacious olive grove garden delights the senses with the scent of jasmine and the vibrant colors of local flowers, with bougainvillea climbing beside old olive trees. It is the place where guests meet, rest and explore.',
+      ],
+      alt: 'A garden path between olive trees and flowering bougainvillea',
+      altSmall: 'A hammock between the olive trees',
+      link: 'Village life',
+    },
+    family: {
+      eyebrow: 'A family welcome',
+      title: 'A place that brings people together',
+      body: [
+        'Paliokaliva is a family-run hotel, and our guests often tell us this is what they like most. We look after the village ourselves and enjoy getting to know the people who stay with us.',
+        'The houses are arranged around the garden, as in a real village, so it is easy to meet your neighbors. Events such as wine tastings and evenings of folk dancing bring everyone together and keep the island’s traditions alive.',
+      ],
+      alt: 'A hanging chair and children’s play tents on the grass in front of the houses',
+      altSmall: 'A long table set with wine glasses in the garden, overlooking the sea',
+      link: 'Activities',
+    },
+    note: {
+      eyebrow: 'A note from us',
+      quote:
+        '“Our dedicated team looks forward to welcoming you this summer on Zakynthos, with one shared purpose: to offer every guest an authentic Zante experience and caring hospitality in the Ionian tradition.”',
+      signature: 'The Management Team',
+    },
+    awards: {
+      eyebrow: 'Recognition',
+      title: 'Awards',
+      items: [
+        { name: 'Boutique Hotel Awards', detail: '2022 winner, Best Apartment Hotel: Europe' },
+        { name: 'World Luxury Hotel Awards', detail: '2020 winner' },
+        { name: 'World Luxury Hotel Awards', detail: '2022 winner' },
+      ],
+    },
+  },
   rooms: {
     eyebrow: 'Accommodation',
     title: 'Villas, Apartments & Studios',

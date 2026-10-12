@@ -1,0 +1,248 @@
+---
+import { Image } from 'astro:assets';
+import heroImage from '@/assets/images/village/hero.jpg';
+import house from '@/assets/images/village/house.jpg';
+import gardenPath from '@/assets/images/village/garden-path.jpg';
+import gardenPlay from '@/assets/images/village/garden-play.jpg';
+import sittingRoom from '@/assets/images/rooms/superior-villa/01-living.jpg';
+import hammock from '@/assets/images/strip-hammock.jpg';
+import wineTable from '@/assets/images/activity-wine.jpg';
+import awardBoutique from '@/assets/images/award-boutique-2022.png';
+import award2020 from '@/assets/images/award-wlha-2020.jpg';
+import award2022 from '@/assets/images/award-wlha-2022.jpg';
+import badge from '@/assets/logo/badge.svg';
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import FeatureSection from '@/components/FeatureSection.astro';
+import BookingCta from '@/components/BookingCta.astro';
+import ArrowLink from '@/components/ArrowLink.astro';
+import { localePath, t, type Locale } from '@/i18n';
+import { routes } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dict = t(locale);
+const v = dict.villagePage;
+const awardImages = [awardBoutique, award2020, award2022];
+---
+
+<Base locale={locale} path={routes.village} title={dict.nav.village} description={v.description} overHero>
+  <PageHero image={heroImage} alt={v.heroAlt} title={v.title} eyebrow={v.eyebrow} position="50% 55%" />
+
+  <section class="village-intro bg-cream">
+    <div class="container">
+      <div class="village-intro__inner" data-reveal>
+        {v.intro.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container village-name">
+      <div class="village-name__emblem" data-reveal>
+        <img src={badge.src} width={badge.width} height={badge.height} alt={v.name.badgeAlt} loading="lazy" />
+        <p class="quote-mono">{v.name.quote}</p>
+      </div>
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{v.name.eyebrow}</span>
+        <h2 class="h2" data-reveal style="--i:1">{v.name.title}</h2>
+        <div class="village-name__text" data-reveal style="--i:2">
+          {v.name.body.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="bg-linen village-features">
+    <FeatureSection
+      eyebrow={v.living.eyebrow}
+      title={v.living.title}
+      body={v.living.body}
+      image={house}
+      alt={v.living.alt}
+      smallImage={sittingRoom}
+      smallAlt={v.living.altSmall}
+    >
+      <ArrowLink href={localePath(locale, routes.accommodation)}>{v.living.link}</ArrowLink>
+    </FeatureSection>
+
+    <FeatureSection
+      eyebrow={v.zante.eyebrow}
+      title={v.zante.title}
+      body={v.zante.body}
+      image={gardenPath}
+      alt={v.zante.alt}
+      smallImage={hammock}
+      smallAlt={v.zante.altSmall}
+      reverse
+    >
+      <ArrowLink href={localePath(locale, routes.life)}>{v.zante.link}</ArrowLink>
+    </FeatureSection>
+
+    <FeatureSection
+      eyebrow={v.family.eyebrow}
+      title={v.family.title}
+      body={v.family.body}
+      image={gardenPlay}
+      alt={v.family.alt}
+      smallImage={wineTable}
+      smallAlt={v.family.altSmall}
+    >
+      <ArrowLink href={localePath(locale, routes.activities)}>{v.family.link}</ArrowLink>
+    </FeatureSection>
+  </div>
+
+  <section class="section bg-cream">
+    <div class="container village-note">
+      <span class="eyebrow" data-reveal>{v.note.eyebrow}</span>
+      <blockquote data-reveal style="--i:1">
+        <p>{v.note.quote}</p>
+      </blockquote>
+      <p class="village-note__signature" data-reveal style="--i:2">{v.note.signature}</p>
+    </div>
+  </section>
+
+  <section class="village-awards bg-cream">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{v.awards.eyebrow}</span>
+        <h2 class="h2" data-reveal style="--i:1">{v.awards.title}</h2>
+      </div>
+      <ul class="village-awards__list">
+        {
+          v.awards.items.map((award, i) => (
+            <li data-reveal style={`--i:${i}`}>
+              <div class="village-awards__badge">
+                <Image src={awardImages[i]} alt="" height={220} loading="lazy" />
+              </div>
+              <h3 class="h3">{award.name}</h3>
+              <p>{award.detail}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <BookingCta locale={locale} />
+</Base>
+
+<style>
+  .village-intro {
+    padding-top: var(--section);
+  }
+
+  .village-intro__inner {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 44rem;
+    margin-inline: auto;
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  .village-name {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .village-name__emblem {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 2rem;
+    aspect-ratio: 4 / 3;
+    padding: 2rem;
+    background: var(--linen);
+    text-align: center;
+  }
+
+  .village-name__emblem img {
+    width: clamp(6rem, 4rem + 8vw, 10rem);
+    height: auto;
+  }
+
+  .village-name__text {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 32rem;
+    margin-top: 0.5rem;
+    text-wrap: pretty;
+  }
+
+  .village-features {
+    padding-block: calc(var(--section) * 0.4);
+  }
+
+  .village-note {
+    display: grid;
+    justify-items: center;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .village-note blockquote {
+    max-width: 42rem;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: clamp(1.375rem, 1.2rem + 0.9vw, 1.875rem);
+    line-height: 1.22;
+    text-wrap: balance;
+  }
+
+  .village-note__signature {
+    color: var(--brown);
+    font-size: var(--fs-label);
+    font-weight: 400;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+  }
+
+  .village-awards {
+    padding-bottom: var(--section);
+  }
+
+  .village-awards__list {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+
+  .village-awards__list li {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .village-awards__badge {
+    display: flex;
+    align-items: center;
+    height: 6.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .village-awards__badge :global(img) {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
+
+  @media (min-width: 56em) {
+    .village-name {
+      grid-template-columns: 1fr 1.2fr;
+      gap: clamp(3rem, 8vw, 7.5rem);
+    }
+
+    .village-awards__list {
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1.5rem, 3vw, 2.75rem);
+    }
+  }
+</style>

@@ -72,7 +72,8 @@ Waiting for the owner or the developer:
 - The Google map on the Contact page loads only after the visitor clicks "Show the map". It searches for the hotel by name; check that the pin is on the hotel, or replace `mapsEmbedUrl` and `mapsUrl` in `site.ts` with exact links.
 - Distances on the Contact page come from the owner's text. "Bus Station 250 m" was written as "Bus stop".
 - Activity details (pottery workshop, wine tasting): the current texts are drafts without facts.
+- Our Village says the hotel is family-run and that events include wine tastings and folk dancing evenings. This comes from the owner's questionnaire and texts; the owner should read that section.
 - Greek titles in EB Garamond look old-fashioned; the developer is deciding whether to keep it.
 - On phones the RateParity widget may overlap the Call / WhatsApp / Book bar; check on a test address.
 
-Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form. Still to build: the other inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.
+Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form, Our Village. Still to build: the other inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.

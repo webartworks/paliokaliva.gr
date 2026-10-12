@@ -1,0 +1,242 @@
+---
+import heroImage from '@/assets/images/zakynthos/hero.jpg';
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import LineList from '@/components/LineList.astro';
+import BookingCta from '@/components/BookingCta.astro';
+import ArrowLink from '@/components/ArrowLink.astro';
+import { localePath, t, type Locale } from '@/i18n';
+import { routes } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dict = t(locale);
+const z = dict.zakynthosPage;
+const beachTypes = z.beaches.types as Record<string, string>;
+---
+
+<Base locale={locale} path={routes.zakynthos} title={dict.nav.zakynthos} description={z.description} overHero>
+  <PageHero image={heroImage} alt={z.heroAlt} title={z.title} eyebrow={z.eyebrow} position="50% 40%" />
+
+  <section class="zak-intro bg-cream">
+    <div class="container">
+      <div class="zak-intro__inner" data-reveal>
+        {z.intro.map((p) => <p>{p}</p>)}
+        <ArrowLink href={localePath(locale, routes.contact)}>{z.excursionsLink}</ArrowLink>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{z.sights.eyebrow}</span>
+        <h2 class="h2" data-reveal style="--i:1">{z.sights.title}</h2>
+      </div>
+      <ul class="zak-cards zak-cards--two">
+        {
+          z.sights.items.map((item, i) => (
+            <li data-reveal style={`--i:${i % 2}`}>
+              <h3 class="h3">{item.name}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section bg-linen">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{z.beaches.eyebrow}</span>
+        <h2 class="h2" data-reveal style="--i:1">{z.beaches.title}</h2>
+        <p class="lede" data-reveal style="--i:2">{z.beaches.body}</p>
+      </div>
+      <ul class="zak-beaches">
+        {
+          z.beaches.items.map((beach) => (
+            <li data-reveal>
+              <div class="zak-beaches__head">
+                <h3 class="h3">{beach.name}</h3>
+                <span class="zak-beaches__type">{beachTypes[beach.type]}</span>
+              </div>
+              <p>{beach.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{z.villages.eyebrow}</span>
+        <h2 class="h2" data-reveal style="--i:1">{z.villages.title}</h2>
+        <p class="lede" data-reveal style="--i:2">{z.villages.body}</p>
+      </div>
+      <ul class="zak-cards zak-cards--two">
+        {
+          z.villages.items.map((item, i) => (
+            <li data-reveal style={`--i:${i % 2}`}>
+              <h3 class="h3">{item.name}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section bg-linen">
+    <div class="container zak-culture">
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{z.culture.eyebrow}</span>
+        <h2 class="h2" data-reveal style="--i:1">{z.culture.title}</h2>
+        <div class="zak-culture__text" data-reveal style="--i:2">
+          {z.culture.body.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+      <div>
+        <h3 class="h3 zak-culture__list-title" data-reveal>{z.culture.listTitle}</h3>
+        <LineList items={z.culture.list} columns={1} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{z.travel.eyebrow}</span>
+        <h2 class="h2" data-reveal style="--i:1">{z.travel.title}</h2>
+      </div>
+      <ul class="zak-cards zak-cards--two">
+        {
+          z.travel.items.map((item, i) => (
+            <li data-reveal style={`--i:${i}`}>
+              <h3 class="h3">{item.name}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <BookingCta locale={locale} />
+</Base>
+
+<style>
+  .zak-intro {
+    padding-top: var(--section);
+  }
+
+  .zak-intro__inner {
+    display: grid;
+    justify-items: center;
+    gap: 1.25rem;
+    max-width: 44rem;
+    margin-inline: auto;
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  .zak-intro__inner :global(.arrow-link) {
+    margin-top: 1rem;
+  }
+
+  .zak-cards {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+
+  .zak-cards li {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .zak-cards p {
+    max-width: 34rem;
+    text-wrap: pretty;
+  }
+
+  .zak-beaches {
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    border-top: 1px solid var(--rule);
+  }
+
+  .zak-beaches li {
+    display: grid;
+    gap: 0.75rem 3rem;
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .zak-beaches__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1.25rem;
+  }
+
+  .zak-beaches__type {
+    color: var(--brown);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .zak-beaches p {
+    max-width: 44rem;
+    text-wrap: pretty;
+  }
+
+  .zak-culture {
+    display: grid;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .zak-culture__text {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 34rem;
+    margin-top: 0.5rem;
+    text-wrap: pretty;
+  }
+
+  .zak-culture__list-title {
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 56em) {
+    .zak-cards--two {
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem clamp(2.5rem, 7vw, 6.25rem);
+    }
+
+    .zak-beaches li {
+      grid-template-columns: 18rem 1fr;
+      align-items: baseline;
+    }
+
+    .zak-beaches__head {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .zak-culture {
+      grid-template-columns: 1.2fr 1fr;
+      gap: clamp(3rem, 8vw, 7.5rem);
+    }
+  }
+</style>

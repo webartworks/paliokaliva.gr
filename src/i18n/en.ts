@@ -550,6 +550,133 @@ export const en = {
       },
     ],
   },
+  zakynthosPage: {
+    description:
+      'A guide to Zakynthos from Paliokaliva Village: Navagio and the Blue Caves, the Caretta caretta turtles and the Marine Park, the best beaches, mountain villages and monasteries, and the island’s culture.',
+    heroAlt: 'Sun loungers by the pool with the Ionian Sea and the horizon beyond',
+    eyebrow: 'Zakynthos',
+    title: 'Immersive experiences, memorable excursions',
+    intro: [
+      'The Venetians named Zakynthos the Flower of the East, for its thousands of species of plants and flowers. It is a lush, breathtaking island, surrounded by the sparkling waters of the Ionian Sea, with a coastline of glorious beaches.',
+      'Zante offers countless treasures for all interests and tastes. Our knowledgeable team arranges minibus excursions and private boat tours for experiences of a lifetime.',
+    ],
+    excursionsLink: 'Ask us about excursions',
+    sights: {
+      eyebrow: 'Not to be missed',
+      title: 'The sea, the caves and the turtles',
+      items: [
+        {
+          name: 'Navagio',
+          text: 'One of the most famous beaches on the planet and a landmark of Zakynthos and of Greece. Crystal-clear waters, a white beach and towering cliffs around the shipwreck make a scene of beautiful contrasts. The shipwreck beach and the Blue Caves are close to each other.',
+        },
+        {
+          name: 'Blue Caves',
+          text: 'The Blue Caves are one of the island’s best-known natural attractions, second only to Navagio. Discovered in 1897 by Antonio Komouto, they are a series of chambers leading to the Great Cave and the Little Cave. Everything below the surface takes on a blue hue, which gives the caves their name. Special tour boats take visitors inside.',
+        },
+        {
+          name: 'Caretta caretta turtles and Marathonisi',
+          text: 'The protected loggerhead sea turtle, Caretta caretta, is an endangered species that returns to the island every year to nest. Marathonisi, the largest islet in the bay of Laganas in the south of Zakynthos, is one of its nesting places. Boats leave often for the islet, a rewarding trip for families and nature lovers.',
+        },
+        {
+          name: 'The Marine Park',
+          text: 'The National Marine Park covers the sea area of the Bay of Laganas, a refuge that is vital to the survival of the loggerhead turtle. It is also home to the sea daffodil, to submerged reefs and to hundreds of species of plants and animals. The critically endangered Mediterranean monk seal lives on the west coast of the island.',
+        },
+      ],
+    },
+    beaches: {
+      eyebrow: 'Beach hopping',
+      title: 'Sand, pebbles and rocks',
+      body: 'Zakynthos has a varied choice of landscapes and beautiful beaches: sandy shallows for families and, for the more adventurous, days by the rocks.',
+      types: { sandy: 'Sandy', pebbles: 'Pebbles', rocky: 'Rocky' },
+      items: [
+        {
+          name: 'Tsilivi',
+          type: 'sandy',
+          text: 'One of the most popular beaches on Zakynthos, with sunbeds, cafés and a few lively beach bars. The water is shallow and ideal for small children, and there are many water sports, from windsurfing and pedal boats to water skiing and paragliding.',
+        },
+        {
+          name: 'Banana',
+          type: 'sandy',
+          text: 'A long stretch of soft golden sand and clear water, organized with sun loungers, umbrellas and beach bars for snacks, lunch and drinks. A wide choice of water sports is available, access is easy and there is plenty of parking.',
+        },
+        {
+          name: 'Gerakas',
+          type: 'sandy',
+          text: 'A dreamy bay surrounded by natural beauty, loved by summer visitors and by the protected Caretta caretta turtles alike.',
+        },
+        {
+          name: 'Xigia',
+          type: 'pebbles',
+          text: 'Unique on the island for its water, rich in sulphur from a nearby cave and long valued by bathers for its soothing qualities. The water is deep and rather cool: a natural spa day.',
+        },
+        {
+          name: 'Porto Roxa',
+          type: 'rocky',
+          text: 'A charming cove among wild rocks, with a diving spot for the brave who want to plunge into deep turquoise water. A taverna and sun loungers along the rocks make it well worth a day trip.',
+        },
+        {
+          name: 'Porto Limnionas',
+          type: 'rocky',
+          text: 'The ideal spot for lovers of nature and diving, carved into the rocks of the coast, with two sun decks and very clear turquoise water. Swimming, snorkeling and exploring the caves are a must.',
+        },
+      ],
+    },
+    villages: {
+      eyebrow: 'Mountain villages & monasteries',
+      title: 'Where time stands still',
+      body: 'Drive or book an excursion to enjoy this special part of the island, and spend a day in history, where tradition lives on.',
+      items: [
+        {
+          name: 'Anafonitria',
+          text: 'The Monastery of Anafonitria stands in a wide green pine forest. Founded in 1429, it is a place of history and memory: Agios Dionysios, the patron saint of the island, lived here as abbot. Inside the church is an exceptional icon of the Virgin and Child, of Byzantine origin, thought to come from Constantinople.',
+        },
+        {
+          name: 'Kambi',
+          text: 'Further north, in the mountain village of Kambi on Mount Schiza, a large cross stands in honor of those who lost their lives during World War II. The area also has Mycenaean finds, including tombs. Cafés and restaurants look out over the sea and the greenery: an ideal place to watch the sunset.',
+        },
+        {
+          name: 'Volimes',
+          text: 'Volimes, made up of Ano, Meso and Kato Volimes, is the largest mountain village of Zakynthos, rich in tradition, natural beauty and history. Its churches include Saint Paraskevi, from the 17th century, and Saint Theodosius, from the 15th. Small shops sell traditional items handmade by the women of the village, and a walk towards Ano Volimes passes fine buildings and old stone mills.',
+        },
+        {
+          name: 'Louha and Giri',
+          text: 'A short drive from Agios Leon leads to two charming mountain villages, among the few places on Zakynthos untouched both by tourism and by the great earthquake of 1953. Dating from the late 15th century, they are small and close-built, with stone houses, well-kept courtyards and paved uphill alleys: a journey back in time.',
+        },
+      ],
+    },
+    culture: {
+      eyebrow: 'Culture & people',
+      title: 'An island of music and hospitality',
+      body: [
+        'Zakynthians are a happy, positive people with a great appreciation for culture and the arts, proud of their traditional hospitality and of the island’s heritage. Music runs through island life: the serenades introduced by the Venetians, known locally as kantades, are still sung in many taverns.',
+        'Agriculture is a large part of life here, with local products such as olive oil, currants, grapes and citrus fruit. The Zante currant is unique to the island.',
+      ],
+      listTitle: 'Points of interest',
+      list: [
+        'Solomos Museum',
+        'Museum of Post-Byzantine Art',
+        'Helmis Natural History Museum',
+        'Wine festivals',
+        'Theatre productions',
+        'Summer concerts at the open-air theatre',
+        'The celebrations of Saint Dionysios, patron saint of the island, held twice a year; the largest is on 24 August',
+      ],
+    },
+    travel: {
+      eyebrow: 'Island hopping',
+      title: 'Close to the mainland and to Kefalonia',
+      items: [
+        {
+          name: 'To the mainland',
+          text: 'Zakynthos is the third largest of the Ionian Islands. Ferries link the harbor of Zakynthos Town with the port of Kyllini on the mainland. From there, a short journey across the Peloponnese leads to ancient Olympia and on to Athens.',
+        },
+        {
+          name: 'To Kefalonia',
+          text: 'Another ferry line links the village of Agios Nikolaos, in the north of Zakynthos, with Pesada on Kefalonia, making a day of island hopping possible.',
+        },
+      ],
+    },
+  },
   location: {
     eyebrow: 'Location',
     title: 'Far from the crowd, close to lively Tsilivi',

@@ -1,6 +1,6 @@
 import type { Locale } from '@/i18n';
 
-// The small offer card in the bottom right corner.
+// The small offer card in the bottom left corner.
 // To run an offer: set `active` to true, fill in the texts and the dates.
 // Change `id` for every new offer, so visitors who closed an older one see it again.
 export const offer = {

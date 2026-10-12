@@ -9,9 +9,6 @@ declare global {
 
 window.__paliokaliva = true;
 
-// Listeners added for one page are removed together when the visitor moves to the next page.
-let page = new AbortController();
-
 function initReveal() {
   const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
   if (!('IntersectionObserver' in window)) {
@@ -31,7 +28,6 @@ function initReveal() {
   );
 
   items.forEach((el) => observer.observe(el));
-  page.signal.addEventListener('abort', () => observer.disconnect());
 }
 
 function initHeader() {
@@ -40,7 +36,7 @@ function initHeader() {
 
   const update = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
   update();
-  window.addEventListener('scroll', update, { passive: true, signal: page.signal });
+  window.addEventListener('scroll', update, { passive: true });
 }
 
 function initMenu() {
@@ -68,16 +64,13 @@ function initMenu() {
     }
   };
 
-  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'), {
-    signal: page.signal,
-  });
+  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
 
   menu.addEventListener(
     'click',
     (event) => {
       if ((event.target as HTMLElement).closest('a')) setOpen(false);
     },
-    { signal: page.signal },
   );
 
   document.addEventListener(
@@ -88,7 +81,6 @@ function initMenu() {
         toggle.focus();
       }
     },
-    { signal: page.signal },
   );
 
   // The full-screen menu only exists below the desktop breakpoint.
@@ -97,7 +89,6 @@ function initMenu() {
     (event) => {
       if (event.matches) setOpen(false);
     },
-    { signal: page.signal },
   );
 }
 
@@ -127,7 +118,6 @@ function initBooking() {
           checkout.min = toISODate(next);
           if (!checkout.value || checkout.value <= checkin.value) checkout.value = toISODate(next);
         },
-        { signal: page.signal },
       );
     }
 
@@ -142,7 +132,6 @@ function initBooking() {
           const value = Number(input.value) + Number(button.dataset.step);
           input.value = String(Math.min(Number(input.max), Math.max(Number(input.min), value)));
         },
-        { signal: page.signal },
       );
     });
   });
@@ -161,8 +150,8 @@ function initStrip() {
     // Start in the middle, so photos run off both edges of the screen.
     track.scrollLeft = (track.scrollWidth - track.clientWidth) / 2;
     update();
-    track.addEventListener('scroll', update, { passive: true, signal: page.signal });
-    window.addEventListener('resize', update, { passive: true, signal: page.signal });
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
 
     // Drag with the mouse; touch screens already scroll the row natively.
     let startX = 0;
@@ -179,7 +168,6 @@ function initStrip() {
         track.classList.add('is-dragging');
         track.setPointerCapture(event.pointerId);
       },
-      { signal: page.signal },
     );
 
     track.addEventListener(
@@ -187,15 +175,14 @@ function initStrip() {
       (event) => {
         if (dragging) track.scrollLeft = startScroll - (event.clientX - startX);
       },
-      { signal: page.signal },
     );
 
     const stop = () => {
       dragging = false;
       track.classList.remove('is-dragging');
     };
-    track.addEventListener('pointerup', stop, { signal: page.signal });
-    track.addEventListener('pointercancel', stop, { signal: page.signal });
+    track.addEventListener('pointerup', stop);
+    track.addEventListener('pointercancel', stop);
   });
 }
 
@@ -205,7 +192,7 @@ function initDock() {
 
   const update = () => dock.classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.6);
   update();
-  window.addEventListener('scroll', update, { passive: true, signal: page.signal });
+  window.addEventListener('scroll', update, { passive: true });
 }
 
 function initOffer() {
@@ -224,11 +211,18 @@ function initOffer() {
   }
   if (!inDates || closed) return;
 
-  const timer = window.setTimeout(() => {
+  // The card waits until the visitor has scrolled a little, so it never covers
+  // the booking bar on the opening photo.
+  const show = () => {
+    if (window.scrollY < window.innerHeight * 0.4) return;
+    window.removeEventListener('scroll', show);
     card.hidden = false;
     requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('is-visible')));
-  }, 2500);
-  page.signal.addEventListener('abort', () => window.clearTimeout(timer));
+  };
+  window.setTimeout(() => {
+    window.addEventListener('scroll', show, { passive: true });
+    show();
+  }, 1500);
 
   card.querySelector('[data-offer-close]')?.addEventListener(
     'click',
@@ -241,7 +235,6 @@ function initOffer() {
         // See above.
       }
     },
-    { signal: page.signal },
   );
 }
 
@@ -256,16 +249,6 @@ function init() {
   initOffer();
 }
 
-document.addEventListener('astro:before-swap', () => {
-  page.abort();
-  page = new AbortController();
-  document.body.classList.remove('is-locked');
-});
-
-// The new page arrives without the class the reveal styles depend on.
-document.addEventListener('astro:after-swap', () => document.documentElement.classList.add('js'));
-
-// Fires on the first load and after every page change.
-document.addEventListener('astro:page-load', init);
+init();
 
 export {};

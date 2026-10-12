@@ -1,5 +1,5 @@
 ---
-// Small offer card in the bottom right corner. Content and dates live in src/data/offer.ts.
+// Small offer card in the bottom left corner. Content and dates live in src/data/offer.ts.
 import ArrowLink from './ArrowLink.astro';
 import { t, type Locale } from '@/i18n';
 import { offer } from '@/data/offer';
@@ -38,7 +38,8 @@ const text = offer.text[locale];
 <style>
   .offer {
     position: fixed;
-    right: clamp(0.75rem, 2vw, 1.75rem);
+    /* Bottom left: the RateParity widget uses the bottom right corner. */
+    left: clamp(0.75rem, 2vw, 1.75rem);
     bottom: clamp(0.75rem, 2vw, 1.75rem);
     z-index: 85;
     display: grid;

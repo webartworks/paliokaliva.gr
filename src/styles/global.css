@@ -475,9 +475,19 @@ a:focus-visible .media img {
   }
 }
 
-/* Soft cross-fade between pages */
+/* Soft cross-fade between pages, in browsers that support it */
+@view-transition {
+  navigation: auto;
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 0.5s;
   animation-timing-function: var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
 }

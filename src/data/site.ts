@@ -6,6 +6,8 @@ export const site = {
   mobile: { href: '+306974774379', label: '+30 697 477 4379' },
   whatsapp: '306974774379',
   bookingUrl: 'https://paliokalivavillage.reserve-online.net/',
+  // RateParity price comparison widget, as on the previous website. Set to '' to turn it off.
+  rateParityScript: 'https://code.rateparity.com/versions/installer.min.js',
   licence: '1017280',
   mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Paliokaliva+Village+Zakynthos',
   social: {

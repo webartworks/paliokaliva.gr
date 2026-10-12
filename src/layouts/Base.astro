@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from 'astro:transitions';
 import '@fontsource-variable/eb-garamond';
 import '@fontsource-variable/open-sans';
 import '@fontsource-variable/fira-code';
@@ -54,7 +53,6 @@ const canonical = new URL(localePath(locale, path), site.url).href;
     <meta name="theme-color" content="#f9f4ee" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-    <ClientRouter />
     <script is:inline>
       // Content is only held back for the reveal animations when scripts run.
       // If the main script has not started after 3 seconds, show everything.
@@ -76,5 +74,9 @@ const canonical = new URL(localePath(locale, path), site.url).href;
     <script>
       import '@/scripts/site';
     </script>
+    {
+      // Price comparison widget. It is tied to the live domain, so it only loads in the published site.
+      import.meta.env.PROD && site.rateParityScript && <script is:inline src={site.rateParityScript} defer />
+    }
   </body>
 </html>

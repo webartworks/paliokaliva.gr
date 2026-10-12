@@ -7,6 +7,7 @@ import BookingCta from '@/components/BookingCta.astro';
 import ArrowLink from '@/components/ArrowLink.astro';
 import { localePath, t, type Locale } from '@/i18n';
 import { routes } from '@/data/site';
+import { breadcrumbSchema } from '@/lib/seo';
 
 interface Props {
   locale: Locale;
@@ -18,7 +19,15 @@ const z = dict.zakynthosPage;
 const beachTypes = z.beaches.types as Record<string, string>;
 ---
 
-<Base locale={locale} path={routes.zakynthos} title={dict.nav.zakynthos} description={z.description} overHero>
+<Base
+  locale={locale}
+  path={routes.zakynthos}
+  title={dict.nav.zakynthos}
+  description={z.description}
+  overHero
+  image={heroImage}
+  jsonLd={[breadcrumbSchema(locale, [{ name: dict.nav.zakynthos, path: routes.zakynthos }])]}
+>
   <PageHero image={heroImage} alt={z.heroAlt} title={z.title} eyebrow={z.eyebrow} position="50% 40%" />
 
   <section class="zak-intro bg-cream">

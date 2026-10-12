@@ -9,6 +9,7 @@ import Gallery from '@/components/Gallery.astro';
 import ReservationForm from '@/components/ReservationForm.astro';
 import { t, type Locale } from '@/i18n';
 import { routes, site } from '@/data/site';
+import { breadcrumbSchema, restaurantSchema } from '@/lib/seo';
 
 interface Props {
   locale: Locale;
@@ -26,7 +27,15 @@ const photos = Object.keys(files)
   .map((path, i) => ({ image: files[path].default, alt: m.photoAlts[i] ?? m.eyebrow }));
 ---
 
-<Base locale={locale} path={routes.meraki} title={dict.nav.meraki} description={m.description} overHero>
+<Base
+  locale={locale}
+  path={routes.meraki}
+  title={dict.nav.meraki}
+  description={m.description}
+  overHero
+  image={heroImage}
+  jsonLd={[restaurantSchema(locale), breadcrumbSchema(locale, [{ name: dict.nav.meraki, path: routes.meraki }])]}
+>
   <PageHero image={heroImage} alt={m.heroAlt} title={m.title} eyebrow={m.eyebrow} position="50% 62%" />
 
   <section class="section bg-cream">

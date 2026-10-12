@@ -12,6 +12,7 @@ import BookingCta from '@/components/BookingCta.astro';
 import ArrowLink from '@/components/ArrowLink.astro';
 import { localePath, t, type Locale } from '@/i18n';
 import { routes } from '@/data/site';
+import { breadcrumbSchema } from '@/lib/seo';
 
 interface Props {
   locale: Locale;
@@ -22,7 +23,15 @@ const dict = t(locale);
 const a = dict.activitiesPage;
 ---
 
-<Base locale={locale} path={routes.activities} title={dict.nav.activities} description={a.description} overHero>
+<Base
+  locale={locale}
+  path={routes.activities}
+  title={dict.nav.activities}
+  description={a.description}
+  overHero
+  image={heroImage}
+  jsonLd={[breadcrumbSchema(locale, [{ name: dict.nav.activities, path: routes.activities }])]}
+>
   <PageHero
     image={heroImage}
     alt={a.heroAlt}

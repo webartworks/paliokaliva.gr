@@ -18,6 +18,7 @@ import BookingCta from '@/components/BookingCta.astro';
 import ArrowLink from '@/components/ArrowLink.astro';
 import { localePath, t, type Locale } from '@/i18n';
 import { routes } from '@/data/site';
+import { breadcrumbSchema } from '@/lib/seo';
 
 interface Props {
   locale: Locale;
@@ -29,7 +30,15 @@ const v = dict.villagePage;
 const awardImages = [awardBoutique, award2020, award2022];
 ---
 
-<Base locale={locale} path={routes.village} title={dict.nav.village} description={v.description} overHero>
+<Base
+  locale={locale}
+  path={routes.village}
+  title={dict.nav.village}
+  description={v.description}
+  overHero
+  image={heroImage}
+  jsonLd={[breadcrumbSchema(locale, [{ name: dict.nav.village, path: routes.village }])]}
+>
   <PageHero image={heroImage} alt={v.heroAlt} title={v.title} eyebrow={v.eyebrow} position="50% 55%" />
 
   <section class="village-intro bg-cream">

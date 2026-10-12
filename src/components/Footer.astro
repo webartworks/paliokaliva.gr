@@ -40,7 +40,7 @@ const socials = [
       <address>
         {f.address.map((line) => <span>{line}</span>)}
       </address>
-      <ArrowLink href={localePath(locale, routes.contact)} class="footer__directions">{f.directions}</ArrowLink>
+      <ArrowLink href={site.directionsUrl} class="footer__directions" external>{f.directions}</ArrowLink>
     </div>
 
     <div class="footer__col">

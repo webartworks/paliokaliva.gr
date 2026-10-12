@@ -9,6 +9,7 @@ import ArrowLink from '@/components/ArrowLink.astro';
 import { localePath, t, type Locale } from '@/i18n';
 import { baseAmenities, roomFacts, roomPhotos, roomSlugs } from '@/data/rooms';
 import { routes, site } from '@/data/site';
+import { breadcrumbSchema } from '@/lib/seo';
 
 interface Props {
   locale: Locale;
@@ -34,7 +35,15 @@ const rooms = roomSlugs.map((slug) => {
 });
 ---
 
-<Base locale={locale} path={routes.accommodation} title={dict.nav.accommodation} description={a.description} overHero>
+<Base
+  locale={locale}
+  path={routes.accommodation}
+  title={dict.nav.accommodation}
+  description={a.description}
+  overHero
+  image={heroImage}
+  jsonLd={[breadcrumbSchema(locale, [{ name: dict.nav.accommodation, path: routes.accommodation }])]}
+>
   <PageHero image={heroImage} alt={a.heroAlt} title={r.title} eyebrow={r.eyebrow} position="50% 35%" />
 
   <section class="section bg-cream">

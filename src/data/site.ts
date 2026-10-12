@@ -27,9 +27,14 @@ export const site = {
     privacyUpdated: '2026-10-12',
   },
   licence: '1017280',
-  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Paliokaliva+Village+Zakynthos',
+  // Exact position of the hotel, used for the maps and for search engines.
+  geo: { lat: 37.820286, lng: 20.850568 },
+  // Opens Google Maps with a pin on the hotel.
+  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=37.820286,20.850568',
+  // Opens Google Maps with the route from where the visitor is to the hotel.
+  directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=37.820286,20.850568',
   // The embedded map on the Contact page. It loads only after the visitor asks for it.
-  mapsEmbedUrl: 'https://www.google.com/maps?q=Paliokaliva+Village+Zakynthos&z=14&output=embed',
+  mapsEmbedUrl: 'https://www.google.com/maps?q=37.820286,20.850568&z=15&output=embed',
   social: {
     instagram: 'https://www.instagram.com/paliokaliva/',
     facebook: 'https://www.facebook.com/PaliokalivaZakynthos',
@@ -40,6 +45,8 @@ export const site = {
         | null,
   },
   meraki: {
+    // Exact position of the restaurant, used for search engines.
+    geo: { lat: 37.820095, lng: 20.850771 },
     // Set the menu URL (page or PDF) to show the "See the menu" button.
     menuUrl: null as string | null,
   },

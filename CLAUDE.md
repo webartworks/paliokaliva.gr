@@ -28,6 +28,7 @@ The developer's English is not strong: write to them in simple, clear English. T
 - `src/scripts/site.ts`: scroll reveals, header state, mobile menu, booking bar, photo strip, mobile bar, offer card.
 - `src/layouts/Base.astro`: page shell, meta tags, language alternates.
 - `src/lib/mail.ts`: sending through Postmark, plus validation helpers and the request limit. `src/lib/form.ts` holds the steps every form endpoint shares. The endpoints are `src/pages/api/reservation.ts` (Meraki table request) and `src/pages/api/contact.ts`. On the page side, `FormFrame` holds what every form shares and the form texts common to all forms are in the `form` group of the dictionaries.
+- `src/lib/seo.ts`: structured data for search engines (hotel, restaurant, breadcrumbs). `src/pages/sitemap.xml.ts` builds the sitemap from `routes` and the room list, so a new page added to `routes` is listed automatically. `public/` holds `robots.txt`, the icons and `og-default.jpg`, the general sharing image.
 - `.env.example`: the settings the forms need. The real `.env` is never committed.
 - `src/components/home/`: the homepage sections, one file each.
 - `src/components/accommodation/`: the Accommodation page and the room page. The thin files in `src/pages/accommodation/` and `src/pages/el/accommodation/` only choose the language.
@@ -43,6 +44,7 @@ The developer's English is not strong: write to them in simple, clear English. T
 - Two languages: English at `/`, Greek at `/el/`, with the same English slugs. Every new text needs both.
 - Use `localePath(locale, path)` for internal links and `routes` from `site.ts` for paths. URLs end with a slash.
 - Follow the homepage design in `_reference/design/UI/`. Colours and fonts come from the tokens in `global.css`; do not add new ones without asking.
+- Every page passes `title` and `description` to `Base`. Pages with an opening photo also pass it as `image` (it becomes the 1200 x 630 sharing image) and a `jsonLd` breadcrumb.
 - Photos go through `<Picture>` from `astro:assets` with `avif` and `webp`, inside a `.media` wrapper.
 - Motion is slow, soft and plays once: `data-reveal` for text, `data-reveal="image"` for photos, `--i` for a small delay between neighbours. Nothing loops or moves on its own. Reduced-motion settings must be respected.
 - Tone of the texts: calm and professional, warm, family-run. Do not invent facts about the hotel (prices, times, capacities); ask instead.
@@ -75,7 +77,7 @@ Waiting for the owner or the developer:
 - Privacy Policy: a draft written by Claude, not legal advice; the owner or their lawyer should approve it. The legal company name, VAT number and G.E.MI. number are empty in `site.legal`. When the policy changes, update `privacyUpdated` there.
 - Umami website ID is not set yet (`site.analytics.websiteId`).
 - Whether RateParity really stores cookies is not known; the consent gate is the cautious default.
-- The Google map on the Contact page loads only after the visitor clicks "Show the map". It searches for the hotel by name; check that the pin is on the hotel, or replace `mapsEmbedUrl` and `mapsUrl` in `site.ts` with exact links.
+- The Google map on the Contact page loads only after the visitor clicks "Show the map". Maps, directions and search data all use the coordinates in `site.geo`.
 - Distances on the Contact page come from the owner's text. "Bus Station 250 m" was written as "Bus stop".
 - Activities page: written in general terms on purpose, with no dates, times, prices or booking rules, until the owner sends those details. Each activity is a section of one page; separate pages can follow when there is more to say.
 - The Zakynthos page has no photos of the island, because none were supplied. It needs photos the hotel has the right to use (Navagio, Blue Caves, turtles, beaches, villages). Its facts come from the owner's text and were not checked against other sources.
@@ -83,4 +85,4 @@ Waiting for the owner or the developer:
 - Greek titles in EB Garamond look old-fashioned; the developer is deciding whether to keep it.
 - On phones the RateParity widget may overlap the Call / WhatsApp / Book bar; check on a test address.
 
-Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form, Our Village, Zakynthos, Gallery, Activities, Privacy Policy, and a 404 page. Still to build: the newsletter signup, redirects from the old site's addresses, a sitemap, hotel data for search engines and a social sharing image.
+Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form, Our Village, Zakynthos, Gallery, Activities, Privacy Policy, and a 404 page. Still to build: the newsletter signup and redirects from the old site's addresses.

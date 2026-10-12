@@ -10,6 +10,7 @@ import Location from './Location.astro';
 import Note from './Note.astro';
 import type { Locale } from '@/i18n';
 import { routes } from '@/data/site';
+import { hotelSchema } from '@/lib/seo';
 
 interface Props {
   locale: Locale;
@@ -18,7 +19,7 @@ interface Props {
 const { locale } = Astro.props;
 ---
 
-<Base locale={locale} path={routes.home} overHero>
+<Base locale={locale} path={routes.home} overHero jsonLd={[hotelSchema(locale)]}>
   <Hero locale={locale} />
   <Welcome locale={locale} />
   <Rooms locale={locale} />

@@ -2,13 +2,20 @@
 interface Props {
   href?: string;
   class?: string;
+  // True for links to other websites: they open in a new tab.
+  external?: boolean;
 }
 
-const { href, class: className } = Astro.props;
+const { href, class: className, external = false } = Astro.props;
 const Tag = href ? 'a' : 'span';
 ---
 
-<Tag class:list={['arrow-link', className]} href={href}>
+<Tag
+  class:list={['arrow-link', className]}
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener' : undefined}
+>
   <slot />
   <svg viewBox="0 0 30 5" aria-hidden="true" focusable="false">
     <path d="M0 2.47v-.657h27.858V0L30 2.142l-2.142 2.141V2.47H0Z"></path>

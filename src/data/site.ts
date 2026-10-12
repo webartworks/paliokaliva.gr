@@ -46,24 +46,3 @@ export const mainNav: RouteKey[] = [
   'zakynthos',
   'contact',
 ];
-
-export const roomSlugs = [
-  'studio',
-  'superior-studio',
-  'apartment',
-  'superior-apartment',
-  'villa',
-  'superior-villa',
-] as const;
-
-export type RoomSlug = (typeof roomSlugs)[number];
-
-// Size in m² and maximum guests, as published on the previous website.
-export const roomFacts: Record<RoomSlug, { size: number; guests: number }> = {
-  studio: { size: 40, guests: 3 },
-  'superior-studio': { size: 50, guests: 4 },
-  apartment: { size: 63, guests: 4 },
-  'superior-apartment': { size: 68, guests: 4 },
-  villa: { size: 83, guests: 5 },
-  'superior-villa': { size: 100, guests: 5 },
-};

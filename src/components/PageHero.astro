@@ -1,0 +1,120 @@
+---
+// The opening photo of an inner page, with the page title on it.
+import { Picture } from 'astro:assets';
+
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  title: string;
+  eyebrow?: string;
+  // Where the photo is anchored when it is cropped, for example "50% 30%".
+  position?: string;
+}
+
+const { image, alt, title, eyebrow, position = '50% 50%' } = Astro.props;
+---
+
+<section class="page-hero">
+  <div class="page-hero__media" style={`--position:${position}`}>
+    <Picture
+      src={image}
+      alt={alt}
+      formats={['avif', 'webp']}
+      widths={[640, 960, 1440, 1920]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+  <div class="container page-hero__content">
+    {eyebrow && <span class="eyebrow page-hero__eyebrow">{eyebrow}</span>}
+    <h1 class="page-hero__title"><span>{title}</span></h1>
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    display: grid;
+    align-items: end;
+    min-height: clamp(26rem, 78svh, 48rem);
+    color: var(--white);
+    background: var(--ink);
+    overflow: hidden;
+  }
+
+  .page-hero__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .page-hero__media :global(picture) {
+    display: block;
+    height: 100%;
+  }
+
+  .page-hero__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--position);
+    animation: page-hero-settle 3.2s var(--ease) both;
+  }
+
+  .page-hero__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgb(18 17 13 / 0.4), rgb(18 17 13 / 0) 30%),
+      linear-gradient(to top, rgb(18 17 13 / 0.62), rgb(18 17 13 / 0.1) 55%, rgb(18 17 13 / 0) 75%);
+  }
+
+  .page-hero__content {
+    position: relative;
+    display: grid;
+    gap: 1.25rem;
+    padding-block: calc(var(--header-h) + 2rem) clamp(2.5rem, 1.5rem + 4vw, 5rem);
+  }
+
+  .page-hero__eyebrow {
+    color: inherit;
+    animation: page-hero-fade 1.4s var(--ease) 0.3s both;
+  }
+
+  .page-hero__title {
+    overflow: hidden;
+    padding-bottom: 0.12em;
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .page-hero__title span {
+    display: block;
+    animation: page-hero-rise 1.5s var(--ease) 0.4s both;
+  }
+
+  @keyframes page-hero-settle {
+    from {
+      transform: scale(1.08);
+    }
+  }
+
+  @keyframes page-hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes page-hero-fade {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+  }
+</style>

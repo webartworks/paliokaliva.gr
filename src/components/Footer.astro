@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logoDark from '@/assets/logo/logo-dark.svg';
+import awardBoutique from '@/assets/images/award-boutique-2022.png';
 import award2020 from '@/assets/images/award-wlha-2020.jpg';
 import award2022 from '@/assets/images/award-wlha-2022.jpg';
 import ArrowLink from './ArrowLink.astro';
@@ -67,6 +68,7 @@ const socials = [
     </div>
 
     <ul class="footer__awards" aria-label={f.awards}>
+      <li><Image src={awardBoutique} alt={f.awardBoutique} height={200} loading="lazy" /></li>
       <li><Image src={award2020} alt={f.award2020} height={200} loading="lazy" /></li>
       <li><Image src={award2022} alt={f.award2022} height={200} loading="lazy" /></li>
     </ul>

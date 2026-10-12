@@ -1,0 +1,205 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import Gallery from '@/components/Gallery.astro';
+import AmenityList from '@/components/AmenityList.astro';
+import BookingCta from '@/components/BookingCta.astro';
+import RoomGrid from '@/components/RoomGrid.astro';
+import ArrowLink from '@/components/ArrowLink.astro';
+import { localePath, t, type Locale } from '@/i18n';
+import { baseAmenities, otherRooms, roomFacts, roomPhotos, type RoomSlug } from '@/data/rooms';
+import { routes, site } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+  slug: RoomSlug;
+}
+
+const { locale, slug } = Astro.props;
+const dict = t(locale);
+const r = dict.room;
+const room = dict.rooms.items[slug];
+const facts = roomFacts[slug];
+
+const photos = roomPhotos(slug).map((photo) => ({
+  image: photo.image,
+  alt: `${room.name}: ${r.kinds[photo.kind]}`,
+}));
+const [cover] = photos;
+
+const guests =
+  r.upTo.replace('{n}', String(facts.guests)) +
+  (facts.adults ? ` (${r.adults.replace('{n}', String(facts.adults))})` : '');
+
+const factRows = [
+  { label: r.facts.size, value: `${facts.size} m²` },
+  { label: r.facts.guests, value: guests },
+  { label: r.facts.layout, value: room.layout },
+  { label: r.facts.beds, value: room.beds },
+  { label: r.facts.bathroom, value: room.bathroom },
+];
+
+const amenities = [...baseAmenities, ...facts.extras];
+const accommodationUrl = localePath(locale, routes.accommodation);
+---
+
+<Base
+  locale={locale}
+  path={`${routes.accommodation}${slug}/`}
+  title={room.name}
+  description={`${room.intro} ${factRows[0].value}, ${guests.toLowerCase()}.`}
+  overHero
+>
+  <PageHero image={cover.image} alt={cover.alt} title={room.name} eyebrow={dict.rooms.eyebrow} />
+
+  <section class="section bg-cream">
+    <div class="container room-intro">
+      <div class="room-intro__text">
+        <p class="room-intro__lede" data-reveal>{room.intro}</p>
+        <div class="room-intro__body" data-reveal style="--i:1">
+          {room.description.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+
+      <aside class="room-facts" data-reveal style="--i:2">
+        <dl>
+          {
+            factRows.map((row) => (
+              <div>
+                <dt>{row.label}</dt>
+                <dd>{row.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <a class="btn" href={site.bookingUrl} target="_blank" rel="noopener">{dict.bookingCta.button}</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="room-gallery bg-cream">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{r.gallery}</span>
+        <h2 class="h2" data-reveal style="--i:1">{r.galleryTitle}</h2>
+      </div>
+      <div class="room-gallery__grid">
+        <Gallery locale={locale} photos={photos} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-linen">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{r.amenitiesEyebrow}</span>
+        <h2 class="h2" data-reveal style="--i:1">{r.amenitiesTitle}</h2>
+      </div>
+      <div class="room-amenities">
+        <AmenityList locale={locale} items={amenities} />
+      </div>
+    </div>
+  </section>
+
+  <BookingCta locale={locale} />
+
+  <section class="section bg-cream">
+    <div class="container">
+      <div class="room-more__head">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal>{r.more}</span>
+          <h2 class="h2" data-reveal style="--i:1">{r.moreTitle}</h2>
+        </div>
+        <div data-reveal style="--i:2">
+          <ArrowLink href={accommodationUrl}>{r.back}</ArrowLink>
+        </div>
+      </div>
+      <div class="room-more__grid">
+        <RoomGrid locale={locale} slugs={otherRooms(slug)} />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .room-intro {
+    display: grid;
+    gap: 3rem;
+  }
+
+  .room-intro__lede {
+    max-width: 34rem;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  .room-intro__body {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 38rem;
+    margin-top: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    text-wrap: pretty;
+  }
+
+  .room-facts {
+    display: grid;
+    gap: 2rem;
+    justify-items: start;
+    align-content: start;
+  }
+
+  .room-facts dl {
+    width: 100%;
+    margin: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .room-facts dl > div {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 1rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .room-facts dt {
+    padding-top: 0.2rem;
+    color: var(--brown);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .room-facts dd {
+    margin: 0;
+  }
+
+  .room-gallery {
+    padding-bottom: var(--section);
+  }
+
+  .room-gallery__grid,
+  .room-amenities,
+  .room-more__grid {
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+
+  .room-more__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem 3rem;
+  }
+
+  @media (min-width: 56em) {
+    .room-intro {
+      grid-template-columns: 1.25fr 1fr;
+      gap: clamp(3rem, 8vw, 7.5rem);
+    }
+  }
+</style>

@@ -20,14 +20,18 @@ The developer's English is not strong: write to them in simple, clear English. T
 ## Where things live
 
 - `src/i18n/en.ts` and `src/i18n/el.ts`: every text on the site. `el.ts` is typed against `en.ts`, so a missing Greek text is a type error.
-- `src/data/site.ts`: contact details, booking engine URL, social links, routes, menu order, room list with sizes and guest numbers.
+- `src/data/site.ts`: contact details, booking engine URL, social links, routes, menu order.
+- `src/data/rooms.ts`: the six room types with size, guests and extra facilities, and the list of facilities found in every house.
 - `src/data/offer.ts`: the offer card. Set `active`, the texts and the dates. Change `id` for each new offer.
 - `src/styles/global.css`: colours, type sizes, spacing, shared classes (`.eyebrow`, `.h2`, `.btn`, `.arrow-link`, `.media`) and the motion rules.
 - `src/scripts/site.ts`: scroll reveals, header state, mobile menu, booking bar, photo strip, mobile bar, offer card.
 - `src/layouts/Base.astro`: page shell, meta tags, language alternates.
 - `src/components/home/`: the homepage sections, one file each.
+- `src/components/accommodation/`: the Accommodation page and the room page. The thin files in `src/pages/accommodation/` and `src/pages/el/accommodation/` only choose the language.
+- Shared page parts: `PageHero` (opening photo of an inner page), `Gallery` (photo mosaic with a large viewer), `RoomCard` / `RoomGrid`, `AmenityList`, `BookingCta`.
 - `src/pages/[...path].astro`: placeholder for every page that is not built yet. When a real page is added, remove its entry from the list there.
 - `src/assets/images/`: photos used on the site, already cropped and resized.
+- `src/assets/images/rooms/<room>/`: gallery photos of each room, named `NN-kind.jpg` (for example `02-bedroom.jpg`). They show in file name order, the first is the page's opening photo, and the kind (bedroom, living, kitchen, dining, bathroom, interior, detail) gives the alt text. Adding a file adds it to the gallery.
 - `_reference/`: the client's source material (design, brand book, texts, photos, videos). It is not in git. Never write into it; copy what is needed into `src/assets/`.
 
 ## Rules
@@ -54,13 +58,13 @@ The developer's English is not strong: write to them in simple, clear English. T
 
 Waiting for the owner or the developer:
 
-- Room sizes and guest numbers come from the old site and need confirming. Superior Villa is set to 5 guests for now.
+- Room facts (sizes, guests, beds, bathrooms, facilities) come from the old site and need confirming. Superior Villa is set to 5 guests for now. "CD & DVD player" from the old facilities list was left out as probably outdated.
+- Two photos in the client's folders are AI-generated (file names start with `Gemini_Generated_Image`). They are not used; ask before using them.
 - Reception hours and the TripAdvisor link (both left out of the footer until confirmed).
 - Whether the mobile number has WhatsApp.
 - Meraki menu: the "See the menu" button is hidden until `site.meraki.menuUrl` is set.
 - Activity details (pottery workshop, wine tasting): the current texts are drafts without facts.
 - Greek titles in EB Garamond look old-fashioned; the developer is deciding whether to keep it.
 - On phones the RateParity widget may overlap the Call / WhatsApp / Book bar; check on a test address.
-- The Boutique Hotel Awards badge is missing from the footer until its image is supplied again.
 
-Still to build: all inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.
+Built: homepage, Accommodation, six room pages. Still to build: the other inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.

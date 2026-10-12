@@ -1,0 +1,67 @@
+---
+// Closing band of a page: a short invitation and the way to book.
+import { t, type Locale } from '@/i18n';
+import { site } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = t(locale).bookingCta;
+---
+
+<section class="cta">
+  <div class="container cta__inner">
+    <span class="eyebrow" data-reveal>{c.eyebrow}</span>
+    <h2 class="h2" data-reveal style="--i:1">{c.title}</h2>
+    <p data-reveal style="--i:2">{c.body}</p>
+    <a class="btn btn--solid-light" href={site.bookingUrl} target="_blank" rel="noopener" data-reveal style="--i:3">
+      {c.button}
+    </a>
+    <p class="cta__phone" data-reveal style="--i:4">
+      {c.or} <a href={`tel:${site.phone.href}`}>{site.phone.label}</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding-block: var(--section);
+    background: var(--brown);
+    color: var(--cream);
+    text-align: center;
+  }
+
+  .cta__inner {
+    display: grid;
+    justify-items: center;
+    gap: 1.25rem;
+  }
+
+  .cta .eyebrow {
+    margin-bottom: 1rem;
+    color: inherit;
+    opacity: 0.9;
+  }
+
+  .cta .h2 {
+    color: inherit;
+  }
+
+  .cta p {
+    font-weight: 400;
+  }
+
+  .cta .btn {
+    margin-top: 1.5rem;
+  }
+
+  .cta__phone {
+    font-size: var(--fs-small);
+  }
+
+  .cta__phone a {
+    border-bottom: 1px solid rgb(249 244 238 / 0.6);
+  }
+</style>

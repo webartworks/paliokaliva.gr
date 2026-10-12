@@ -1,5 +1,5 @@
 // Small behaviours shared by every page: scroll reveals, header state, mobile menu,
-// booking bar, photo strip, mobile dock and the offer card. No animation library.
+// booking bar, photo strip, photo viewer, mobile dock and the offer card. No animation library.
 
 declare global {
   interface Window {
@@ -238,6 +238,68 @@ function initOffer() {
   );
 }
 
+function initLightbox() {
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox-dialog]');
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-lightbox]'));
+  const image = dialog?.querySelector<HTMLImageElement>('[data-lightbox-image]');
+  const count = dialog?.querySelector<HTMLElement>('[data-lightbox-count]');
+  if (!dialog || !image || links.length === 0 || typeof dialog.showModal !== 'function') return;
+
+  let current = 0;
+
+  const show = (index: number) => {
+    current = (index + links.length) % links.length;
+    const link = links[current];
+    image.classList.add('is-loading');
+    image.onload = () => image.classList.remove('is-loading');
+    image.src = link.href;
+    image.alt = link.dataset.alt ?? '';
+    if (count) {
+      count.textContent = (dialog.dataset.counter ?? '{n} / {total}')
+        .replace('{n}', String(current + 1))
+        .replace('{total}', String(links.length));
+    }
+  };
+
+  links.forEach((link, index) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      show(index);
+      dialog.showModal();
+    });
+  });
+
+  dialog.querySelector('[data-lightbox-prev]')?.addEventListener('click', () => show(current - 1));
+  dialog.querySelector('[data-lightbox-next]')?.addEventListener('click', () => show(current + 1));
+  dialog.querySelector('[data-lightbox-close]')?.addEventListener('click', () => dialog.close());
+
+  dialog.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') show(current - 1);
+    if (event.key === 'ArrowRight') show(current + 1);
+  });
+
+  // A click on the dark area around the photo closes the viewer.
+  dialog.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    if (target === dialog || target.tagName === 'FIGURE') dialog.close();
+  });
+
+  // Swipe left or right on touch screens.
+  let touchX = 0;
+  dialog.addEventListener('touchstart', (event) => (touchX = event.touches[0].clientX), { passive: true });
+  dialog.addEventListener(
+    'touchend',
+    (event) => {
+      const moved = event.changedTouches[0].clientX - touchX;
+      if (Math.abs(moved) > 50) show(current + (moved < 0 ? 1 : -1));
+    },
+    { passive: true },
+  );
+
+  // Give the page back its scroll position and focus when the viewer closes.
+  dialog.addEventListener('close', () => links[current]?.focus());
+}
+
 function init() {
   document.documentElement.classList.add('js');
   initReveal();
@@ -247,6 +309,7 @@ function init() {
   initStrip();
   initDock();
   initOffer();
+  initLightbox();
 }
 
 init();

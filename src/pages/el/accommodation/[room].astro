@@ -1,0 +1,12 @@
+---
+import RoomPage from '@/components/accommodation/RoomPage.astro';
+import { roomSlugs, type RoomSlug } from '@/data/rooms';
+
+export function getStaticPaths() {
+  return roomSlugs.map((room) => ({ params: { room } }));
+}
+
+const { room } = Astro.params as { room: RoomSlug };
+---
+
+<RoomPage locale="el" slug={room} />

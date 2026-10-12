@@ -1,0 +1,66 @@
+# Paliokaliva Village website
+
+Website for Paliokaliva Village, a boutique hotel of 18 stone houses in Tragaki, Zakynthos (paliokaliva.gr). Built by Web Artworks for the hotel owner. It replaces an older PHP site.
+
+The developer's English is not strong: write to them in simple, clear English. Text for the website itself must be polished. Greek text is checked by the developer.
+
+## Commands
+
+- `pnpm dev` starts the dev server.
+- `pnpm build` builds the static site into `dist/`. The first build is slow because it generates the images; later builds reuse the cache.
+- Use pnpm, not npm. Astro 5 on Node 20 or newer (Astro 6+ needs Node 22).
+
+## Stack and hosting
+
+- Astro, static output, no CMS. The developer edits content in the code.
+- Deployed on the developer's Coolify server.
+- No UI framework and no animation library. Plain CSS and one small script.
+- Fonts are self-hosted through `@fontsource-variable`: EB Garamond (titles), Open Sans (body), Fira Code (small quotes).
+
+## Where things live
+
+- `src/i18n/en.ts` and `src/i18n/el.ts`: every text on the site. `el.ts` is typed against `en.ts`, so a missing Greek text is a type error.
+- `src/data/site.ts`: contact details, booking engine URL, social links, routes, menu order, room list with sizes and guest numbers.
+- `src/data/offer.ts`: the offer card. Set `active`, the texts and the dates. Change `id` for each new offer.
+- `src/styles/global.css`: colours, type sizes, spacing, shared classes (`.eyebrow`, `.h2`, `.btn`, `.arrow-link`, `.media`) and the motion rules.
+- `src/scripts/site.ts`: scroll reveals, header state, mobile menu, booking bar, photo strip, mobile bar, offer card.
+- `src/layouts/Base.astro`: page shell, meta tags, language alternates.
+- `src/components/home/`: the homepage sections, one file each.
+- `src/pages/[...path].astro`: placeholder for every page that is not built yet. When a real page is added, remove its entry from the list there.
+- `src/assets/images/`: photos used on the site, already cropped and resized.
+- `_reference/`: the client's source material (design, brand book, texts, photos, videos). It is not in git. Never write into it; copy what is needed into `src/assets/`.
+
+## Rules
+
+- Two languages: English at `/`, Greek at `/el/`, with the same English slugs. Every new text needs both.
+- Use `localePath(locale, path)` for internal links and `routes` from `site.ts` for paths. URLs end with a slash.
+- Follow the homepage design in `_reference/design/UI/`. Colours and fonts come from the tokens in `global.css`; do not add new ones without asking.
+- Photos go through `<Picture>` from `astro:assets` with `avif` and `webp`, inside a `.media` wrapper.
+- Motion is slow, soft and plays once: `data-reveal` for text, `data-reveal="image"` for photos, `--i` for a small delay between neighbours. Nothing loops or moves on its own. Reduced-motion settings must be respected.
+- Tone of the texts: calm and professional, warm, family-run. Do not invent facts about the hotel (prices, times, capacities); ask instead.
+
+## Decisions
+
+- Booking: "Book now" and the booking bar send visitors to the external engine at `paliokalivavillage.reserve-online.net`. Passing dates and guests in the URL is not yet tested against the live engine.
+- RateParity price widget: one script, loaded only in production builds. It appears in the bottom right corner, so the offer card sits bottom left. It is expected to work only on the live domain.
+- Page transitions use the browser's native `@view-transition`. Do not add Astro's `ClientRouter`: it would remove the RateParity widget when the visitor changes page.
+- Offers: there is no offers page. A running offer is shown with the offer card.
+- Meraki Restaurant is a separate business next to the hotel, with its own logo and photos. Table reservations will be an email form on the hotel site.
+- Forms (contact, Meraki reservation) will send email through Postmark. This needs a server endpoint, which is not built yet.
+- Newsletter: a simple hosted service (for example Brevo or MailerLite) is planned; not chosen yet.
+- Menu: Our Village, Accommodation, Village Life, Meraki Restaurant, Activities, Zakynthos, Contact. Gallery and Privacy Policy are in the footer. Six room types, each with its own page.
+
+## Open points
+
+Waiting for the owner or the developer:
+
+- Room sizes and guest numbers come from the old site and need confirming. Superior Villa is set to 5 guests for now.
+- Reception hours and the TripAdvisor link (both left out of the footer until confirmed).
+- Whether the mobile number has WhatsApp.
+- Meraki menu: the "See the menu" button is hidden until `site.meraki.menuUrl` is set.
+- Activity details (pottery workshop, wine tasting): the current texts are drafts without facts.
+- Greek titles in EB Garamond look old-fashioned; the developer is deciding whether to keep it.
+- On phones the RateParity widget may overlap the Call / WhatsApp / Book bar; check on a test address.
+- The Boutique Hotel Awards badge is missing from the footer until its image is supplied again.
+
+Still to build: all inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.

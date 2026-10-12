@@ -46,7 +46,7 @@ The developer's English is not strong: write to them in simple, clear English. T
 - Follow the homepage design in `_reference/design/UI/`. Colours and fonts come from the tokens in `global.css`; do not add new ones without asking.
 - Every page passes `title` and `description` to `Base`. Pages with an opening photo also pass it as `image` (it becomes the 1200 x 630 sharing image) and a `jsonLd` breadcrumb.
 - Photos go through `<Picture>` from `astro:assets` with `formats={imageFormats}` (from `src/lib/images.ts`), inside a `.media` wrapper. The built site offers AVIF and WebP; `pnpm dev` offers WebP only, because the dev server re-encodes AVIF on every request and takes seconds per photo.
-- Motion is slow, soft and plays once: `data-reveal` for text, `data-reveal="image"` for photos, `--i` for a small delay between neighbours. Nothing loops or moves on its own. Reduced-motion settings must be respected.
+- Motion is slow, soft and plays once: `data-reveal` for text (a fade with a very small drift), `data-reveal="image"` for photos (a feathered curtain with a slight zoom), `--i` for a small delay between neighbours. Titles fade in; nothing rises, bounces or loops. Reduced-motion settings must be respected. The developer found the first, stronger version "too much" and chose this calmer one, so do not make motion more noticeable without asking.
 - Tone of the texts: calm and professional, warm, family-run. Do not invent facts about the hotel (prices, times, capacities); ask instead.
 
 ## Decisions

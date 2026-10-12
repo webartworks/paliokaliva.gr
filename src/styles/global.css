@@ -39,9 +39,10 @@
   /* Motion: slow, soft, never bouncing */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  /* Arrives quickly, then settles very gently. Used for the photo reveals. */
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
   --t-fast: 0.35s;
   --t-base: 0.9s;
-  --t-slow: 1.4s;
 }
 
 @media (max-width: 47.99em) {
@@ -488,12 +489,12 @@ a:hover > .arrow-link svg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1.6s var(--ease);
+  transition: transform 2.6s var(--ease-settle);
 }
 
 a:hover .media img,
 a:focus-visible .media img {
-  transform: scale(1.035);
+  transform: scale(1.02);
 }
 
 /* --------------------------------------------------------------------------
@@ -503,11 +504,11 @@ a:focus-visible .media img {
 
 .js [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 1.125rem, 0);
+  transform: translate3d(0, 0.5rem, 0);
   transition:
-    opacity var(--t-base) var(--ease),
-    transform 1.2s var(--ease);
-  transition-delay: calc(var(--i, 0) * 110ms);
+    opacity 1.3s var(--ease),
+    transform 1.6s var(--ease);
+  transition-delay: calc(var(--i, 0) * 70ms);
 }
 
 .js [data-reveal].is-in {
@@ -515,9 +516,10 @@ a:focus-visible .media img {
   transform: none;
 }
 
-/* Photos open like a slow curtain while the image settles into place.
-   The curtain is on the picture inside, never on the element itself: Chrome treats
-   an element that is fully clipped as not visible, so its reveal would never start. */
+/* Photos open like a soft curtain while the image settles into place: a mask with a
+   feathered edge slides down over the picture.
+   The mask is on the picture inside, never on the element itself: Chrome treats an
+   element that is fully hidden as not visible, so its reveal would never start. */
 .js [data-reveal='image'] {
   opacity: 1;
   transform: none;
@@ -525,17 +527,28 @@ a:focus-visible .media img {
 }
 
 .js [data-reveal='image'] > picture {
-  clip-path: inset(0 0 100% 0);
-  transition: clip-path var(--t-slow) var(--ease-in-out);
-  transition-delay: calc(var(--i, 0) * 110ms);
+  --curtain: linear-gradient(to bottom, #000 45%, transparent 60%);
+  -webkit-mask-image: var(--curtain);
+  mask-image: var(--curtain);
+  -webkit-mask-size: 100% 300%;
+  mask-size: 100% 300%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: 0 100%;
+  mask-position: 0 100%;
+  transition:
+    -webkit-mask-position 2.2s var(--ease-settle),
+    mask-position 2.2s var(--ease-settle);
+  transition-delay: calc(var(--i, 0) * 90ms);
 }
 
 .js [data-reveal='image'].is-in > picture {
-  clip-path: inset(0);
+  -webkit-mask-position: 0 0;
+  mask-position: 0 0;
 }
 
 .js [data-reveal='image'] img {
-  transform: scale(1.08);
+  transform: scale(1.05);
 }
 
 .js [data-reveal='image'].is-in img {
@@ -544,7 +557,7 @@ a:focus-visible .media img {
 
 .js a:hover [data-reveal='image'].is-in img,
 .js a:focus-visible [data-reveal='image'].is-in img {
-  transform: scale(1.035);
+  transform: scale(1.02);
 }
 
 /* Thin hand-drawn lines draw themselves once. */
@@ -597,11 +610,14 @@ a:focus-visible .media img {
     transition-delay: 0s !important;
   }
 
-  .js [data-reveal],
-  .js [data-reveal='image'] > picture {
+  .js [data-reveal] {
     opacity: 1;
     transform: none;
-    clip-path: none;
+  }
+
+  .js [data-reveal='image'] > picture {
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .js [data-reveal='image'] img,

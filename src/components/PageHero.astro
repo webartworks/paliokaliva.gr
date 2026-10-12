@@ -59,7 +59,7 @@ const { image, alt, title, eyebrow, position = '50% 50%' } = Astro.props;
     height: 100%;
     object-fit: cover;
     object-position: var(--position);
-    animation: page-hero-settle 3.2s var(--ease) both;
+    animation: page-hero-settle 2.6s var(--ease) both;
   }
 
   .page-hero__media::after {
@@ -80,11 +80,10 @@ const { image, alt, title, eyebrow, position = '50% 50%' } = Astro.props;
 
   .page-hero__eyebrow {
     color: inherit;
-    animation: page-hero-fade 1.4s var(--ease) 0.3s both;
+    animation: page-hero-fade 1.6s var(--ease) 0.6s both;
   }
 
   .page-hero__title {
-    overflow: hidden;
     padding-bottom: 0.12em;
     font-family: var(--serif);
     font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4rem);
@@ -96,26 +95,25 @@ const { image, alt, title, eyebrow, position = '50% 50%' } = Astro.props;
 
   .page-hero__title span {
     display: block;
-    animation: page-hero-rise 1.5s var(--ease) 0.4s both;
+    animation: page-hero-rise 1.8s var(--ease) 0.25s both;
   }
 
   @keyframes page-hero-settle {
     from {
-      transform: scale(1.08);
+      transform: scale(1.03);
     }
   }
 
   @keyframes page-hero-rise {
     from {
       opacity: 0;
-      transform: translateY(100%);
+      transform: translateY(0.5rem);
     }
   }
 
   @keyframes page-hero-fade {
     from {
       opacity: 0;
-      transform: translateY(0.75rem);
     }
   }
 </style>

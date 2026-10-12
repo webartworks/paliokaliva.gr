@@ -62,7 +62,7 @@ const h = t(locale).hero;
     height: 100%;
     object-fit: cover;
     object-position: 50% 50%;
-    animation: hero-settle 3.2s var(--ease) both;
+    animation: hero-settle 2.6s var(--ease) both;
   }
 
   /* Soft shade so the logo, menu and title stay readable on the photo. */
@@ -95,50 +95,43 @@ const h = t(locale).hero;
 
   .hero__line {
     display: block;
-    overflow: hidden;
     padding-bottom: 0.12em;
   }
 
   .hero__line > span {
     display: block;
-    animation: hero-rise 1.5s var(--ease) both;
-    animation-delay: 0.35s;
-  }
-
-  .hero__line:nth-child(2) > span {
-    animation-delay: 0.5s;
+    animation: hero-rise 1.8s var(--ease) 0.25s both;
   }
 
   .hero__subtitle {
     margin-top: clamp(1rem, 0.6rem + 1.4vw, 1.75rem);
     font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
-    animation: hero-fade 1.4s var(--ease) 0.9s both;
+    animation: hero-fade 1.6s var(--ease) 0.6s both;
   }
 
   .hero__booking {
     width: min(47.5rem, 100%);
     margin-top: clamp(2rem, 1.2rem + 3vw, 3.25rem);
     text-align: left;
-    animation: hero-fade 1.4s var(--ease) 1.15s both;
+    animation: hero-fade 1.6s var(--ease) 0.9s both;
   }
 
   @keyframes hero-settle {
     from {
-      transform: scale(1.08);
+      transform: scale(1.03);
     }
   }
 
   @keyframes hero-rise {
     from {
       opacity: 0;
-      transform: translateY(100%);
+      transform: translateY(0.5rem);
     }
   }
 
   @keyframes hero-fade {
     from {
       opacity: 0;
-      transform: translateY(0.75rem);
     }
   }
 </style>

@@ -3,41 +3,18 @@
 // to the guest (Reply-To: the hotel).
 import type { APIRoute } from 'astro';
 import { MAIL_TO } from 'astro:env/server';
-import { locales, t, type Locale } from '@/i18n';
-import { allowRequest, isEmail, json, MailNotConfiguredError, oneLine, sendMail } from '@/lib/mail';
+import { t } from '@/i18n';
+import { consented, fill, readSubmission, text, withinLimit } from '@/lib/form';
+import { isEmail, json, MailNotConfiguredError, oneLine, sendMail } from '@/lib/mail';
 
 export const prerender = false;
 
 const MAX_GUESTS = 20;
 
-function text(value: unknown, max: number): string {
-  return typeof value === 'string' ? value.trim().slice(0, max) : '';
-}
-
-function fill(template: string, values: Record<string, string>): string {
-  return template.replace(/\{(\w+)\}/g, (_, key: string) => values[key] ?? '');
-}
-
-export const POST: APIRoute = async ({ request, clientAddress, url }) => {
-  // Only accept requests sent from the site's own pages.
-  const origin = request.headers.get('origin');
-  if (origin && new URL(origin).host !== url.host) return json({ ok: false, error: 'server' }, 403);
-
-  let body: Record<string, unknown>;
-  try {
-    body = await request.json();
-  } catch {
-    return json({ ok: false, error: 'validation', fields: [] }, 400);
-  }
-
-  const locale: Locale = locales.includes(body.locale as Locale) ? (body.locale as Locale) : 'en';
-  const r = t(locale).reservation;
-
-  // Two quiet checks against bots: a field people never see, and a form sent
-  // faster than a person can fill it. Both get a normal-looking answer.
-  const startedAt = Number(body.startedAt);
-  const tooFast = Number.isFinite(startedAt) && Date.now() - startedAt < 3000;
-  if (text(body.website, 200) !== '' || tooFast) return json({ ok: true });
+export const POST: APIRoute = async (context) => {
+  const submission = await readSubmission(context);
+  if (submission instanceof Response) return submission;
+  const { body, locale } = submission;
 
   const data = {
     name: oneLine(text(body.name, 100)),
@@ -60,16 +37,10 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
   }
   if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(data.time)) invalid.push('time');
   if (!Number.isInteger(data.guests) || data.guests < 1 || data.guests > MAX_GUESTS) invalid.push('guests');
-  if (body.consent !== true && body.consent !== 'on') invalid.push('consent');
+  if (!consented(body.consent)) invalid.push('consent');
   if (invalid.length > 0) return json({ ok: false, error: 'validation', fields: invalid }, 400);
 
-  let visitor = 'unknown';
-  try {
-    visitor = clientAddress;
-  } catch {
-    // Some hosts do not pass the visitor address; all such requests then share one limit.
-  }
-  if (!allowRequest(`reservation:${visitor}`)) return json({ ok: false, error: 'rate' }, 429);
+  if (!withinLimit(context, 'reservation')) return json({ ok: false, error: 'rate' }, 429);
 
   const guests = String(data.guests);
   const details = [
@@ -97,12 +68,13 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
 
   // The guest's copy repeats only the booking details, never their free text,
   // so the form cannot be used to send someone else an arbitrary message.
+  const receipt = t(locale).reservation.email;
   try {
     await sendMail({
       to: data.email,
       replyTo: MAIL_TO,
-      subject: r.email.subject,
-      text: fill(r.email.body, { name: data.name, date: data.date, time: data.time, guests }),
+      subject: receipt.subject,
+      text: fill(receipt.body, { name: data.name, date: data.date, time: data.time, guests }),
       tag: 'meraki-reservation-receipt',
     });
   } catch (error) {

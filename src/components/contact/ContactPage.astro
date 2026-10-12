@@ -1,0 +1,315 @@
+---
+import heroImage from '@/assets/images/location.jpg';
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import ContactForm from '@/components/ContactForm.astro';
+import BookingCta from '@/components/BookingCta.astro';
+import ArrowLink from '@/components/ArrowLink.astro';
+import { t, type Locale } from '@/i18n';
+import { routes, site } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dict = t(locale);
+const c = dict.contactPage;
+const loc = dict.location;
+
+const socials = [
+  { label: 'Instagram', href: site.social.instagram },
+  { label: 'Facebook', href: site.social.facebook },
+  { label: 'TripAdvisor', href: site.social.tripadvisor },
+].filter((s): s is { label: string; href: string } => Boolean(s.href));
+---
+
+<Base locale={locale} path={routes.contact} title={dict.nav.contact} description={c.description} overHero>
+  <PageHero image={heroImage} alt={c.heroAlt} title={c.title} eyebrow={c.eyebrow} position="50% 45%" />
+
+  <section class="section bg-cream">
+    <div class="container contact">
+      <div class="contact__details">
+        <p class="contact__intro" data-reveal>{c.intro}</p>
+        <h2 class="h3" data-reveal style="--i:1">{c.detailsTitle}</h2>
+        <dl class="contact__list" data-reveal style="--i:2">
+          <div>
+            <dt>{c.phone}</dt>
+            <dd><a href={`tel:${site.phone.href}`}>{site.phone.label}</a></dd>
+          </div>
+          <div>
+            <dt>{c.mobile}</dt>
+            <dd><a href={`tel:${site.mobile.href}`}>{site.mobile.label}</a></dd>
+          </div>
+          <div>
+            <dt>{c.whatsapp}</dt>
+            <dd>
+              <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener">{c.whatsappLink}</a>
+            </dd>
+          </div>
+          <div>
+            <dt>{c.email}</dt>
+            <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+          </div>
+          <div>
+            <dt>{c.address}</dt>
+            <dd>
+              <address>{dict.footer.address.map((line) => <span>{line}</span>)}</address>
+            </dd>
+          </div>
+          <div>
+            <dt>{c.follow}</dt>
+            <dd class="contact__social">
+              {
+                socials.map((s) => (
+                  <a href={s.href} target="_blank" rel="noopener">
+                    {s.label}
+                  </a>
+                ))
+              }
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="contact__form" data-reveal style="--i:2">
+        <h2 class="h2">{c.formTitle}</h2>
+        <ContactForm locale={locale} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-linen" id="location">
+    <div class="container">
+      <div class="location-grid">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal>{loc.eyebrow}</span>
+          <h2 class="h2" data-reveal style="--i:1">{loc.title}</h2>
+          <p class="lede" data-reveal style="--i:2">{loc.body}</p>
+
+          <h3 class="h3 location-grid__subtitle" data-reveal style="--i:3">{c.distancesTitle}</h3>
+          <dl class="distances" data-reveal style="--i:4">
+            {
+              c.distances.map(([place, distance]) => (
+                <div>
+                  <dt>{place}</dt>
+                  <dd>{distance}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+
+        <div class="map" data-reveal style="--i:2">
+          <div class="map__frame" data-map data-src={site.mapsEmbedUrl} data-title={c.map.title}>
+            <div class="map__ask">
+              <p>{c.map.note}</p>
+              <button class="btn" type="button" data-map-show>{c.map.show}</button>
+            </div>
+          </div>
+          <ArrowLink href={site.mapsUrl}>{c.map.open}</ArrowLink>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-reveal>{c.gettingHere.eyebrow}</span>
+        <h2 class="h2" data-reveal style="--i:1">{c.gettingHere.title}</h2>
+      </div>
+      <ul class="ways">
+        {
+          c.gettingHere.items.map((item, i) => (
+            <li data-reveal style={`--i:${i}`}>
+              <h3 class="h3">{item.name}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <BookingCta locale={locale} />
+</Base>
+
+<style>
+  .contact {
+    display: grid;
+    gap: 3.5rem;
+    align-items: start;
+  }
+
+  .contact__intro {
+    max-width: 30rem;
+    margin-bottom: clamp(2rem, 1.5rem + 2vw, 3rem);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+
+  .contact__list {
+    margin: 1.5rem 0 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .contact__list > div {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 1rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .contact__list dt {
+    padding-top: 0.2rem;
+    color: var(--brown);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .contact__list dd {
+    margin: 0;
+  }
+
+  .contact__list address span {
+    display: block;
+  }
+
+  .contact__list a {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+    transition: background-size 0.6s var(--ease);
+  }
+
+  .contact__list a:hover,
+  .contact__list a:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  .contact__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+  }
+
+  .contact__form {
+    display: grid;
+    gap: 2.25rem;
+  }
+
+  .location-grid {
+    display: grid;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .location-grid__subtitle {
+    margin-top: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  }
+
+  .distances {
+    width: 100%;
+    max-width: 30rem;
+    margin: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .distances > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .distances dd {
+    margin: 0;
+    color: var(--brown);
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  .map {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+
+  .map__frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--sand);
+  }
+
+  .map__frame :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .map__ask {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .map__ask p {
+    max-width: 22rem;
+    font-size: var(--fs-small);
+  }
+
+  .ways {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+
+  .ways li {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .ways p {
+    max-width: 24rem;
+    text-wrap: pretty;
+  }
+
+  @media (min-width: 56em) {
+    .contact {
+      grid-template-columns: 1fr 1.2fr;
+      gap: clamp(3rem, 8vw, 7.5rem);
+    }
+
+    .location-grid {
+      grid-template-columns: 1fr 1.2fr;
+      gap: clamp(3rem, 8vw, 7.5rem);
+    }
+
+    .map {
+      position: sticky;
+      top: 6rem;
+    }
+
+    .ways {
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1.5rem, 3vw, 2.75rem);
+    }
+  }
+</style>

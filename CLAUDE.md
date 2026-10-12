@@ -27,7 +27,7 @@ The developer's English is not strong: write to them in simple, clear English. T
 - `src/styles/global.css`: colours, type sizes, spacing, shared classes (`.eyebrow`, `.h2`, `.btn`, `.arrow-link`, `.media`) and the motion rules.
 - `src/scripts/site.ts`: scroll reveals, header state, mobile menu, booking bar, photo strip, mobile bar, offer card.
 - `src/layouts/Base.astro`: page shell, meta tags, language alternates.
-- `src/lib/mail.ts`: sending through Postmark, plus validation helpers and the request limit. `src/pages/api/reservation.ts` is the Meraki table request endpoint; a contact form should follow the same pattern.
+- `src/lib/mail.ts`: sending through Postmark, plus validation helpers and the request limit. `src/lib/form.ts` holds the steps every form endpoint shares. The endpoints are `src/pages/api/reservation.ts` (Meraki table request) and `src/pages/api/contact.ts`. On the page side, `FormFrame` holds what every form shares and the form texts common to all forms are in the `form` group of the dictionaries.
 - `.env.example`: the settings the forms need. The real `.env` is never committed.
 - `src/components/home/`: the homepage sections, one file each.
 - `src/components/accommodation/`: the Accommodation page and the room page. The thin files in `src/pages/accommodation/` and `src/pages/el/accommodation/` only choose the language.
@@ -69,8 +69,10 @@ Waiting for the owner or the developer:
 - Meraki menu: the "See the menu" button is hidden until `site.meraki.menuUrl` is set.
 - Meraki opening season, hours and its own phone number are unknown; the page shows the hotel phone and the form accepts any time.
 - The Postmark token is not set yet, so real sending has not been tested.
+- The Google map on the Contact page loads only after the visitor clicks "Show the map". It searches for the hotel by name; check that the pin is on the hotel, or replace `mapsEmbedUrl` and `mapsUrl` in `site.ts` with exact links.
+- Distances on the Contact page come from the owner's text. "Bus Station 250 m" was written as "Bus stop".
 - Activity details (pottery workshop, wine tasting): the current texts are drafts without facts.
 - Greek titles in EB Garamond look old-fashioned; the developer is deciding whether to keep it.
 - On phones the RateParity widget may overlap the Call / WhatsApp / Book bar; check on a test address.
 
-Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form. Still to build: the other inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.
+Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form. Still to build: the other inner pages, the forms, the newsletter signup, the privacy policy and cookie notice, redirects from the old site's addresses, and a social sharing image.

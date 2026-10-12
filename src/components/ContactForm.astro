@@ -1,0 +1,40 @@
+---
+// Contact form, received by src/pages/api/contact.ts.
+import FormFrame from './FormFrame.astro';
+import { t, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dict = t(locale);
+const c = dict.contactPage;
+const f = c.fields;
+---
+
+<FormFrame
+  locale={locale}
+  id="contact-form"
+  action="/api/contact/"
+  submit={c.submit}
+  successTitle={c.successTitle}
+  successBody={c.successBody}
+>
+  <label class="field form__wide">
+    <span class="field__label">{f.name}</span>
+    <input type="text" name="name" autocomplete="name" required minlength="2" maxlength="100" />
+  </label>
+  <label class="field">
+    <span class="field__label">{f.email}</span>
+    <input type="email" name="email" autocomplete="email" required maxlength="254" />
+  </label>
+  <label class="field">
+    <span class="field__label">{f.phone} <small>({dict.form.optional})</small></span>
+    <input type="tel" name="phone" autocomplete="tel" maxlength="40" />
+  </label>
+  <label class="field form__wide">
+    <span class="field__label">{f.message}</span>
+    <textarea name="message" rows="5" required minlength="5" maxlength="4000" placeholder={f.messageHint}></textarea>
+  </label>
+</FormFrame>

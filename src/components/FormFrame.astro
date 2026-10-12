@@ -1,0 +1,79 @@
+---
+// The parts every form shares: hidden guard fields, consent, error line, send button
+// and the thank-you panel. The fields themselves go in the slot.
+// Forms are sent by src/scripts/site.ts to the endpoint given in `action`.
+import { localePath, t, type Locale } from '@/i18n';
+import { routes, site } from '@/data/site';
+
+interface Props {
+  locale: Locale;
+  id: string;
+  action: string;
+  submit: string;
+  successTitle: string;
+  successBody: string;
+}
+
+const { locale, id, action, submit, successTitle, successBody } = Astro.props;
+const dict = t(locale);
+const f = dict.form;
+
+const [consentBefore, consentAfter] = f.consent.split('{privacy}');
+---
+
+<form class="form" id={id} action={action} method="post" data-ajax-form>
+  <input type="hidden" name="locale" value={locale} />
+  <input type="hidden" name="startedAt" value="" />
+  <div class="form__trap" aria-hidden="true">
+    <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <slot />
+
+  <label class="form__consent form__wide">
+    <input type="checkbox" name="consent" required />
+    <span>
+      {consentBefore}<a href={localePath(locale, routes.privacy)}>{dict.nav.privacy}</a>{consentAfter}
+    </span>
+  </label>
+
+  <p
+    class="form__status form__wide"
+    role="alert"
+    data-form-status
+    data-validation={f.errors.validation}
+    data-rate={f.errors.rate}
+    data-server={f.errors.server}
+  >
+  </p>
+
+  <div class="form__wide">
+    <button class="btn" type="submit" data-sending={f.sending}>{submit}</button>
+  </div>
+
+  <noscript>
+    <p class="form__wide">
+      {f.noscript}
+      <a href={`tel:${site.phone.href}`}>{site.phone.label}</a> · <a href={`mailto:${site.email}`}>{site.email}</a>
+    </p>
+  </noscript>
+</form>
+
+<div class="form-success" tabindex="-1" hidden data-form-success={id}>
+  <h3 class="h3">{successTitle}</h3>
+  <p>{successBody}</p>
+</div>
+
+<style>
+  .form-success {
+    display: grid;
+    gap: 0.75rem;
+    padding: 2rem;
+    border: 1px solid var(--rule);
+    outline: 0;
+  }
+
+  .form-success[hidden] {
+    display: none;
+  }
+</style>

@@ -363,6 +363,21 @@ function initForms() {
   });
 }
 
+function initMap() {
+  // The Google map is only loaded when the visitor asks for it.
+  document.querySelectorAll<HTMLElement>('[data-map]').forEach((frame) => {
+    frame.querySelector('[data-map-show]')?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = frame.dataset.src ?? '';
+      iframe.title = frame.dataset.title ?? '';
+      iframe.loading = 'lazy';
+      iframe.referrerPolicy = 'no-referrer-when-downgrade';
+      iframe.allowFullscreen = true;
+      frame.replaceChildren(iframe);
+    });
+  });
+}
+
 function init() {
   document.documentElement.classList.add('js');
   initReveal();
@@ -374,6 +389,7 @@ function init() {
   initOffer();
   initLightbox();
   initForms();
+  initMap();
 }
 
 init();

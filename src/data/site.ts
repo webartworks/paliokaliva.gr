@@ -10,6 +10,8 @@ export const site = {
   rateParityScript: 'https://code.rateparity.com/versions/installer.min.js',
   licence: '1017280',
   mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Paliokaliva+Village+Zakynthos',
+  // The embedded map on the Contact page. It loads only after the visitor asks for it.
+  mapsEmbedUrl: 'https://www.google.com/maps?q=Paliokaliva+Village+Zakynthos&z=14&output=embed',
   social: {
     instagram: 'https://www.instagram.com/paliokaliva/',
     facebook: 'https://www.facebook.com/PaliokalivaZakynthos',

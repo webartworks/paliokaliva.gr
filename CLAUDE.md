@@ -14,7 +14,7 @@ The developer's English is not strong: write to them in simple, clear English. T
 ## Stack and hosting
 
 - Astro, no CMS. The developer edits content in the code. All pages are static; only the form endpoints in `src/pages/api/` run on the server, through the `@astrojs/node` adapter.
-- Deployed on the developer's Coolify server as a Node app (not as a static site), with the variables from `.env.example` set there.
+- Deployed on the developer's Coolify server as a Node app (not as a static site), with the variables from `.env.example` set there. Coolify builds from the `Dockerfile` (Build Pack: Dockerfile) and deploys on every push to `main` of `github.com/webartworks/paliokaliva.gr`. The Dockerfile keeps Astro's image cache on the server between builds; without it a build takes about 30 minutes. It sets `HOST`, `PORT` (3000) and installs `curl` for the Coolify health check.
 - No UI framework and no animation library. Plain CSS and one small script.
 - Fonts are self-hosted through `@fontsource-variable`: EB Garamond (titles), Open Sans (body), Fira Code (small quotes).
 

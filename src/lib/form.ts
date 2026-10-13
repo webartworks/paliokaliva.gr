@@ -59,8 +59,3 @@ export function text(value: unknown, max: number): string {
 export function consented(value: unknown): boolean {
   return value === true || value === 'on';
 }
-
-// Replaces {name} style placeholders in a text from the dictionaries.
-export function fill(template: string, values: Record<string, string>): string {
-  return template.replace(/\{(\w+)\}/g, (_, key: string) => values[key] ?? '');
-}

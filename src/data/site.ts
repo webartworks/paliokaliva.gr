@@ -24,7 +24,7 @@ export const site = {
     vat: '',
     gemi: '',
     // Date of the latest change to the Privacy Policy.
-    privacyUpdated: '2026-10-12',
+    privacyUpdated: '2026-10-13',
   },
   licence: '1017280',
   // Exact position of the hotel, used for directions, the embedded map and search engines.

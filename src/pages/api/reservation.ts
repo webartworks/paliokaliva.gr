@@ -1,10 +1,8 @@
 // Receives the Meraki table request form.
-// Sends one email to the hotel (Reply-To: the guest) and one confirmation of receipt
-// to the guest (Reply-To: the hotel).
+// Sends one email to the hotel (Reply-To: the guest). The guest gets no email.
 import type { APIRoute } from 'astro';
 import { MAIL_TO } from 'astro:env/server';
-import { t } from '@/i18n';
-import { consented, fill, readSubmission, text, withinLimit } from '@/lib/form';
+import { consented, readSubmission, text, withinLimit } from '@/lib/form';
 import { isEmail, json, MailNotConfiguredError, oneLine, sendMail } from '@/lib/mail';
 
 export const prerender = false;
@@ -63,21 +61,6 @@ export const POST: APIRoute = async (context) => {
   } catch (error) {
     console.error('[reservation] email to the hotel failed:', error);
     return json({ ok: false, error: error instanceof MailNotConfiguredError ? 'config' : 'server' }, 500);
-  }
-
-  // The guest's copy repeats only the booking details, never their free text,
-  // so the form cannot be used to send someone else an arbitrary message.
-  const receipt = t(locale).reservation.email;
-  try {
-    await sendMail({
-      to: data.email,
-      replyTo: MAIL_TO,
-      subject: receipt.subject,
-      text: fill(receipt.body, { name: data.name, date: data.date, time: data.time, guests }),
-    });
-  } catch (error) {
-    // The hotel already has the request, so the guest still sees the success message.
-    console.error('[reservation] confirmation to the guest failed:', error);
   }
 
   return json({ ok: true });

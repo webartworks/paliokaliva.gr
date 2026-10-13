@@ -447,11 +447,7 @@ export const en = {
     },
     submit: 'Send request',
     successTitle: 'Thank you',
-    successBody: 'We have received your request and will reply by email to confirm your table. A copy has been sent to your address.',
-    email: {
-      subject: 'Meraki Restaurant: we have received your table request',
-      body: 'Dear {name},\n\nThank you for your request. We have received the following details:\n\nDate: {date}\nTime: {time}\nGuests: {guests}\n\nThis is not yet a confirmation. We will reply shortly to confirm your table.\n\nIf you need to change something, simply reply to this email.\n\nKind regards,\nMeraki Restaurant\nPaliokaliva Village, Tragaki, Zakynthos',
-    },
+    successBody: 'We have received your request and will reply by email to confirm your table.',
   },
   form: {
     optional: 'optional',
@@ -804,7 +800,7 @@ export const en = {
         body: [
           'When you use the contact form or the table request form for the Meraki Restaurant, we receive what you type in: your name, email address, phone number, and your message or the details of your request (date, time, number of guests, notes).',
           'We use this data only to answer you and to handle your request. The legal basis is your request itself, that is, steps taken at your request before a possible booking, and our legitimate interest in answering the people who write to us.',
-          'You receive an automatic email confirming that we received your request. We keep your message for as long as we need to handle it and for as long as the law requires.',
+          'We keep your message for as long as we need to handle it and for as long as the law requires.',
         ],
       },
       {

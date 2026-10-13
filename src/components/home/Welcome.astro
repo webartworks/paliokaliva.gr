@@ -2,7 +2,7 @@
 import { Picture } from 'astro:assets';
 import poolNight from '@/assets/images/welcome-pool-night.jpg';
 import village from '@/assets/images/welcome-village.jpg';
-import logoDark from '@/assets/logo/logo-dark.svg';
+import logoLight from '@/assets/logo/logo-light.svg';
 import ArrowLink from '@/components/ArrowLink.astro';
 import Wave from '@/components/Wave.astro';
 import { localePath, t, type Locale } from '@/i18n';
@@ -48,7 +48,7 @@ const w = t(locale).welcome;
       </figure>
       <div class="welcome__story" data-reveal style="--i:2">
         <p class="quote-mono">{w.quote}</p>
-        <img src={logoDark.src} width="834" height="451" alt="" loading="lazy" />
+        <span class="welcome__logo" style={`--logo: url(${logoLight.src})`} aria-hidden="true"></span>
         <p class="quote-mono welcome__story-text">{w.story}</p>
         <ArrowLink href={localePath(locale, routes.village)}>{w.link}</ArrowLink>
       </div>
@@ -110,9 +110,14 @@ const w = t(locale).welcome;
     text-align: center;
   }
 
-  .welcome__story img {
+  /* The logo in one colour: the white logo file is used as a mask and the colour comes from here. */
+  .welcome__logo {
     width: 7.25rem;
-    opacity: 0.32;
+    aspect-ratio: 830 / 449;
+    background-color: var(--brown);
+    -webkit-mask: var(--logo) center / contain no-repeat;
+    mask: var(--logo) center / contain no-repeat;
+    opacity: 0.45;
   }
 
   .welcome__story-text {

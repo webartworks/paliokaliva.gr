@@ -892,6 +892,10 @@ export const en = {
     eyebrow: 'Offer',
     close: 'Close offer',
   },
+  media: {
+    pauseVideo: 'Pause the video',
+    playVideo: 'Play the video',
+  },
   notFound: {
     eyebrow: 'Page not found',
     title: 'This page does not exist',

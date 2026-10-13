@@ -893,6 +893,10 @@ export const el: Dictionary = {
     eyebrow: 'Προσφορά',
     close: 'Κλείσιμο προσφοράς',
   },
+  media: {
+    pauseVideo: 'Παύση του βίντεο',
+    playVideo: 'Αναπαραγωγή του βίντεο',
+  },
   notFound: {
     eyebrow: 'Η σελίδα δεν βρέθηκε',
     title: 'Η σελίδα αυτή δεν υπάρχει',

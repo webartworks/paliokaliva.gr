@@ -37,7 +37,10 @@ const photos = Object.keys(files)
   image={heroImage}
   jsonLd={[restaurantSchema(locale), breadcrumbSchema(locale, [{ name: dict.nav.meraki, path: routes.meraki }])]}
 >
-  <PageHero image={heroImage} alt={m.heroAlt} title={m.title} eyebrow={m.eyebrow} position="50% 62%" />
+  <PageHero image={heroImage} alt={m.heroAlt} title={m.title} eyebrow={m.eyebrow} position="50% 62%"
+    video={{ wide: '/video/meraki-wide.mp4', tall: '/video/meraki-tall.mp4' }}
+    videoLabels={{ pause: dict.media.pauseVideo, play: dict.media.playVideo }}
+  />
 
   <section class="section bg-cream">
     <div class="container meraki-intro">

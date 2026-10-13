@@ -491,6 +491,64 @@ a:hover > .arrow-link svg {
   object-fit: cover;
 }
 
+/* Pause / play button for things that play by themselves (slideshow, video).
+   The parent decides where it sits. */
+.play-toggle {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--white);
+  opacity: 0.7;
+  transition: opacity var(--t-fast) var(--ease);
+}
+
+.play-toggle[hidden] {
+  display: none;
+}
+
+.play-toggle:hover,
+.play-toggle:focus-visible {
+  opacity: 1;
+}
+
+/* Two bars while playing, a triangle while paused. */
+.play-toggle span {
+  width: 0.625rem;
+  height: 0.75rem;
+  border-inline: 2px solid currentColor;
+}
+
+.play-toggle[data-state='paused'] span {
+  width: 0;
+  height: 0;
+  border-block: 0.4375rem solid transparent;
+  border-inline: 0.6875rem solid currentColor;
+  border-inline-end-width: 0;
+}
+
+/* A silent video that plays over its photo while it is on screen. */
+.media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.2s var(--ease);
+}
+
+.media video.is-playing {
+  opacity: 1;
+}
+
+.media .play-toggle {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  filter: drop-shadow(0 0 0.25rem rgb(18 17 13 / 0.6));
+}
+
 /* --------------------------------------------------------------------------
    Motion
    Elements wait hidden only when JavaScript is running (html.js).

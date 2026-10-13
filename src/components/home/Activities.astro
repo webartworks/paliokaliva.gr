@@ -17,6 +17,9 @@ const photos = [pottery, wine];
 const href = localePath(locale, routes.activities);
 // Each card lands on its own section of the Activities page.
 const anchors = ['pottery', 'wine'];
+// A silent video that plays over the card's photo while it is on screen (see FeatureSection).
+const videos: (string | undefined)[] = ['/video/pottery-workshop.mp4', undefined];
+const media = t(locale).media;
 ---
 
 <section class="activities section bg-linen">
@@ -30,7 +33,7 @@ const anchors = ['pottery', 'wine'];
     <ul class="activities__grid">
       {
         a.items.map((item, i) => (
-          <li>
+          <li class="activities__item" data-video-box>
             <a class="activity" href={`${href}#${anchors[i]}`}>
               <div class="media activity__photo" data-reveal="image" style={`--i:${i}`}>
                 <Picture
@@ -40,12 +43,31 @@ const anchors = ['pottery', 'wine'];
                   widths={[480, 800, 1200]}
                   sizes="(min-width: 48em) 43vw, 100vw"
                 />
+                {videos[i] && (
+                  <video muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-auto-video={videos[i]} />
+                )}
               </div>
               <div class="activity__body" data-reveal style={`--i:${i + 1}`}>
                 <h3 class="h3">{item.name}</h3>
                 <p>{item.text}</p>
               </div>
             </a>
+            {
+              /* Outside the link, because a button cannot sit inside one. */
+              videos[i] && (
+                <button
+                  class="play-toggle activities__toggle"
+                  type="button"
+                  hidden
+                  aria-label={media.pauseVideo}
+                  data-video-toggle
+                  data-pause={media.pauseVideo}
+                  data-play={media.playVideo}
+                >
+                  <span aria-hidden="true" />
+                </button>
+              )
+            }
           </li>
         ))
       }
@@ -70,6 +92,18 @@ const anchors = ['pottery', 'wine'];
     display: grid;
     gap: 3rem;
     margin-top: clamp(2.5rem, 2rem + 2vw, 3rem);
+  }
+
+  .activities__item {
+    position: relative;
+  }
+
+  /* Top right corner of the photo. */
+  .activities__toggle {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    filter: drop-shadow(0 0 0.25rem rgb(18 17 13 / 0.6));
   }
 
   .activity {

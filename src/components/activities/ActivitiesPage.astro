@@ -35,6 +35,8 @@ const a = dict.activitiesPage;
   <PageHero
     image={heroImage}
     alt={a.heroAlt}
+    video={{ wide: '/video/workshop-wide.mp4', tall: '/video/workshop-tall.mp4' }}
+    videoLabels={{ pause: dict.media.pauseVideo, play: dict.media.playVideo }}
     title={dict.activities.title}
     eyebrow={dict.activities.eyebrow}
     position="50% 45%"
@@ -59,6 +61,8 @@ const a = dict.activitiesPage;
       smallImage={potteryHands}
       smallAlt={a.pottery.altSmall}
       ratio="4 / 5"
+      video="/video/pottery-workshop.mp4"
+      videoLabels={{ pause: dict.media.pauseVideo, play: dict.media.playVideo }}
     />
 
     <FeatureSection

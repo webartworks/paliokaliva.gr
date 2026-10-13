@@ -17,9 +17,13 @@ interface Props {
   reverse?: boolean;
   // Shape of the large photo. Use "4 / 5" when the photos are portrait.
   ratio?: string;
+  // A silent video (a file in public/) that plays over the large photo while it is on
+  // screen. The photo stays as its first frame and as the fallback. Needs the two labels.
+  video?: string;
+  videoLabels?: { pause: string; play: string };
 }
 
-const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', reverse = false, ratio = '3 / 2' } = Astro.props;
+const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', reverse = false, ratio = '3 / 2', video, videoLabels } = Astro.props;
 ---
 
 <section class:list={['feature', { 'feature--reverse': reverse }]} id={id} style={`--ratio:${ratio}`}>
@@ -32,6 +36,24 @@ const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', 
         widths={[640, 960, 1400]}
         sizes="(min-width: 56em) 52vw, 100vw"
       />
+      {
+        video && (
+          <>
+            <video muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-auto-video={video} />
+            <button
+              class="play-toggle"
+              type="button"
+              hidden
+              aria-label={videoLabels?.pause}
+              data-video-toggle
+              data-pause={videoLabels?.pause}
+              data-play={videoLabels?.play}
+            >
+              <span aria-hidden="true" />
+            </button>
+          </>
+        )
+      }
     </div>
 
     <div class="feature__body">

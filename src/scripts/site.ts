@@ -535,6 +535,57 @@ function initHeroSlides() {
   else window.addEventListener('load', start, { once: true });
 }
 
+function initAutoVideos() {
+  const videos = document.querySelectorAll<HTMLVideoElement>('video[data-auto-video]');
+  if (videos.length === 0 || !('IntersectionObserver' in window)) return;
+  // Visitors who asked for less motion, or to save data, keep the photo.
+  const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || saveData) return;
+
+  videos.forEach((video) => {
+    // The button can sit outside the photo (see the homepage card), inside the same box.
+    const box = video.closest('[data-video-box]') ?? video.parentElement;
+    const toggle = box?.querySelector<HTMLButtonElement>('[data-video-toggle]');
+    // A second, upright file can be given for tall screens.
+    const tall = video.dataset.autoVideoTall;
+    const file = tall && window.matchMedia('(max-aspect-ratio: 1/1)').matches ? tall : video.dataset.autoVideo;
+    let paused = false; // By the visitor, with the button.
+    let inView = false;
+
+    const update = () => {
+      if (inView && !paused) {
+        // The file is only downloaded the first time the video comes on screen.
+        if (!video.src) video.src = file ?? '';
+        video.play().catch(() => {
+          // The browser refused to play it; the photo simply stays.
+        });
+      } else {
+        video.pause();
+      }
+    };
+
+    video.addEventListener('playing', () => {
+      video.classList.add('is-playing');
+      if (toggle) toggle.hidden = false;
+    });
+
+    toggle?.addEventListener('click', () => {
+      paused = !paused;
+      toggle.dataset.state = paused ? 'paused' : 'playing';
+      toggle.setAttribute('aria-label', (paused ? toggle.dataset.play : toggle.dataset.pause) ?? '');
+      update();
+    });
+
+    new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        update();
+      },
+      { threshold: 0.5 },
+    ).observe(video);
+  });
+}
+
 function init() {
   document.documentElement.classList.add('js');
   // First, because the offer card checks whether the cookie notice is showing.
@@ -551,6 +602,7 @@ function init() {
   initMap();
   initGalleryFilter();
   initHeroSlides();
+  initAutoVideos();
 }
 
 init();

@@ -12,7 +12,7 @@ const MAX_GUESTS = 20;
 export const POST: APIRoute = async (context) => {
   const submission = await readSubmission(context);
   if (submission instanceof Response) return submission;
-  const { body, locale } = submission;
+  const { body } = submission;
 
   const data = {
     name: oneLine(text(body.name, 100)),
@@ -48,7 +48,6 @@ export const POST: APIRoute = async (context) => {
     `Name:    ${data.name}`,
     `Email:   ${data.email}`,
     `Phone:   ${data.phone}`,
-    `Language of the guest: ${locale === 'el' ? 'Greek' : 'English'}`,
   ].join('\n');
 
   try {

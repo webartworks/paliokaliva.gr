@@ -1,15 +1,17 @@
 // Sending email through Postmark, plus the small guards shared by the form endpoints.
 import { MAIL_FROM, POSTMARK_MESSAGE_STREAM, POSTMARK_SERVER_TOKEN } from 'astro:env/server';
-import { site } from '@/data/site';
 
 interface Mail {
   to: string;
   replyTo: string;
   subject: string;
   text: string;
-  // Shown in the Postmark activity list, for example "meraki-reservation".
-  tag: string;
 }
+
+// The Postmark server is shared with other Web Artworks sites: the sender name is
+// the same for all of them and the tag tells this site's emails apart.
+const SENDER_NAME = 'Mailer from Web Artworks';
+const TAG = 'paliokaliva.gr';
 
 export class MailNotConfiguredError extends Error {}
 
@@ -33,12 +35,12 @@ export async function sendMail(mail: Mail): Promise<void> {
       'X-Postmark-Server-Token': POSTMARK_SERVER_TOKEN,
     },
     body: JSON.stringify({
-      From: `${site.name} <${MAIL_FROM}>`,
+      From: `${SENDER_NAME} <${MAIL_FROM}>`,
       To: mail.to,
       ReplyTo: mail.replyTo,
       Subject: mail.subject,
       TextBody: mail.text,
-      Tag: mail.tag,
+      Tag: TAG,
       MessageStream: POSTMARK_MESSAGE_STREAM,
     }),
     signal: AbortSignal.timeout(10_000),

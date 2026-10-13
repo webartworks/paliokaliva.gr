@@ -490,10 +490,6 @@ export const en = {
     submit: 'Send message',
     successTitle: 'Thank you',
     successBody: 'We have received your message and will reply by email as soon as possible.',
-    emailReceipt: {
-      subject: 'Paliokaliva Village: we have received your message',
-      body: 'Dear {name},\n\nThank you for writing to us. We have received your message and will reply as soon as possible.\n\nIf you need to add something, simply reply to this email.\n\nKind regards,\nPaliokaliva Village\nTragaki, Zakynthos\n+30 26950 63770',
-    },
     distancesTitle: 'Distances',
     distances: [
       ['Bus stop', '250 m'],

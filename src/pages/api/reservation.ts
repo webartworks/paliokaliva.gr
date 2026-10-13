@@ -59,7 +59,6 @@ export const POST: APIRoute = async (context) => {
       replyTo: data.email,
       subject: `Meraki table request: ${data.date} ${data.time}, ${guests} guests, ${data.name}`,
       text: `New table request for Meraki Restaurant, sent from the website.\n\n${details}\n\nNotes:\n${data.notes || '-'}\n\nReply to this email to answer the guest directly.`,
-      tag: 'meraki-reservation',
     });
   } catch (error) {
     console.error('[reservation] email to the hotel failed:', error);
@@ -75,7 +74,6 @@ export const POST: APIRoute = async (context) => {
       replyTo: MAIL_TO,
       subject: receipt.subject,
       text: fill(receipt.body, { name: data.name, date: data.date, time: data.time, guests }),
-      tag: 'meraki-reservation-receipt',
     });
   } catch (error) {
     // The hotel already has the request, so the guest still sees the success message.

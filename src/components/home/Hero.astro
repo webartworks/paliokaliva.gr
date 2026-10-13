@@ -1,9 +1,17 @@
 ---
 import { Picture } from 'astro:assets';
 import heroImage from '@/assets/images/hero.jpg';
+// First selection, kept for comparison (see `moreSlides` below).
+// import house from '@/assets/images/hero/02-house.jpg';
+// import garden from '@/assets/images/hero/03-garden.jpg';
+// import dusk from '@/assets/images/hero/04-dusk.jpg';
+import village from '@/assets/images/hero/05-village.jpg';
+import poolSunset from '@/assets/images/hero/06-pool-sunset.jpg';
+import gardensEvening from '@/assets/images/hero/07-gardens-evening.jpg';
+import poolNight from '@/assets/images/hero/08-pool-night.jpg';
 import BookingBar from '@/components/BookingBar.astro';
 import { t, type Locale } from '@/i18n';
-import { imageFormats } from '@/lib/images';
+import { coverSizes, imageFormats } from '@/lib/images';
 
 interface Props {
   locale: Locale;
@@ -11,19 +19,62 @@ interface Props {
 
 const { locale } = Astro.props;
 const h = t(locale).hero;
+
+const welcome = t(locale).welcome;
+const life = t(locale).life;
+
+// The photos that follow the opening photo, in order, each with its description.
+
+// First selection, kept for comparison. To use it, uncomment this list and the three
+// imports above, and comment out the list below.
+// const moreSlides = [
+//   { image: house, alt: h.slideAlts[0] },
+//   { image: garden, alt: h.slideAlts[1] },
+//   { image: dusk, alt: h.slideAlts[2] },
+// ];
+
+// Second selection: photos already used further down the homepage (the two of the
+// welcome section, Pool & All-Day Bar, Olive Grove Gardens), from day to night.
+const moreSlides = [
+  { image: village, alt: welcome.altVillage },
+  { image: poolSunset, alt: life.items[1].alt },
+  { image: gardensEvening, alt: life.items[2].alt },
+  { image: poolNight, alt: welcome.altPool },
+];
 ---
 
 <section class="hero">
-  <div class="hero__media">
-    <Picture
-      src={heroImage}
-      alt={h.alt}
-      formats={imageFormats}
-      widths={[640, 960, 1440, 1920, 2560]}
-      sizes="100vw"
-      loading="eager"
-      fetchpriority="high"
-    />
+  <div class="hero__media" data-hero-slides>
+    <div class="hero__slide is-active">
+      <Picture
+        src={heroImage}
+        alt={h.alt}
+        formats={imageFormats}
+        widths={[640, 960, 1440, 1920, 2560]}
+        sizes={coverSizes(heroImage, 100)}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+    {
+      /* Kept in a template so these photos are not downloaded until the page has
+         loaded; src/scripts/site.ts adds them and runs the slideshow. */
+    }
+    <template>
+      {
+        moreSlides.map((slide) => (
+          <div class="hero__slide" aria-hidden="true">
+            <Picture
+              src={slide.image}
+              alt={slide.alt}
+              formats={imageFormats}
+              widths={[640, 960, 1440, 1920, 2560]}
+              sizes={coverSizes(slide.image, 100)}
+            />
+          </div>
+        ))
+      }
+    </template>
   </div>
   <div class="hero__content">
     <h1 class="hero__title">
@@ -33,6 +84,17 @@ const h = t(locale).hero;
     <div class="hero__booking">
       <BookingBar locale={locale} />
     </div>
+    <button
+      class="hero__toggle"
+      type="button"
+      hidden
+      aria-label={h.pause}
+      data-hero-toggle
+      data-pause={h.pause}
+      data-play={h.play}
+    >
+      <span aria-hidden="true"></span>
+    </button>
   </div>
 </section>
 
@@ -52,6 +114,18 @@ const h = t(locale).hero;
     inset: 0;
   }
 
+  /* The photos lie on top of each other and cross-fade slowly. */
+  .hero__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 2.4s var(--ease);
+  }
+
+  .hero__slide.is-active {
+    opacity: 1;
+  }
+
   .hero__media :global(picture) {
     display: block;
     height: 100%;
@@ -62,7 +136,60 @@ const h = t(locale).hero;
     height: 100%;
     object-fit: cover;
     object-position: 50% 50%;
+  }
+
+  /* Only the opening photo settles; the others stay still. */
+  .hero__slide:first-child :global(img) {
     animation: hero-settle 2.6s var(--ease) both;
+  }
+
+  /* Pause / play for the slideshow: centred under the booking bar on phones,
+     bottom right on larger screens. Kept away from the menu button. */
+  .hero__toggle {
+    position: absolute;
+    left: 50%;
+    bottom: 0.375rem;
+    translate: -50% 0;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    color: var(--white);
+    opacity: 0.7;
+    transition: opacity var(--t-fast) var(--ease);
+  }
+
+  .hero__toggle[hidden] {
+    display: none;
+  }
+
+  .hero__toggle:hover,
+  .hero__toggle:focus-visible {
+    opacity: 1;
+  }
+
+  /* Two bars while playing, a triangle while paused. */
+  .hero__toggle span {
+    width: 0.625rem;
+    height: 0.75rem;
+    border-inline: 2px solid currentColor;
+  }
+
+  .hero__toggle[data-state='paused'] span {
+    width: 0;
+    height: 0;
+    border-block: 0.4375rem solid transparent;
+    border-inline: 0.6875rem solid currentColor;
+    border-inline-end-width: 0;
+  }
+
+  @media (min-width: 56em) {
+    .hero__toggle {
+      left: auto;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      translate: none;
+    }
   }
 
   /* Soft shade so the logo, menu and title stay readable on the photo. */
@@ -81,8 +208,15 @@ const h = t(locale).hero;
     display: grid;
     justify-items: center;
     width: 100%;
-    padding: calc(var(--header-h) + 2rem) var(--gutter) clamp(1.5rem, 1rem + 5vw, 6.25rem);
+    /* On phones the bottom space holds the pause button of the slideshow. */
+    padding: calc(var(--header-h) + 2rem) var(--gutter) 3.5rem;
     text-align: center;
+  }
+
+  @media (min-width: 56em) {
+    .hero__content {
+      padding-bottom: clamp(1.5rem, 1rem + 5vw, 6.25rem);
+    }
   }
 
   .hero__title {

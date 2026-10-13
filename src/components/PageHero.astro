@@ -1,7 +1,7 @@
 ---
 // The opening photo of an inner page, with the page title on it.
 import { Picture } from 'astro:assets';
-import { imageFormats } from '@/lib/images';
+import { coverSizes, imageFormats } from '@/lib/images';
 
 interface Props {
   image: ImageMetadata;
@@ -21,8 +21,8 @@ const { image, alt, title, eyebrow, position = '50% 50%' } = Astro.props;
       src={image}
       alt={alt}
       formats={imageFormats}
-      widths={[640, 960, 1440, 1920]}
-      sizes="100vw"
+      widths={[640, 960, 1440, 1920, 2560]}
+      sizes={coverSizes(image, 78)}
       loading="eager"
       fetchpriority="high"
     />

@@ -37,6 +37,14 @@ export const en = {
     title: ['Traditional Zakynthian', 'Atmosphere'],
     subtitle: 'Authentic living and caring hospitality',
     alt: 'The pool of Paliokaliva Village seen from the bar terrace, with the Ionian Sea behind',
+    // Descriptions of the first selection of slideshow photos (see Hero.astro).
+    slideAlts: [
+      'A stone house with a shaded veranda, seen between old olive trees',
+      'Old olive trees and pink bougainvillea in the garden, with a stone house behind',
+      'A table set for dinner on the terrace at dusk, looking over the pool to the sea',
+    ],
+    pause: 'Pause the photo slideshow',
+    play: 'Play the photo slideshow',
   },
   welcome: {
     eyebrow: 'Welcome',

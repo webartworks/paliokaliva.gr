@@ -466,6 +466,75 @@ function initConsent() {
   }
 }
 
+function initHeroSlides() {
+  const media = document.querySelector<HTMLElement>('[data-hero-slides]');
+  const template = media?.querySelector('template');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-hero-toggle]');
+  if (!media || !template) return;
+  // Visitors who asked for less motion keep the single opening photo.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const HOLD = 6500; // Time each photo stays, in milliseconds.
+  let slides: HTMLElement[] = [];
+  let current = 0;
+  let timer = 0;
+  let paused = false; // By the visitor, with the button.
+  let inView = true;
+
+  const ready = (slide: HTMLElement) => {
+    const img = slide.querySelector('img');
+    return Boolean(img && img.complete && img.naturalWidth > 0);
+  };
+
+  const schedule = (delay = HOLD) => {
+    window.clearTimeout(timer);
+    if (paused || !inView || document.hidden) return;
+    timer = window.setTimeout(next, delay);
+  };
+
+  const next = () => {
+    const target = (current + 1) % slides.length;
+    // Never fade to a photo that has not arrived yet; look again in a moment.
+    if (!ready(slides[target])) return schedule(1000);
+    slides[current].classList.remove('is-active');
+    slides[current].setAttribute('aria-hidden', 'true');
+    slides[target].classList.add('is-active');
+    slides[target].removeAttribute('aria-hidden');
+    current = target;
+    schedule();
+  };
+
+  const start = () => {
+    media.append(template.content.cloneNode(true));
+    slides = Array.from(media.querySelectorAll<HTMLElement>('.hero__slide'));
+    if (slides.length < 2) return;
+
+    if (toggle) {
+      toggle.hidden = false;
+      toggle.addEventListener('click', () => {
+        paused = !paused;
+        toggle.dataset.state = paused ? 'paused' : 'playing';
+        toggle.setAttribute('aria-label', (paused ? toggle.dataset.play : toggle.dataset.pause) ?? '');
+        schedule();
+      });
+    }
+
+    // Rest while the tab is in the background or the photo is scrolled out of view.
+    document.addEventListener('visibilitychange', () => schedule());
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        inView = entry.isIntersecting;
+        schedule();
+      }).observe(media);
+    }
+    schedule();
+  };
+
+  // Wait until the page itself has loaded, so the extra photos never slow it down.
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start, { once: true });
+}
+
 function init() {
   document.documentElement.classList.add('js');
   // First, because the offer card checks whether the cookie notice is showing.
@@ -481,6 +550,7 @@ function init() {
   initForms();
   initMap();
   initGalleryFilter();
+  initHeroSlides();
 }
 
 init();

@@ -207,6 +207,14 @@ const socials = [
     color: var(--brown);
   }
 
+  /* On phones the fixed Call / WhatsApp / Book bar (MobileDock) covers the bottom
+     of the screen, so leave room for it under the last line. */
+  @media (max-width: 39.99em) {
+    .footer {
+      padding-bottom: calc(1.75rem + 3.25rem + env(safe-area-inset-bottom));
+    }
+  }
+
   @media (min-width: 40em) {
     .footer__grid {
       grid-template-columns: repeat(3, 1fr);

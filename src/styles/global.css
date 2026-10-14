@@ -601,6 +601,7 @@ a:hover > .arrow-link svg {
 
 /* Thin hand-drawn lines draw themselves once. */
 .wave {
+  display: block;
   width: 100%;
   height: auto;
   overflow: visible;

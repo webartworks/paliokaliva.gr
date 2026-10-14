@@ -52,8 +52,10 @@ const photos = [restaurant, table, hammock, pancakes, pergola, grove];
 </section>
 
 <style>
+  /* No top padding: it follows Location on the same cream, whose bottom padding
+     already makes the gap. */
   .note {
-    padding-block: var(--section);
+    padding-block: 0 var(--section);
     overflow: hidden;
   }
 

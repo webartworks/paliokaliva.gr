@@ -23,7 +23,7 @@ const script = import.meta.env.PROD ? widget : '';
     <aside class="consent" aria-label={c.label} data-consent data-script={script} hidden>
       <p>
         {c.text}{' '}
-        <a href={localePath(locale, routes.privacy)}>{c.more}</a>
+        <a href={localePath(locale, routes.privacy)}>{c.more}</a>.
       </p>
       <div class="consent__actions">
         <button class="btn" type="button" data-consent-decline>

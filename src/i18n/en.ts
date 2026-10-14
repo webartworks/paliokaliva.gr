@@ -785,7 +785,7 @@ export const en = {
   },
   consent: {
     label: 'Cookie notice',
-    text: 'We use a price comparison tool from another company that may store cookies on your device. Do you allow it? The rest of the website works without cookies.',
+    text: 'Welcome to Paliokaliva Village. We use a few cookies to make your visit easier, for example to show you our best rates. You can allow them or keep only the necessary ones. Read more in our',
     accept: 'Allow',
     decline: 'Only necessary',
     more: 'Privacy Policy',

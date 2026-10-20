@@ -54,6 +54,7 @@ The developer's English is not strong: write to them in simple, clear English. T
 - Booking: "Book now" and the booking bar send visitors to the external engine at `paliokalivavillage.reserve-online.net`. Passing dates and guests in the URL is not yet tested against the live engine.
 - RateParity price widget: one script, loaded only in production builds and only after the visitor chooses "Allow" in the cookie notice (`rateParityNeedsConsent` in `site.ts`). It appears in the bottom right corner, so the offer card and the cookie notice sit bottom left. It is expected to work only on the live domain.
 - Cookie notice: it exists only because of RateParity. The site itself sets no cookies; the choice is kept in `localStorage` for 180 days and can be changed from the footer or the Privacy Policy page. The Google map loads on click and Umami uses no cookies, so neither is in the notice.
+- Car hire: the Eurohire form (partner ID from the old site, in `site.carHire`) is on Village Life, under Facilities & services (`#car-hire`); "Car hire" in the services list links to it. It loads only after the visitor clicks "Find a car", inside a frame showing `src/pages/embed/car-hire.astro`, because the form's own CSS would otherwise restyle the whole page (fonts and colours). That page also holds our style overrides for the form. The form is English only, loads jQuery, Google Fonts and Google Maps, and opens the booking in a popup window from Eurohire. The Privacy Policy mentions it.
 - Statistics: self-hosted Umami at `analytics.webartworks.com`, loaded in production once `analytics.websiteId` is set in `site.ts`.
 - Page transitions use the browser's native `@view-transition`. Do not add Astro's `ClientRouter`: it would remove the RateParity widget when the visitor changes page.
 - Offers: there is no offers page. A running offer is shown with the offer card.
@@ -83,6 +84,7 @@ Waiting for the owner or the developer:
 - The Zakynthos page has no photos of the island, because none were supplied. It needs photos the hotel has the right to use (Navagio, Blue Caves, turtles, beaches, villages). Its facts come from the owner's text and were not checked against other sources.
 - Our Village says the hotel is family-run and that events include wine tastings and folk dancing evenings. This comes from the owner's questionnaire and texts; the owner should read that section.
 - Greek titles in EB Garamond look old-fashioned; the developer is deciding whether to keep it.
+- The map in the Eurohire place picker shows "This page can't load Google Maps correctly" on localhost; it uses Eurohire's Google key, so check it on the live domain.
 - On phones the RateParity widget may overlap the Call / WhatsApp / Book bar; check on a test address.
 
 Built: homepage, Our Houses, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form, Our Village, Zakynthos, Gallery, Activities, Privacy Policy, and a 404 page. Still to build: the newsletter signup and redirects from the old site's addresses.

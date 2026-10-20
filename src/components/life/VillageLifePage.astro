@@ -113,6 +113,19 @@ const f = v.facilities;
         </div>
       </div>
 
+      <div class="car-hire" id="car-hire">
+        <div class="car-hire__text" data-reveal>
+          <h3 class="h3">{f.carHire.title}</h3>
+          <p>{f.carHire.body}</p>
+        </div>
+        <div class="car-hire__frame" data-car-hire data-src="/embed/car-hire/" data-title={f.carHire.frameTitle}>
+          <div class="car-hire__ask" data-reveal style="--i:1">
+            <button class="btn" type="button" data-car-hire-show>{f.carHire.show}</button>
+            <p>{f.carHire.note}</p>
+          </div>
+        </div>
+      </div>
+
       <div class="life-facilities__more" data-reveal>
         <ArrowLink href={localePath(locale, routes.activities)}>{dict.activities.all}</ArrowLink>
       </div>
@@ -165,6 +178,42 @@ const f = v.facilities;
   .life-facilities__group {
     display: grid;
     gap: 3rem;
+  }
+
+  .car-hire {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: clamp(3rem, 2.5rem + 2vw, 4.5rem);
+    padding-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    border-top: 1px solid var(--rule);
+    scroll-margin-top: 6rem;
+  }
+
+  .car-hire__text {
+    display: grid;
+    gap: 1rem;
+    max-width: 44rem;
+    text-wrap: pretty;
+  }
+
+  .car-hire__ask {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.75rem;
+  }
+
+  .car-hire__ask p {
+    max-width: 30rem;
+    color: var(--muted);
+    font-size: var(--fs-small);
+  }
+
+  .car-hire__frame :global(iframe) {
+    display: block;
+    width: 100%;
+    height: 8rem;
+    border: 0;
   }
 
   .life-facilities__more {

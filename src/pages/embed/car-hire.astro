@@ -1,0 +1,102 @@
+---
+// The Eurohire car hire form, alone on a page. Village Life shows this page in a
+// frame, so the form's own styles cannot change the rest of the site.
+import '@fontsource-variable/open-sans';
+import '@/styles/global.css';
+import { site } from '@/data/site';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Car hire | {site.name}</title>
+  </head>
+  <body>
+    <div id="dsp_plugin" data-api-id={site.carHire.apiId} data-style={site.carHire.style}></div>
+    <script is:inline src={site.carHire.script}></script>
+  </body>
+</html>
+
+<style is:global>
+  /* The form brings its own styles; these bring it closer to the site. */
+  html,
+  body {
+    background: transparent;
+  }
+
+  body {
+    position: relative;
+    padding: 1px;
+  }
+
+  #dsp_plugin > div {
+    padding: 0 !important;
+  }
+
+  #dsp_plugin h4 {
+    display: none;
+  }
+
+  #dsp_plugin :is(a, li, input, select, button, p, span, div, label) {
+    color: var(--text);
+    font-family: var(--sans) !important;
+  }
+
+  #dsp_plugin form {
+    border: 1px solid var(--rule);
+    border-radius: 0 !important;
+    background: var(--white);
+    box-shadow: none !important;
+  }
+
+  #dsp_plugin .form-group.row > div:last-child {
+    border-radius: 0 !important;
+  }
+
+  #dsp_plugin label {
+    color: var(--brown) !important;
+    font-size: var(--fs-label) !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.2em;
+  }
+
+  #dsp_plugin label.dsp-transparent {
+    color: transparent !important;
+  }
+
+  #dsp_plugin .form-control,
+  #dsp_plugin .input-group-addon {
+    border-color: var(--rule) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    font-weight: 300;
+  }
+
+  #dsp_plugin .form-control:focus {
+    border-color: var(--brown) !important;
+  }
+
+  #dsp_plugin .dsp-icon-background {
+    background-color: var(--cream) !important;
+  }
+
+  #dsp_plugin .dsp-icon-background svg {
+    fill: var(--muted);
+  }
+
+  #dsp_plugin .form-group.row > div:last-child button {
+    background: var(--brown) !important;
+    color: var(--white) !important;
+    font-size: var(--fs-label) !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  #dsp_plugin .form-group.row > div:last-child button:hover {
+    background: var(--ink) !important;
+  }
+</style>

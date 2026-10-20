@@ -45,6 +45,14 @@ export const site = {
         | string
         | null,
   },
+  // Car hire form from Eurohire, a car rental company on Zakynthos. The ID is the
+  // hotel's partner account, taken from the old website.
+  carHire: {
+    name: 'Eurohire',
+    apiId: '0A835FEE-519A-46F6-A4C4-6C8C26A785AB',
+    script: 'https://eurohire.dsp.com.gr/Plugin/Scripts/DSP.EurohireRental.Plugin.js',
+    style: 'https://eurohire.dsp.com.gr/plugin/content/DSP.EurohireRental.Plugin4.css',
+  },
   meraki: {
     // Exact position of the restaurant, used for search engines.
     geo: { lat: 37.820095, lng: 20.850771 },

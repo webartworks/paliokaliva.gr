@@ -405,6 +405,30 @@ function initMap() {
   });
 }
 
+function initCarHire() {
+  // The Eurohire form is only loaded when the visitor asks for it. It sits in a
+  // frame of its own, so its styles cannot change the page, and the frame grows
+  // with the form (including the list of places that opens under a field).
+  document.querySelectorAll<HTMLElement>('[data-car-hire]').forEach((frame) => {
+    frame.querySelector('[data-car-hire-show]')?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = frame.dataset.src ?? '';
+      iframe.title = frame.dataset.title ?? '';
+      iframe.addEventListener('load', () => {
+        const body = iframe.contentDocument?.body;
+        if (!body) return;
+        const fit = () => {
+          iframe.style.height = `${body.scrollHeight}px`;
+        };
+        new MutationObserver(fit).observe(body, { childList: true, subtree: true, attributes: true });
+        new ResizeObserver(fit).observe(body);
+        fit();
+      });
+      frame.replaceChildren(iframe);
+    });
+  });
+}
+
 const CONSENT_KEY = 'cookie-consent';
 const CONSENT_DAYS = 180;
 
@@ -600,6 +624,7 @@ function init() {
   initLightbox();
   initForms();
   initMap();
+  initCarHire();
   initGalleryFilter();
   initHeroSlides();
   initAutoVideos();

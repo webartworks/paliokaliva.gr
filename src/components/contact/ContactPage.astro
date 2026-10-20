@@ -1,7 +1,7 @@
 ---
+// The page opens without a photo; this one is only the sharing image.
 import heroImage from '@/assets/images/location.jpg';
 import Base from '@/layouts/Base.astro';
-import PageHero from '@/components/PageHero.astro';
 import ContactForm from '@/components/ContactForm.astro';
 import BookingCta from '@/components/BookingCta.astro';
 import ArrowLink from '@/components/ArrowLink.astro';
@@ -30,13 +30,15 @@ const socials = [
   path={routes.contact}
   title={dict.nav.contact}
   description={c.description}
-  overHero
   image={heroImage}
   jsonLd={[hotelSchema(locale), breadcrumbSchema(locale, [{ name: dict.nav.contact, path: routes.contact }])]}
 >
-  <PageHero image={heroImage} alt={c.heroAlt} title={c.title} eyebrow={c.eyebrow} position="50% 45%" />
+  <section class="contact-section bg-cream">
+    <header class="container contact-head">
+      <span class="eyebrow" data-reveal>{c.eyebrow}</span>
+      <h1 class="h2 contact-head__title" data-reveal style="--i:1">{c.title}</h1>
+    </header>
 
-  <section class="section bg-cream">
     <div class="container contact">
       <div class="contact__details">
         <p class="contact__intro" data-reveal>{c.intro}</p>
@@ -152,6 +154,25 @@ const socials = [
 </Base>
 
 <style>
+  .contact-section {
+    padding-block: calc(var(--header-h) + clamp(3rem, 2rem + 4vw, 6rem)) var(--section);
+  }
+
+  .contact-head {
+    display: grid;
+    justify-items: start;
+    margin-bottom: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  }
+
+  .contact-head .eyebrow {
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-head__title {
+    font-size: clamp(2.25rem, 1.6rem + 2.8vw, 3.5rem);
+    line-height: 1.02;
+  }
+
   .contact {
     display: grid;
     gap: 3.5rem;
@@ -163,8 +184,8 @@ const socials = [
     margin-bottom: clamp(2rem, 1.5rem + 2vw, 3rem);
     color: var(--ink);
     font-family: var(--serif);
-    font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
-    line-height: 1.25;
+    font-size: clamp(1.1875rem, 1.05rem + 0.5vw, 1.375rem);
+    line-height: 1.35;
     text-wrap: balance;
   }
 

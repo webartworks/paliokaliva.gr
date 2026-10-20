@@ -56,7 +56,7 @@ export const site = {
 export const routes = {
   home: '/',
   village: '/our-village/',
-  accommodation: '/accommodation/',
+  accommodation: '/our-houses/',
   life: '/village-life/',
   meraki: '/meraki-restaurant/',
   activities: '/activities/',

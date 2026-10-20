@@ -31,7 +31,7 @@ The developer's English is not strong: write to them in simple, clear English. T
 - `src/lib/seo.ts`: structured data for search engines (hotel, restaurant, breadcrumbs). `src/pages/sitemap.xml.ts` builds the sitemap from `routes` and the room list, so a new page added to `routes` is listed automatically. `public/` holds `robots.txt`, the icons and `og-default.jpg`, the general sharing image.
 - `.env.example`: the settings the forms need. The real `.env` is never committed.
 - `src/components/home/`: the homepage sections, one file each.
-- `src/components/accommodation/`: the Accommodation page and the room page. The thin files in `src/pages/accommodation/` and `src/pages/el/accommodation/` only choose the language.
+- `src/components/accommodation/`: the Our Houses page (at `/our-houses/`) and the room page. The thin files in `src/pages/our-houses/` and `src/pages/el/our-houses/` only choose the language.
 - Shared page parts: `PageHero` (opening photo of an inner page), `Gallery` (photo mosaic with a large viewer), `RoomCard` / `RoomGrid`, `FeatureSection` (large photo beside text, with a small second photo), `LineList` / `AmenityList`, `BookingCta`.
 - `src/pages/404.astro`: the "page not found" page, in both languages.
 - `src/assets/images/`: photos used on the site, already cropped and resized.
@@ -61,7 +61,7 @@ The developer's English is not strong: write to them in simple, clear English. T
 - Forms send email through Postmark. The Postmark server is shared with other Web Artworks sites, so the sender is always `Mailer from Web Artworks <mailer@webartworks.gr>` and every email has the tag `paliokaliva.gr`. The hotel receives at `info@paliokaliva.gr`, with the guest as Reply-To. The forms send nothing to the guest: the developer removed the automatic replies, so do not add them back without asking. Without `POSTMARK_SERVER_TOKEN`, `pnpm dev` prints the emails in the terminal and the built site answers with an error.
 - Forms are protected by a hidden trap field, a minimum fill time and a limit of 5 requests per 10 minutes per visitor. There is no captcha.
 - Newsletter: a simple hosted service (for example Brevo or MailerLite) is planned; not chosen yet.
-- Menu: Our Village, Accommodation, Village Life, Meraki Restaurant, Activities, Zakynthos, Contact. Gallery and Privacy Policy are in the footer. Six room types, each with its own page.
+- Menu: Our Village, Our Houses, Village Life, Meraki Restaurant, Activities, Zakynthos, Contact. Gallery and Privacy Policy are in the footer. Six room types, each with its own page.
 
 ## Open points
 
@@ -85,4 +85,4 @@ Waiting for the owner or the developer:
 - Greek titles in EB Garamond look old-fashioned; the developer is deciding whether to keep it.
 - On phones the RateParity widget may overlap the Call / WhatsApp / Book bar; check on a test address.
 
-Built: homepage, Accommodation, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form, Our Village, Zakynthos, Gallery, Activities, Privacy Policy, and a 404 page. Still to build: the newsletter signup and redirects from the old site's addresses.
+Built: homepage, Our Houses, six room pages, Village Life, Meraki Restaurant with the table request form, Contact with the contact form, Our Village, Zakynthos, Gallery, Activities, Privacy Policy, and a 404 page. Still to build: the newsletter signup and redirects from the old site's addresses.

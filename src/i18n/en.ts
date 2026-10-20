@@ -7,7 +7,7 @@ export const en = {
   nav: {
     home: 'Home',
     village: 'Our Village',
-    accommodation: 'Accommodation',
+    accommodation: 'Our Houses',
     life: 'Village Life',
     meraki: 'Meraki Restaurant',
     activities: 'Activities',
@@ -130,12 +130,12 @@ export const en = {
     },
   },
   rooms: {
-    eyebrow: 'Accommodation',
+    eyebrow: 'Our Houses',
     title: 'Villas, Apartments & Studios',
     quote: '“Island tradition, contemporary simplicity”',
     body: 'Rich wooden ceiling beams and furniture handcrafted by local artisans blend with modern living spaces, offering every comfort and convenience.',
     view: 'View',
-    all: 'All accommodation',
+    all: 'All houses',
     guests: 'up to {n} guests',
     items: {
       studio: {
@@ -234,7 +234,7 @@ export const en = {
     },
   },
   room: {
-    back: 'All accommodation',
+    back: 'All houses',
     facts: {
       size: 'Size',
       guests: 'Guests',

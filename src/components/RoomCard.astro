@@ -1,8 +1,9 @@
 ---
 import { Picture } from 'astro:assets';
 import ArrowLink from './ArrowLink.astro';
+import RoomMeta from './RoomMeta.astro';
 import { localePath, t, type Locale } from '@/i18n';
-import { roomCovers, roomFacts, type RoomSlug } from '@/data/rooms';
+import { roomCovers, type RoomSlug } from '@/data/rooms';
 import { routes } from '@/data/site';
 import { imageFormats } from '@/lib/images';
 
@@ -18,8 +19,6 @@ interface Props {
 const { locale, slug, index = 0, heading: Heading = 'h3' } = Astro.props;
 const r = t(locale).rooms;
 const room = r.items[slug];
-const facts = roomFacts[slug];
-const meta = `${facts.size} m² · ${r.guests.replace('{n}', String(facts.guests))}`;
 ---
 
 <a class="room" href={localePath(locale, `${routes.accommodation}${slug}/`)}>
@@ -34,7 +33,7 @@ const meta = `${facts.size} m² · ${r.guests.replace('{n}', String(facts.guests
   </div>
   <div class="room__body" data-reveal style={`--i:${index + 1}`}>
     <Heading class="h3">{room.name}</Heading>
-    <p class="room__meta">{meta}</p>
+    <RoomMeta locale={locale} slug={slug} />
     <p class="room__text">{room.text}</p>
     <ArrowLink>{r.view}</ArrowLink>
   </div>
@@ -54,13 +53,6 @@ const meta = `${facts.size} m² · ${r.guests.replace('{n}', String(facts.guests
     justify-items: start;
     gap: 0.4rem;
     padding-top: 1.75rem;
-  }
-
-  .room__meta {
-    color: var(--muted);
-    font-size: 0.75rem;
-    font-weight: 400;
-    letter-spacing: 0.06em;
   }
 
   .room__text {

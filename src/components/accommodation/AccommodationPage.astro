@@ -6,8 +6,9 @@ import PageHero from '@/components/PageHero.astro';
 import AmenityList from '@/components/AmenityList.astro';
 import BookingCta from '@/components/BookingCta.astro';
 import ArrowLink from '@/components/ArrowLink.astro';
+import RoomMeta from '@/components/RoomMeta.astro';
 import { localePath, t, type Locale } from '@/i18n';
-import { baseAmenities, roomFacts, roomPhotos, roomSlugs } from '@/data/rooms';
+import { baseAmenities, roomPhotos, roomSlugs } from '@/data/rooms';
 import { routes, site } from '@/data/site';
 import { breadcrumbSchema } from '@/lib/seo';
 import { imageFormats } from '@/lib/images';
@@ -23,14 +24,12 @@ const r = dict.rooms;
 
 const rooms = roomSlugs.map((slug) => {
   const item = r.items[slug];
-  const facts = roomFacts[slug];
   const [cover] = roomPhotos(slug);
   return {
     slug,
     ...item,
     cover: cover.image,
     coverAlt: `${item.name}: ${dict.room.kinds[cover.kind]}`,
-    meta: `${facts.size} m² · ${r.guests.replace('{n}', String(facts.guests))}`,
     href: localePath(locale, `${routes.accommodation}${slug}/`),
   };
 });
@@ -72,9 +71,7 @@ const rooms = roomSlugs.map((slug) => {
               <h2 class="h2" data-reveal>
                 <a href={room.href}>{room.name}</a>
               </h2>
-              <p class="acc-room__meta" data-reveal style="--i:1">
-                {room.meta}
-              </p>
+              <RoomMeta locale={locale} slug={room.slug} data-reveal style="--i:1" />
               <p class="acc-room__intro" data-reveal style="--i:2">
                 {room.intro}
               </p>
@@ -148,13 +145,6 @@ const rooms = roomSlugs.map((slug) => {
     display: grid;
     justify-items: start;
     gap: 0.75rem;
-  }
-
-  .acc-room__meta {
-    color: var(--muted);
-    font-size: 0.75rem;
-    font-weight: 400;
-    letter-spacing: 0.06em;
   }
 
   .acc-room__intro {

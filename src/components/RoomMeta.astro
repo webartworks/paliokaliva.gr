@@ -1,0 +1,42 @@
+---
+import { t, type Locale } from '@/i18n';
+import { roomFacts, type RoomSlug } from '@/data/rooms';
+
+// The guests and size line of a room card, with a small person icon.
+interface Props {
+  locale: Locale;
+  slug: RoomSlug;
+  [attribute: string]: unknown;
+}
+
+const { locale, slug, ...attributes } = Astro.props;
+const facts = roomFacts[slug];
+const guests = t(locale).rooms.guests.replace('{n}', String(facts.guests));
+---
+
+<p class="room-meta" {...attributes}>
+  <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+    <circle cx="8" cy="5" r="3"></circle>
+    <path d="M2.5 15c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5"></path>
+  </svg>{guests} · {facts.size} m²
+</p>
+
+<style>
+  .room-meta {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+  }
+
+  svg {
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    margin-right: 0.35em;
+    vertical-align: -0.2em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+</style>

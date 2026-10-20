@@ -19,6 +19,7 @@ export type RoomSlug = (typeof roomSlugs)[number];
 // Comforts found in every house, in the order they are listed on the site.
 export const baseAmenities = [
   'kitchen',
+  'espresso',
   'veranda',
   'wifi',
   'ac',
@@ -27,7 +28,11 @@ export const baseAmenities = [
   'phone',
   'housekeeping',
   'cocomat',
+  'lavender',
   'linen',
+  'bathrobes',
+  'slippers',
+  'sleepMask',
   'toiletries',
   'hairdryer',
   'cot',
@@ -35,7 +40,8 @@ export const baseAmenities = [
   'garden',
 ] as const;
 
-export const extraAmenities = ['nespresso', 'bathrobes'] as const;
+// Comforts found only in some houses, listed in `extras` below.
+export const extraAmenities = ['beachBag', 'beachTowels'] as const;
 
 export type Amenity = (typeof baseAmenities)[number] | (typeof extraAmenities)[number];
 
@@ -52,10 +58,10 @@ interface RoomFacts {
 export const roomFacts: Record<RoomSlug, RoomFacts> = {
   studio: { size: 40, guests: 3, adults: 2, extras: [] },
   'superior-studio': { size: 50, guests: 3, adults: 2, extras: [] },
-  apartment: { size: 63, guests: 4, extras: ['nespresso'] },
+  apartment: { size: 63, guests: 4, extras: [] },
   'superior-apartment': { size: 68, guests: 4, extras: [] },
-  villa: { size: 83, guests: 5, extras: ['nespresso'] },
-  'superior-villa': { size: 100, guests: 4, extras: ['bathrobes'] },
+  villa: { size: 83, guests: 5, extras: ['beachBag', 'beachTowels'] },
+  'superior-villa': { size: 100, guests: 4, extras: ['beachBag', 'beachTowels'] },
 };
 
 // Portrait photos for the room cards.

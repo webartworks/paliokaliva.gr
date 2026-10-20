@@ -205,7 +205,7 @@ export const en = {
       },
       'superior-villa': {
         name: 'Superior Villa',
-        text: 'Our largest house, with a wide sitting room and space for five.',
+        text: 'Our largest house, with a wide sitting room and space for four.',
         alt: 'Superior Villa sitting room with a built-in sofa and stone walls',
         intro: 'Our largest house: two floors, a wide sitting room and a veranda on the gardens.',
         description: [

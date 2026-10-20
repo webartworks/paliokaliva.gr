@@ -67,7 +67,7 @@ The developer's English is not strong: write to them in simple, clear English. T
 
 Waiting for the owner or the developer:
 
-- Room facts (sizes, guests, beds, bathrooms, facilities) come from the old site and need confirming. Superior Villa is set to 5 guests for now. "CD & DVD player" from the old facilities list was left out as probably outdated.
+- Room facts (sizes, guests, beds, bathrooms, facilities) come from the old site and need confirming. Superior Villa: max 4 guests, confirmed by the owner. "CD & DVD player" from the old facilities list was left out as probably outdated.
 - Two photos in the client's folders are AI-generated (file names start with `Gemini_Generated_Image`). They are not used; ask before using them.
 - Reception hours (left out of the footer until confirmed).
 - Whether the mobile number has WhatsApp.

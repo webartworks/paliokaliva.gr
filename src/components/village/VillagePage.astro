@@ -7,6 +7,12 @@ import gardenPlay from '@/assets/images/village/garden-play.jpg';
 import sittingRoom from '@/assets/images/rooms/superior-villa/01-living.jpg';
 import hammock from '@/assets/images/strip-hammock.jpg';
 import wineTable from '@/assets/images/activity-wine.jpg';
+import villaDining from '@/assets/images/rooms/superior-villa/05-dining.jpg';
+import villaBedroom from '@/assets/images/rooms/villa/02-bedroom.jpg';
+import gardenLawn from '@/assets/images/gallery/village/08.jpg';
+import gardenCushions from '@/assets/images/gallery/village/07.jpg';
+import potteryPainting from '@/assets/images/gallery/activities/05.jpg';
+import gardenBikes from '@/assets/images/gallery/village/06.jpg';
 import awardBoutique from '@/assets/images/award-boutique-2022.png';
 import award2020 from '@/assets/images/award-wlha-2020.jpg';
 import award2022 from '@/assets/images/award-wlha-2022.jpg';
@@ -74,6 +80,7 @@ const awardImages = [awardBoutique, award2020, award2022];
       alt={v.living.alt}
       smallImage={sittingRoom}
       smallAlt={v.living.altSmall}
+      moreImages={[villaDining, villaBedroom].map((image, i) => ({ image, alt: v.living.altMore[i] }))}
     >
       <ArrowLink href={localePath(locale, routes.accommodation)}>{v.living.link}</ArrowLink>
     </FeatureSection>
@@ -86,6 +93,7 @@ const awardImages = [awardBoutique, award2020, award2022];
       alt={v.zante.alt}
       smallImage={hammock}
       smallAlt={v.zante.altSmall}
+      moreImages={[gardenLawn, gardenCushions].map((image, i) => ({ image, alt: v.zante.altMore[i] }))}
       reverse
     >
       <ArrowLink href={localePath(locale, routes.life)}>{v.zante.link}</ArrowLink>
@@ -99,6 +107,7 @@ const awardImages = [awardBoutique, award2020, award2022];
       alt={v.family.alt}
       smallImage={wineTable}
       smallAlt={v.family.altSmall}
+      moreImages={[potteryPainting, gardenBikes].map((image, i) => ({ image, alt: v.family.altMore[i] }))}
     >
       <ArrowLink href={localePath(locale, routes.activities)}>{v.family.link}</ArrowLink>
     </FeatureSection>
@@ -184,6 +193,11 @@ const awardImages = [awardBoutique, award2020, award2022];
 
   .village-features {
     padding-block: calc(var(--section) * 0.4);
+  }
+
+  /* More room between the three sections, which each end in a row of photos. */
+  .village-features :global(.feature + .feature) {
+    margin-top: calc(var(--section) * 0.5);
   }
 
   .village-note {

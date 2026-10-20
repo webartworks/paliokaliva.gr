@@ -2,10 +2,16 @@
 import heroImage from '@/assets/images/life/hero.jpg';
 import breakfast from '@/assets/images/life-breakfast.jpg';
 import breakfastPies from '@/assets/images/life/breakfast-pies.jpg';
+import breakfastCakes from '@/assets/images/gallery/breakfast/03.jpg';
+import breakfastEggs from '@/assets/images/gallery/breakfast/08.jpg';
 import pool from '@/assets/images/life-pool.jpg';
 import poolTerrace from '@/assets/images/life/pool-terrace.jpg';
+import poolOlive from '@/assets/images/gallery/pool/03.jpg';
+import poolEvening from '@/assets/images/gallery/pool/06.jpg';
 import gardens from '@/assets/images/life-gardens.jpg';
 import gardensPicnic from '@/assets/images/life/gardens-picnic.jpg';
+import gardensHammock from '@/assets/images/gallery/village/02.jpg';
+import gardensPath from '@/assets/images/gallery/village/04.jpg';
 import Base from '@/layouts/Base.astro';
 import PageHero from '@/components/PageHero.astro';
 import FeatureSection from '@/components/FeatureSection.astro';
@@ -57,6 +63,7 @@ const f = v.facilities;
       alt={s.breakfast.alt}
       smallImage={breakfastPies}
       smallAlt={s.breakfast.altSmall}
+      moreImages={[breakfastCakes, breakfastEggs].map((image, i) => ({ image, alt: s.breakfast.altMore[i] }))}
     />
 
     <FeatureSection
@@ -68,6 +75,7 @@ const f = v.facilities;
       alt={s.pool.alt}
       smallImage={poolTerrace}
       smallAlt={s.pool.altSmall}
+      moreImages={[poolOlive, poolEvening].map((image, i) => ({ image, alt: s.pool.altMore[i] }))}
       reverse
     >
       <p class="life-meraki">{v.merakiNote}</p>
@@ -83,6 +91,7 @@ const f = v.facilities;
       alt={s.gardens.alt}
       smallImage={gardensPicnic}
       smallAlt={s.gardens.altSmall}
+      moreImages={[gardensHammock, gardensPath].map((image, i) => ({ image, alt: s.gardens.altMore[i] }))}
     />
   </div>
 
@@ -151,6 +160,11 @@ const f = v.facilities;
 
   .life-features {
     padding-block: calc(var(--section) * 0.4) calc(var(--section) * 0.6);
+  }
+
+  /* More room between the three sections, which each end in a row of photos. */
+  .life-features :global(.feature + .feature) {
+    margin-top: calc(var(--section) * 0.5);
   }
 
   .life-meraki {

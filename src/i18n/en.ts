@@ -89,6 +89,10 @@ export const en = {
       ],
       alt: 'A stone house with wooden shutters and an old olive tree in front',
       altSmall: 'A sitting room with a built-in sofa, stone walls and a wooden roof',
+      altMore: [
+        'A wooden dining table with a bowl of fruit, under stone walls',
+        'A bedroom with an iron bed, wooden beams and stone walls',
+      ],
       link: 'See the houses',
     },
     zante: {
@@ -100,6 +104,10 @@ export const en = {
       ],
       alt: 'A garden path between olive trees and flowering bougainvillea',
       altSmall: 'A hammock between the olive trees',
+      altMore: [
+        'Old olive trees on the lawn between the stone houses, with flowers by a stone path',
+        'Cushions and rugs laid on the grass under the olive trees',
+      ],
       link: 'Village life',
     },
     family: {
@@ -111,6 +119,7 @@ export const en = {
       ],
       alt: 'A hanging chair and children’s play tents on the grass in front of the houses',
       altSmall: 'A long table set with wine glasses in the garden, overlooking the sea',
+      altMore: ['A hand painting a clay pot, between jars of colour', 'Bicycles on the lawn in front of the stone houses'],
       link: 'Activities',
     },
     note: {
@@ -344,6 +353,10 @@ export const en = {
         ],
         alt: 'The breakfast buffet with breads, jams and fruit under hanging herbs',
         altSmall: 'Traditional Greek pita pies on the breakfast buffet',
+        altMore: [
+          'Homemade cakes and pancakes on the breakfast table',
+          'Fried eggs served in small iron pans',
+        ],
       },
       pool: {
         eyebrow: 'Pool & all-day bar',
@@ -355,6 +368,10 @@ export const en = {
         ],
         alt: 'Sun loungers by the pool at sunset',
         altSmall: 'A long table set for lunch on the bar terrace, with the pool behind',
+        altMore: [
+          'The pool and the shaded bar terrace beside an old olive tree',
+          'The bar lit up in the evening, across the pool',
+        ],
       },
       gardens: {
         eyebrow: 'Olive grove gardens',
@@ -366,6 +383,7 @@ export const en = {
         ],
         alt: 'A candle-lit sitting corner under an old olive tree in the evening',
         altSmall: 'Cushions and a low table set on the grass in front of a stone house',
+        altMore: ['A hammock tied between the trees in the garden', 'Bougainvillea and old olive trees along a garden path'],
       },
     },
     merakiNote: 'For dinner under the stars, the Meraki Restaurant is right next door.',

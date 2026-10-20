@@ -1,5 +1,7 @@
 ---
 // A large photo beside a block of text, with a smaller second photo under the text.
+// With `moreImages`, the small photo and those photos form a row of three across the
+// whole section, under both the large photo and the text.
 // Used for the long, calm sections of inner pages. `reverse` puts the text on the left.
 import { Picture } from 'astro:assets';
 import { imageFormats } from '@/lib/images';
@@ -14,6 +16,8 @@ interface Props {
   alt: string;
   smallImage?: ImageMetadata;
   smallAlt?: string;
+  // Two more photos, shown in one row with the small photo.
+  moreImages?: readonly { image: ImageMetadata; alt: string }[];
   reverse?: boolean;
   // Shape of the large photo. Use "4 / 5" when the photos are portrait.
   ratio?: string;
@@ -23,7 +27,23 @@ interface Props {
   videoLabels?: { pause: string; play: string };
 }
 
-const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', reverse = false, ratio = '3 / 2', video, videoLabels } = Astro.props;
+const {
+  id,
+  eyebrow,
+  title,
+  quote,
+  body,
+  image,
+  alt,
+  smallImage,
+  smallAlt = '',
+  moreImages = [],
+  reverse = false,
+  ratio = '3 / 2',
+  video,
+  videoLabels,
+} = Astro.props;
+const row = moreImages.length > 0;
 ---
 
 <section class:list={['feature', { 'feature--reverse': reverse }]} id={id} style={`--ratio:${ratio}`}>
@@ -67,7 +87,7 @@ const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', 
         <slot />
       </div>
       {
-        smallImage && (
+        smallImage && !row && (
           <div class="media feature__small" data-reveal="image" style="--i:2">
             <Picture
               src={smallImage}
@@ -80,6 +100,24 @@ const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', 
         )
       }
     </div>
+
+    {
+      smallImage && row && (
+        <div class="feature__row">
+          {[{ image: smallImage, alt: smallAlt }, ...moreImages].map((photo, i) => (
+            <div class="media" data-reveal="image" style={`--i:${i}`}>
+              <Picture
+                src={photo.image}
+                alt={photo.alt}
+                formats={imageFormats}
+                widths={[400, 640, 960]}
+                sizes="(min-width: 56em) 30vw, 33vw"
+              />
+            </div>
+          ))}
+        </div>
+      )
+    }
   </div>
 </section>
 
@@ -126,10 +164,25 @@ const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', 
     aspect-ratio: 4 / 3;
   }
 
+  .feature__row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .feature__row .media {
+    aspect-ratio: 4 / 5;
+  }
+
+  /* The middle photo sits a little higher, as in the homepage photo strip. */
+  .feature__row .media:nth-child(2) {
+    margin-top: -0.75rem;
+  }
+
   @media (min-width: 56em) {
     .feature__grid {
       grid-template-columns: 1.25fr 1fr;
-      gap: clamp(2.5rem, 7vw, 6.25rem);
+      gap: clamp(3rem, 5.5vw, 5rem) clamp(2.5rem, 7vw, 6.25rem);
     }
 
     .feature--reverse .feature__grid {
@@ -140,8 +193,18 @@ const { id, eyebrow, title, quote, body, image, alt, smallImage, smallAlt = '', 
       order: 2;
     }
 
-    .feature__body {
-      padding-top: clamp(1rem, 3vw, 3rem);
+    .feature__row {
+      order: 3;
+      grid-column: 1 / -1;
+      gap: clamp(0.75rem, 1.5vw, 1.25rem);
+    }
+
+    .feature__row .media {
+      aspect-ratio: 3 / 2;
+    }
+
+    .feature__row .media:nth-child(2) {
+      margin-top: -1.25rem;
     }
   }
 </style>

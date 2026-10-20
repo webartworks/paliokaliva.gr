@@ -162,11 +162,11 @@ export const en = {
       },
       'superior-studio': {
         name: 'Superior Studio',
-        text: 'A separate bedroom and more room to breathe, for couples or a small family.',
+        text: 'One bedroom and more room to breathe, for couples or a small family.',
         alt: 'Superior Studio living area with a wooden gallery above',
-        intro: 'A separate bedroom, an open living and dining area, and a private veranda.',
+        intro: 'One bedroom, an open living and dining area, and a private veranda.',
         description: [
-          'The Superior Studio adds a bedroom of its own, with a king-size bed or twin beds on Coco-Mat mattresses. The open-plan living and dining area has a fold-out sofa bed and an equipped kitchen, and the bathroom comes with a bathtub or a shower.',
+          'The Superior Studio has one bedroom, with a king-size bed or twin beds on Coco-Mat mattresses. The open-plan living and dining area has a fold-out sofa bed and an equipped kitchen, and the bathroom comes with a bathtub or a shower.',
           'Modern comforts sit easily beside stone walls, wooden beams and simple, natural décor. Step out to your furnished veranda and the garden. Ideal for couples and small families.',
         ],
         layout: 'One bedroom, open-plan living and dining area',

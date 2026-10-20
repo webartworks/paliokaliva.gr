@@ -174,7 +174,7 @@ export const en = {
           'The interiors are decorated in earthy tones, with natural stone and wood. Just below your furnished veranda lies the garden, for long, relaxing walks and for planning the next day on the island.',
         ],
         layout: 'Two bedrooms, open-plan living and dining area',
-        beds: 'King-size bed, and twin beds or a double bed',
+        beds: 'King-size bed, and two single beds that can be joined into a double',
         bathroom: 'One bathroom with shower',
       },
       'superior-apartment': {
@@ -187,7 +187,7 @@ export const en = {
           'Wooden beamed ceilings, traditional metal beds and handmade furniture in natural materials give the space its Zakynthian character. From the furnished veranda you look onto the landscaped gardens, with fragrant jasmine and colorful bougainvillea.',
         ],
         layout: 'Two bedrooms on one level, separate living and dining area',
-        beds: 'King-size bed, and twin beds or a double bed',
+        beds: 'King-size bed, and two single beds that can be joined into a double',
         bathroom: 'One bathroom with bathtub',
       },
       villa: {

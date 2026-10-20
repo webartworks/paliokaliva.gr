@@ -7,6 +7,7 @@ import '@/styles/global.css';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import MobileDock from '@/components/MobileDock.astro';
+import WhatsAppButton from '@/components/WhatsAppButton.astro';
 import OfferPopup from '@/components/OfferPopup.astro';
 import CookieNotice from '@/components/CookieNotice.astro';
 import { getImage } from 'astro:assets';
@@ -106,6 +107,7 @@ const ogImage = new URL(shared ? shared.src : '/og-default.jpg', site.url).href;
     </main>
     <Footer locale={locale} />
     <MobileDock locale={locale} />
+    <WhatsAppButton locale={locale} />
     <OfferPopup locale={locale} />
     <CookieNotice locale={locale} />
     <script>

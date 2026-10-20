@@ -938,6 +938,7 @@ export const el: Dictionary = {
     call: 'Κλήση',
     whatsapp: 'WhatsApp',
     book: 'Κράτηση',
+    whatsappChat: 'Μιλήστε μας στο WhatsApp',
   },
   offer: {
     eyebrow: 'Προσφορά',

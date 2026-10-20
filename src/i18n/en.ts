@@ -925,6 +925,7 @@ export const en = {
     call: 'Call',
     whatsapp: 'WhatsApp',
     book: 'Book',
+    whatsappChat: 'Chat with us on WhatsApp',
   },
   offer: {
     eyebrow: 'Offer',

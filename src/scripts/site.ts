@@ -187,10 +187,15 @@ function initStrip() {
 }
 
 function initDock() {
-  const dock = document.querySelector<HTMLElement>('[data-dock]');
-  if (!dock) return;
+  // The phone bar and the WhatsApp button show once the visitor has scrolled past
+  // the opening photo, so they never cover the booking bar on it.
+  const items = document.querySelectorAll<HTMLElement>('[data-dock], [data-whatsapp]');
+  if (!items.length) return;
 
-  const update = () => dock.classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.6);
+  const update = () => {
+    const past = window.scrollY > window.innerHeight * 0.6;
+    items.forEach((item) => item.classList.toggle('is-visible', past));
+  };
   update();
   window.addEventListener('scroll', update, { passive: true });
 }

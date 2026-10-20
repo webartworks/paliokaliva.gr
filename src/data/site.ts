@@ -2,6 +2,8 @@ export const site = {
   name: 'Paliokaliva Village',
   url: 'https://paliokaliva.gr',
   email: 'info@paliokaliva.gr',
+  // Shown on the Contact page next to the general address. The forms still send to `email`.
+  reservationsEmail: 'reservations@paliokaliva.gr',
   phone: { href: '+302695063770', label: '+30 26950 63770' },
   mobile: { href: '+306974774379', label: '+30 697 477 4379' },
   whatsapp: '306974774379',

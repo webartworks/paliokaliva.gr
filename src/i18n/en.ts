@@ -515,6 +515,7 @@ export const en = {
     phone: 'Phone',
     mobile: 'Mobile',
     email: 'Email',
+    reservationsEmail: 'Reservations',
     whatsapp: 'WhatsApp',
     whatsappLink: 'Send us a message',
     address: 'Address',

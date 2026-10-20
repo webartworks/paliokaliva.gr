@@ -528,6 +528,7 @@ export const el: Dictionary = {
     phone: 'Τηλέφωνο',
     mobile: 'Κινητό',
     email: 'Email',
+    reservationsEmail: 'Κρατήσεις',
     whatsapp: 'WhatsApp',
     whatsappLink: 'Στείλτε μας μήνυμα',
     address: 'Διεύθυνση',

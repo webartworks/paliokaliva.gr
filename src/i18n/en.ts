@@ -166,11 +166,11 @@ export const en = {
         alt: 'Superior Studio living area with a wooden gallery above',
         intro: 'One bedroom, an open living and dining area, and a private veranda.',
         description: [
-          'The Superior Studio has one bedroom, with a king-size bed or twin beds on Coco-Mat mattresses. The open-plan living and dining area has a fold-out sofa bed and an equipped kitchen, and the bathroom comes with a bathtub or a shower.',
+          'The Superior Studio has one bedroom, with a king-size bed or twin beds on Coco-Mat mattresses. The open-plan living and dining area has a sofa bed and an equipped kitchen, and the bathroom comes with a bathtub or a shower.',
           'Modern comforts sit easily beside stone walls, wooden beams and simple, natural décor. Step out to your furnished veranda and the garden. Ideal for couples and small families.',
         ],
         layout: 'One bedroom, open-plan living and dining area',
-        beds: 'King-size bed or twin beds, plus a fold-out sofa bed',
+        beds: 'King-size bed or twin beds, plus a sofa bed',
         bathroom: 'One bathroom with bathtub or shower',
       },
       apartment: {

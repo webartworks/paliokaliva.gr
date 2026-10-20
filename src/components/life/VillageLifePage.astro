@@ -97,9 +97,15 @@ const f = v.facilities;
       </div>
 
       <div class="life-facilities__lists">
-        <div>
-          <h3 class="h3" data-reveal>{f.facilitiesTitle}</h3>
-          <LineList items={f.facilities} columns={2} />
+        <div class="life-facilities__group">
+          <div>
+            <h3 class="h3" data-reveal>{f.facilitiesTitle}</h3>
+            <LineList items={f.facilities} columns={2} />
+          </div>
+          <div>
+            <h3 class="h3" data-reveal>{f.soonTitle}</h3>
+            <LineList items={f.soon} columns={2} />
+          </div>
         </div>
         <div>
           <h3 class="h3" data-reveal>{f.servicesTitle}</h3>
@@ -154,6 +160,11 @@ const f = v.facilities;
 
   .life-facilities__lists .h3 {
     margin-bottom: 1rem;
+  }
+
+  .life-facilities__group {
+    display: grid;
+    gap: 3rem;
   }
 
   .life-facilities__more {

@@ -88,10 +88,10 @@ export const en = {
         'Every house has wooden beams and furniture handcrafted by local artisans. Designed for simplicity, the warm touch of traditional wood sits beside modern furnishings, with every comfort and convenience.',
       ],
       alt: 'A stone house with wooden shutters and an old olive tree in front',
-      altSmall: 'A sitting room with a built-in sofa, stone walls and a wooden roof',
+      altSmall: 'A clay teapot and cups on a tray, on old wooden chests in front of a sofa',
       altMore: [
-        'A wooden dining table with a bowl of fruit, under stone walls',
-        'A bedroom with an iron bed, wooden beams and stone walls',
+        'A bunch of dried lavender on a pillow, in front of an iron bed and a stone wall',
+        'Old wooden spools and small plants on shelves in a stone niche',
       ],
       link: 'See the houses',
     },
@@ -352,10 +352,10 @@ export const en = {
           'Savor Greek pita pies, an assortment of fresh breads, homemade marmalades, coffee cakes, creamy Greek yogurt and local cheeses, along with plenty of health-oriented options. Breakfast is served by the pool, with a view of the Ionian Sea.',
         ],
         alt: 'The breakfast buffet with breads, jams and fruit under hanging herbs',
-        altSmall: 'Traditional Greek pita pies on the breakfast buffet',
+        altSmall: 'Homemade marmalades in glass jars, with fresh bread and butter',
         altMore: [
-          'Homemade cakes and pancakes on the breakfast table',
           'Fried eggs served in small iron pans',
+          'Glass jars of nuts, cereals and oats on the breakfast buffet',
         ],
       },
       pool: {
@@ -369,8 +369,8 @@ export const en = {
         alt: 'Sun loungers by the pool at sunset',
         altSmall: 'A long table set for lunch on the bar terrace, with the pool behind',
         altMore: [
-          'The pool and the shaded bar terrace beside an old olive tree',
           'The bar lit up in the evening, across the pool',
+          'Bar stools at the stone bar, lit in the evening',
         ],
       },
       gardens: {
@@ -383,7 +383,7 @@ export const en = {
         ],
         alt: 'A candle-lit sitting corner under an old olive tree in the evening',
         altSmall: 'Cushions and a low table set on the grass in front of a stone house',
-        altMore: ['A hammock tied between the trees in the garden', 'Bougainvillea and old olive trees along a garden path'],
+        altMore: ['A hammock tied between the trees in the garden', 'A massage table set in the garden under an old olive tree'],
       },
     },
     merakiNote: 'For dinner under the stars, the Meraki Restaurant is right next door.',

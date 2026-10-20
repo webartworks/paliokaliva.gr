@@ -4,11 +4,11 @@ import heroImage from '@/assets/images/village/hero.jpg';
 import house from '@/assets/images/village/house.jpg';
 import gardenPath from '@/assets/images/village/garden-path.jpg';
 import gardenPlay from '@/assets/images/village/garden-play.jpg';
-import sittingRoom from '@/assets/images/rooms/superior-villa/01-living.jpg';
+import teaSet from '@/assets/images/details/tea-set.jpg';
+import lavenderPillow from '@/assets/images/details/lavender-pillow.jpg';
+import spoolShelves from '@/assets/images/details/spool-shelves.jpg';
 import hammock from '@/assets/images/strip-hammock.jpg';
 import wineTable from '@/assets/images/activity-wine.jpg';
-import villaDining from '@/assets/images/rooms/superior-villa/05-dining.jpg';
-import villaBedroom from '@/assets/images/rooms/villa/02-bedroom.jpg';
 import gardenLawn from '@/assets/images/gallery/village/08.jpg';
 import gardenCushions from '@/assets/images/gallery/village/07.jpg';
 import potteryPainting from '@/assets/images/gallery/activities/05.jpg';
@@ -78,9 +78,9 @@ const awardImages = [awardBoutique, award2020, award2022];
       body={v.living.body}
       image={house}
       alt={v.living.alt}
-      smallImage={sittingRoom}
+      smallImage={teaSet}
       smallAlt={v.living.altSmall}
-      moreImages={[villaDining, villaBedroom].map((image, i) => ({ image, alt: v.living.altMore[i] }))}
+      moreImages={[lavenderPillow, spoolShelves].map((image, i) => ({ image, alt: v.living.altMore[i] }))}
     >
       <ArrowLink href={localePath(locale, routes.accommodation)}>{v.living.link}</ArrowLink>
     </FeatureSection>

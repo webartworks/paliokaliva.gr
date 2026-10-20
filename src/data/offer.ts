@@ -4,7 +4,7 @@ import type { Locale } from '@/i18n';
 // To run an offer: set `active` to true, fill in the texts and the dates.
 // Change `id` for every new offer, so visitors who closed an older one see it again.
 export const offer = {
-  active: true,
+  active: false,
   id: 'offer-2027-early-booking',
   from: '2026-10-01',
   until: '2027-02-28',

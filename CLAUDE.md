@@ -77,7 +77,6 @@ Waiting for the owner or the developer:
 - Meraki opening season, hours and its own phone number are unknown; the page shows the hotel phone and the form accepts any time.
 - Real sending through Postmark has not been tested from this side.
 - Privacy Policy: a draft written by Claude, not legal advice; the owner or their lawyer should approve it. The legal company name, VAT number and G.E.MI. number are empty in `site.legal`. When the policy changes, update `privacyUpdated` there.
-- Umami website ID is not set yet (`site.analytics.websiteId`).
 - Whether RateParity really stores cookies is not known; the consent gate is the cautious default.
 - The Google map on the Contact page loads only after the visitor clicks "Show the map". Maps, directions and search data all use the coordinates in `site.geo`.
 - Distances on the Contact page come from the owner's text. "Bus Station 250 m" was written as "Bus stop".

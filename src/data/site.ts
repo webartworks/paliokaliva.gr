@@ -18,7 +18,7 @@ export const site = {
   // no consent. Fill in the website ID from Umami to switch them on.
   analytics: {
     src: 'https://analytics.webartworks.com/script.js',
-    websiteId: '',
+    websiteId: 'b18e7b8a-4c4b-4228-bdb3-62b82af174ec',
   },
   // Shown on the Privacy Policy page. Fill in the legal details of the company that runs the hotel.
   legal: {

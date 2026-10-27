@@ -102,8 +102,8 @@ const moreSlides = [
   .hero {
     position: relative;
     display: grid;
-    /* Fill the screen, but stop growing on very tall displays. */
-    min-height: max(38rem, min(100svh, 68rem));
+    /* Fill the screen, at any height. */
+    min-height: max(38rem, 100svh);
     color: var(--white);
     background: var(--ink);
     overflow: hidden;

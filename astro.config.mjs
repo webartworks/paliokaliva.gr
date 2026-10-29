@@ -20,6 +20,9 @@ export default defineConfig({
       // The verified sender in Postmark, and the hotel address that receives the requests.
       MAIL_FROM: envField.string({ context: 'server', access: 'secret', default: 'mailer@webartworks.gr' }),
       MAIL_TO: envField.string({ context: 'server', access: 'secret', default: 'info@paliokaliva.gr' }),
+      // Signs the forms' time token (src/lib/antispam.ts). Optional: without it the
+      // key is derived from POSTMARK_SERVER_TOKEN.
+      ANTISPAM_SECRET: envField.string({ context: 'server', access: 'secret', optional: true }),
     },
   },
 });

@@ -501,6 +501,7 @@ export const en = {
       validation: 'Please check the marked fields and try again.',
       rate: 'Too many requests in a short time. Please try again in a few minutes, or call us.',
       server: 'Your message could not be sent. Please try again, or call us.',
+      spam: 'Your message could not be sent because it looks like spam. If you are writing to us as a guest, please call us or send us an email.',
     },
     noscript: 'This form needs JavaScript. You can also reach us by phone or email.',
   },

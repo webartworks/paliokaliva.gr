@@ -337,8 +337,25 @@ function initForms() {
     const status = form.querySelector<HTMLElement>('[data-form-status]');
     const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     const success = document.querySelector<HTMLElement>(`[data-form-success="${form.id}"]`);
-    const started = form.querySelector<HTMLInputElement>('input[name="startedAt"]');
-    if (started) started.value = String(Date.now());
+    // The endpoints drop forms without a signed time token from /api/token. It is
+    // fetched when the page opens, and again when the visitor returns to the form
+    // after half an hour (a token is valid for three hours).
+    const token = form.querySelector<HTMLInputElement>('input[name="_ast"]');
+    let tokenAt = 0;
+    const loadToken = () => {
+      if (!token || Date.now() - tokenAt < 30 * 60_000) return;
+      tokenAt = Date.now();
+      fetch('/api/token/', { headers: { Accept: 'application/json' } })
+        .then((response) => response.json())
+        .then((result: { t?: unknown }) => {
+          if (typeof result.t === 'string') token.value = result.t;
+        })
+        .catch(() => {
+          tokenAt = 0;
+        });
+    };
+    loadToken();
+    form.addEventListener('focusin', loadToken);
 
     // Requests for a past date make no sense.
     form.querySelectorAll<HTMLInputElement>('input[type="date"][data-min-today]').forEach((input) => {
@@ -384,7 +401,8 @@ function initForms() {
         form.querySelector(`[name="${name}"]`)?.setAttribute('aria-invalid', 'true');
       });
       if (status) {
-        const key = result.error === 'validation' || result.error === 'rate' ? result.error : 'server';
+        const known = ['validation', 'rate', 'spam'];
+        const key = result.error && known.includes(result.error) ? result.error : 'server';
         status.textContent = status.dataset[key] ?? '';
       }
       if (button) {

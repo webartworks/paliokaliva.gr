@@ -23,7 +23,7 @@ const [consentBefore, consentAfter] = f.consent.split('{privacy}');
 
 <form class="form" id={id} action={action} method="post" data-ajax-form>
   <input type="hidden" name="locale" value={locale} />
-  <input type="hidden" name="startedAt" value="" />
+  <input type="hidden" name="_ast" value="" />
   <div class="form__trap" aria-hidden="true">
     <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
   </div>
@@ -44,6 +44,7 @@ const [consentBefore, consentAfter] = f.consent.split('{privacy}');
     data-validation={f.errors.validation}
     data-rate={f.errors.rate}
     data-server={f.errors.server}
+    data-spam={f.errors.spam}
   >
   </p>
 

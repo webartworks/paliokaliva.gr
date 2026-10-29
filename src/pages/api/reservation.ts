@@ -2,7 +2,7 @@
 // Sends one email to the hotel (Reply-To: the guest). The guest gets no email.
 import type { APIRoute } from 'astro';
 import { MAIL_TO } from 'astro:env/server';
-import { consented, readSubmission, text, withinLimit } from '@/lib/form';
+import { consented, looksLikeSpam, readSubmission, text, withinLimit } from '@/lib/form';
 import { isEmail, json, MailNotConfiguredError, oneLine, sendMail } from '@/lib/mail';
 
 export const prerender = false;
@@ -37,6 +37,10 @@ export const POST: APIRoute = async (context) => {
   if (!Number.isInteger(data.guests) || data.guests < 1 || data.guests > MAX_GUESTS) invalid.push('guests');
   if (!consented(body.consent)) invalid.push('consent');
   if (invalid.length > 0) return json({ ok: false, error: 'validation', fields: invalid }, 400);
+
+  if (await looksLikeSpam(context, { name: body.name, email: body.email, message: body.notes })) {
+    return json({ ok: false, error: 'spam' }, 400);
+  }
 
   if (!withinLimit(context, 'reservation')) return json({ ok: false, error: 'rate' }, 429);
 

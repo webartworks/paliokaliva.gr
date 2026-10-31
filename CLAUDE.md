@@ -51,6 +51,7 @@ The developer's English is not strong: write to them in simple, clear English. T
 
 ## Decisions
 
+- Main address: `https://www.paliokaliva.gr`, with www. The non-www address redirects to it. The address is set in `astro.config.mjs`, `src/data/site.ts` and `public/robots.txt`; keep the three the same.
 - Booking: "Book now" and the booking bar send visitors to the external engine at `paliokalivavillage.reserve-online.net`. Passing dates and guests in the URL is not yet tested against the live engine.
 - RateParity price widget: one script, loaded only in production builds and only after the visitor chooses "Allow" in the cookie notice (`rateParityNeedsConsent` in `site.ts`). It appears in the bottom right corner, so the offer card and the cookie notice sit bottom left. It is expected to work only on the live domain.
 - WhatsApp button: a round button in the bottom right corner (`WhatsAppButton.astro`), on tablets and computers only (phones have WhatsApp in the bottom bar). It fades in after the opening photo, like the phone bar. RateParity sits above that corner; check on the live domain that they do not overlap.

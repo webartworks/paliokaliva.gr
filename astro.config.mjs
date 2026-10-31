@@ -2,7 +2,7 @@ import { defineConfig, envField } from 'astro/config';
 import node from '@astrojs/node';
 
 export default defineConfig({
-  site: 'https://paliokaliva.gr',
+  site: 'https://www.paliokaliva.gr',
   trailingSlash: 'always',
   // Pages are built as static files. Only the form endpoints under src/pages/api
   // run on the server, which is why the site needs the Node adapter.

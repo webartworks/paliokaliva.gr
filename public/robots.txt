@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://paliokaliva.gr/sitemap.xml
+Sitemap: https://www.paliokaliva.gr/sitemap.xml

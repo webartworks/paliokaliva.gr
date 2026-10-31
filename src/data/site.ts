@@ -1,6 +1,6 @@
 export const site = {
   name: 'Paliokaliva Village',
-  url: 'https://paliokaliva.gr',
+  url: 'https://www.paliokaliva.gr',
   email: 'info@paliokaliva.gr',
   // Shown on the Contact page next to the general address. The forms still send to `email`.
   reservationsEmail: 'reservations@paliokaliva.gr',
